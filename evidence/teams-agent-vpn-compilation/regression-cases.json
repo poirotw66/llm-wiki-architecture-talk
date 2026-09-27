@@ -1,0 +1,96 @@
+{
+  "$schema": "internal://llm-wiki-architecture-talk/teams-agent-vpn-regression/v1",
+  "source": "Selected from poirotw66/teams-agent data/eval retrieval and workflow evaluation files.",
+  "boundary": "These are regression targets for a local Knowledge Compilation run. They are not newly measured execution results yet.",
+  "cases": [
+    {
+      "id": "ta-vpn-r1-455",
+      "pattern": "multi_source_troubleshooting",
+      "query": "FortiClient 出現 Permission denied 錯誤碼 -455 怎麼辦？",
+      "expectedFound": true,
+      "expectedDocuments": [
+        "登入 FortiClient 出現錯訊",
+        "VPN常見Q&A問答"
+      ],
+      "expectedEvidence": [
+        "(-455)",
+        "Permission denied"
+      ],
+      "expectedCompiledArtifacts": [
+        "queries/vpn-455.md",
+        "concepts/vpn-error-codes.md",
+        "entities/forticlient.md"
+      ],
+      "passCriteria": [
+        "Answer cites a documented source instead of generic model knowledge.",
+        "Answer may cite both FortiClient error doc and VPN Q&A, but should not confuse -455 with unrelated VPN errors.",
+        "If the compiled query page exists, it should carry claim-level source support."
+      ]
+    },
+    {
+      "id": "ta-vpn-r2-password-expiry",
+      "pattern": "cross_document_synthesis",
+      "query": "VPN 密碼到期了要怎麼處理？",
+      "expectedFound": true,
+      "expectedDocuments": [
+        "VPN常見Q&A問答",
+        "登入 FortiClient 出現錯訊"
+      ],
+      "expectedEvidence": [
+        "密碼到期",
+        "改密碼"
+      ],
+      "expectedCompiledArtifacts": [
+        "queries/vpn-password-expired.md",
+        "concepts/vpn-credentials.md",
+        "entities/forticlient.md"
+      ],
+      "passCriteria": [
+        "Answer preserves both symptom and action rather than returning only a source title.",
+        "Answer distinguishes password expiry from account lockout and from generic network instability.",
+        "Compiled page should indicate which source supports the expiry claim and which source supports the action steps."
+      ]
+    },
+    {
+      "id": "ta-vpn-r3-overseas-temporary-access",
+      "pattern": "process_knowledge",
+      "query": "員工要出國，需要短暫申請 VPN 國外連線，流程是什麼？",
+      "expectedFound": true,
+      "expectedDocuments": [
+        "VPN國外連線短暫申請"
+      ],
+      "expectedEvidence": [
+        "主管",
+        "網路組",
+        "資安"
+      ],
+      "expectedCompiledArtifacts": [
+        "queries/vpn-overseas-temporary-access.md",
+        "concepts/vpn-access-policy.md",
+        "concepts/escalation-and-approval.md"
+      ],
+      "passCriteria": [
+        "Answer preserves approval / CC / escalation flow, not just a general VPN troubleshooting answer.",
+        "Compiled artifact should model this as procedure knowledge, not an error-code answer.",
+        "If required fields are missing, the agent should ask for the minimum missing application context."
+      ]
+    },
+    {
+      "id": "ta-vpn-r4-unknown-619",
+      "pattern": "no_answer_boundary",
+      "query": "VPN連線出現 Error -619，這是什麼問題？",
+      "expectedFound": false,
+      "expectedDocuments": [],
+      "expectedEvidence": [],
+      "expectedCompiledArtifacts": [
+        "queries/vpn-619-no-answer.md",
+        "concepts/knowledge-boundary.md"
+      ],
+      "passCriteria": [
+        "System must not infer an answer from adjacent VPN documents.",
+        "System should say the current corpus documents -455, -14, -8 and other known cases, but not -619 if that remains true after export.",
+        "Compiled wiki should encode unknown / unsupported cases, not only known answers."
+      ]
+    }
+  ]
+}
