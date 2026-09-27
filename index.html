@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
-  <meta name="description" content="Hello World 2026 技術分享：Agentic RAG、LLM Wiki 與企業知識系統的架構演進。">
+  <meta name="description" content="Hello World 2026：以一次合成來源更新，展示 LLM Wiki 的修訂、檢查與審查邊界。">
   <meta name="theme-color" content="#f5f7f8">
   <title>LLM Wiki：企業內部知識問答系統的架構演進</title>
   <style>
@@ -80,7 +80,24 @@
     .slide-id { font: 700 .82rem/1.2 var(--mono); letter-spacing: .08em; }
     .slide-kind { font: 600 .72rem/1.3 var(--mono); letter-spacing: .07em; }
     .slide-title { max-width: 23ch; margin: 0 0 clamp(1.35rem, 3vh, 2.2rem); font-size: clamp(2.2rem, 4.2vw, 4rem); line-height: 1.13; letter-spacing: -.045em; font-weight: 760; }
-    .eyebrow { margin: 0 0 .7rem; color: var(--accent); font: 700 .78rem/1.35 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+    .slide-copy { font-size: clamp(1.1rem, 1.75vw, 1.75rem); line-height: 1.42; }
+    .slide-copy h3 { font-size: clamp(1.1rem, 1.5vw, 1.45rem); line-height: 1.25; }
+    .slide-copy p, .slide-copy li { line-height: 1.45; }
+    .slide-copy .data-table { font-size: clamp(1rem, 1.35vw, 1.4rem); }
+    .slide-copy .data-table th, .slide-copy .data-table td { padding: .52rem .55rem; }
+    .slide-copy .knowledge-excerpt { font-size: clamp(1.05rem, 1.5vw, 1.4rem); }
+    .slide-copy .flow-step h3 { font-size: clamp(1.05rem, 1.4vw, 1.35rem); }
+    .slide-copy .flow-step p { font-size: clamp(.98rem, 1.25vw, 1.2rem); }
+    .slide-copy .small-note { font-size: clamp(1rem, 1.25vw, 1.2rem); }
+    .slide-copy .code-window { font-size: clamp(.88rem, 1.05vw, 1.1rem); }
+    .slide-copy .output-excerpt { white-space: pre-wrap; overflow-wrap: anywhere; }
+    .slide-copy .doc-column h3 { font-size: clamp(.95rem, 1.1vw, 1.15rem); }
+    .projection-diff { white-space: pre-wrap; overflow-wrap: anywhere; }
+    .closing-list { padding-left: 1.35em; line-height: 1.55; }
+    .closing-list li { margin: .55rem 0; }
+    .closing-evidence { padding-left: 1.2rem; border-left: 2px solid var(--dark-accent); }
+    .closing-evidence p { margin: .7rem 0; }
+    .eyebrow { margin: 0 0 .7rem; color: var(--accent); font: 700 clamp(.85rem, 1vw, 1rem)/1.35 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
     .lede { max-width: 58ch; margin: -.4rem 0 1.5rem; color: var(--muted); font-size: clamp(1.08rem, 1.55vw, 1.5rem); line-height: 1.55; }
     .conclusion {
       margin-top: auto; padding: 1.1rem 0 0; border-top: 2px solid var(--accent);
@@ -262,8 +279,8 @@
     .reading-mode .reader-notes a, .source-index a { overflow-wrap: anywhere; }
     .source-index { display: none; width: min(100% - 2rem, 1500px); margin: 3rem auto 5rem; padding: clamp(1.5rem, 4vw, 3rem); border-top: 3px solid var(--accent); background: var(--surface); }
     .source-index h2 { margin: 0 0 1.2rem; font-size: clamp(1.6rem, 3vw, 2.4rem); }
-    .source-index h3 { margin: 0 0 .35rem; font-size: 1rem; }
-    .source-index p { margin: .25rem 0; color: var(--muted); font-size: .88rem; line-height: 1.45; }
+    .source-index h3 { margin: 0 0 .35rem; font-size: clamp(.95rem, 1.1vw, 1.15rem); }
+    .source-index p { margin: .25rem 0; color: var(--muted); font-size: clamp(.95rem, 1.125vw, 1.125rem); line-height: 1.45; }
     .source-index ol { margin: 0; padding-left: 1.6rem; }
     .source-index li { padding: .7rem 0; border-bottom: 1px solid var(--rule); }
     .speaker-notes {
@@ -401,751 +418,435 @@
   </header>
 
   <main id="deck" aria-label="LLM Wiki 分享簡報">
-    <article id="s01" class="slide theme-dark active" data-section="S01" data-title="LLM Wiki：企業內部知識問答系統的架構演進" data-timing="00:00–00:45" data-kind="FRAMING" aria-roledescription="投影片" aria-label="S01，封面">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">HELLO WORLD 2026</p><p class="slide-kind">S01 · 00:00–00:45 · FRAMING</p></div>
-        <div class="cover-layout">
-          <div>
-            <p class="eyebrow">企業知識工程</p>
-            <h1 class="cover-title"><span>LLM Wiki：</span><span>企業內部知識問答系統</span><span>的架構演進</span></h1>
-            <p class="cover-subtitle">一次回答背後，知識如何被取得、整理與維護</p>
-            <p class="cover-meta">Hello World 2026 · Justin</p>
-          </div>
-          <div class="cover-evidence" aria-label="合成案例的來源、主張與引用">
-            <p class="eyebrow">合成教學案例 · 來源 D1</p>
-            <h3>ExampleVPN 裝置登錄與登入指南</h3>
-            <p><strong>適用範圍</strong>　受管理筆電 · ExampleVPN 4.x</p>
-            <p><strong>來源主張</strong>　DEMO-101 表示裝置登錄尚未完成</p>
-            <p><strong>引用</strong>　服務台確認登錄紀錄 <a href="#source-demo-01">[D1]</a></p>
-          </div>
-        </div>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>今天分享的是企業內部問答的架構思考。我會先說 Agentic RAG 怎麼找資料，再看評測告訴我們哪些問題還存在，接著用一個完整例子說明 LLM Wiki 如何整理來源與維護。最後回到 Teams IT Agent，討論這些知識怎麼進入服務流程，以及哪些部分適合交給共用知識平台。</p>
-          <h4>轉場</h4><p>先從一個每個服務台都可能遇到的提問開始。</p>
-          <h4>來源與主張類型</h4><p>講題來自本任務；案例局部使用 DEMO-01。類型：FRAMING。</p>
-          <h4>驗收</h4><p>正式題目不被改寫；沒有模型能力、上線狀態或效益數字的無來源宣稱。</p>
-        </section>
+<article id="s01" class="slide theme-dark active" data-section="S01" data-title="LLM Wiki：企業內部知識問答系統的架構演進" data-timing="00:00–00:30" data-kind="FRAMING" aria-roledescription="投影片" aria-label="S01，LLM Wiki：企業內部知識問答系統的架構演進"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">HELLO WORLD 2026</p><p class="slide-kind">S01 · 00:00–00:30 · FRAMING</p></div><div class="cover-layout">
+      <div>
+        <h1 class="cover-title"><span>LLM Wiki：</span><span>企業內部知識問答系統</span><span>的架構演進</span></h1>
+        <p class="cover-subtitle">來源規則改了，既有知識與回答如何跟著改？</p>
+        <p class="cover-meta">Hello World 2026 · Justin</p>
       </div>
-    </article>
+      <div class="cover-evidence" aria-label="合成來源的版本差異">
+        <p class="eyebrow">DEMO-02 · 合成來源</p>
+        <h3>同一個問題，來源多了一個版本分支</h3>
+        <p><strong>4.0</strong>　沿用原流程：服務台確認登錄紀錄</p>
+        <p><strong>4.1+</strong>　先同步裝置狀態；仍失敗再交服務台</p>
+        <p><a href="evidence/wiki-update-demo/README.md">查看保存的案例與產物</a></p>
+      </div>
+    </div><p class="source-line">來源與產物：<a href="#source-src-14">SRC-14</a>、<a href="#source-src-17">SRC-17</a>、<a href="#source-demo-02">DEMO-02</a> · 正式題目維持不變；案例為合成資料。</p><section class="reader-notes"><h3>講者稿</h3><p>今天用一次來源改版，說明企業知識問答的架構責任。我們會看到知識頁怎麼更新、工具能抓到什麼錯誤，以及通過檢查之後為什麼仍需要有人負責。</p><h4>轉場</h4><p>先看這次保存的問答草稿與來源差異。</p><h4>來源與證據</h4><p><a href="#source-src-14">SRC-14</a>、<a href="#source-src-17">SRC-17</a>、<a href="#source-demo-02">DEMO-02</a> · 正式題目維持不變；案例為合成資料。</p><h4>驗收</h4><p>封面副標提出問題，不預先宣稱導入效益；4.0／4.1+ 分支符合合成來源。</p></section></div></article>
 
-    <article id="s02" class="slide" data-section="S02" data-title="一句提問，還缺哪些條件？" data-timing="00:45–02:00" data-kind="ILLUSTRATIVE" data-max-step="2" aria-roledescription="投影片" aria-label="S02，一句提問，還缺哪些條件？">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">01 / 問題與系統邊界</p><p class="slide-kind">S02 · 00:45–02:00 · ILLUSTRATIVE</p></div>
-        <p class="eyebrow">合成教學案例</p>
-        <blockquote class="question">「我在筆電上登入 ExampleVPN，一直進不去<span class="question-mark">。</span>」</blockquote>
-        <div data-step="2">
-          <ul class="unknown-list" aria-label="目前未知的條件">
-            <li><b>錯誤訊息</b><span class="unknown-mark">未知</span></li>
-            <li><b>裝置狀態</b><span class="unknown-mark">未知</span></li>
-            <li><b>用戶端版本</b><span class="unknown-mark">未知</span></li>
+    <article id="s02" class="slide" data-section="S02" data-title="來源改了，回答也需要改" data-timing="00:30–01:30" data-kind="DEMO-AUTHORED + DEMO-EXECUTED" data-max-step="2" aria-roledescription="投影片" aria-label="S02，來源改了，回答也需要改"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">01 / 產物與問題</p><p class="slide-kind">S02 · 00:30–01:30 · DEMO-AUTHORED + DEMO-EXECUTED</p></div><p class="eyebrow">DEMO-02 · 持久化問答草稿</p><h2 class="slide-title">來源改了，回答也需要改</h2><div class="slide-copy">
+      <p class="lede">固定問題：受管理筆電、ExampleVPN 4.1、DEMO-101，怎麼處理？</p>
+      <div class="two-column">
+        <div class="doc-column">
+          <h3>QUERY · v1</h3>
+          <blockquote class="knowledge-excerpt">請由示範服務台確認登錄紀錄。</blockquote>
+          <p><a href="evidence/wiki-update-demo/stale-v2/wiki/queries/demo-101.md">開啟保存的 v1 問答</a></p>
+        </div>
+        <div class="doc-column summary" data-step="2">
+          <h3>QUERY · 修訂草稿</h3>
+          <blockquote class="knowledge-excerpt">先使用「同步裝置狀態」一次；仍顯示 DEMO-101，再交服務台確認登錄紀錄。</blockquote>
+          <p><a href="evidence/wiki-update-demo/revised-v2/wiki/queries/demo-101.md">開啟保存的修訂問答</a></p>
+        </div>
+      </div>
+      <p class="proposed-link" data-step="2"><strong>來源 v2：</strong>4.1 及以上才新增同步步驟；4.0 沿用 v1。</p>
+      <p class="small-note">兩版問答與實際檔案 diff 已保存。這是合成內容中的持久化 Agent 草稿，不是 Teams 或 RAG runtime 回答。</p>
+    </div><p class="source-line">來源與產物：<a href="#source-src-14">SRC-14</a>、<a href="#source-src-17">SRC-17</a>、<a href="#source-src-18">SRC-18</a> · 逐字片段取自 stale-v2 與 revised-v2 的固定 query 檔。</p><section class="reader-notes"><h3>講者稿</h3><p>同一個問題，指南更新後多了一個先做的步驟，而且只適用於 4.1 以上。來源是合成的，但問答頁和 diff 是這次實際保存的產物。接下來要把版本範圍準確帶進相關頁面，並讓別人能檢查修改是否正確。</p><h4>轉場</h4><p>這次展示的知識維護工作與系統邊界是什麼？</p><h4>來源與證據</h4><p><a href="#source-src-14">SRC-14</a>、<a href="#source-src-17">SRC-17</a>、<a href="#source-src-18">SRC-18</a> · 逐字片段取自 stale-v2 與 revised-v2 的固定 query 檔。</p><h4>驗收</h4><p>第一分鐘已展示可檢查的 Wiki 產物；版本限制可讀；問答頁沒有被描述成 runtime 實測。</p></section></div></article>
+
+    <article id="s03" class="slide" data-section="S03" data-title="這次展示的知識維護工作" data-timing="01:30–03:00" data-kind="DEMO-AUTHORED + DEMO-EXECUTED + PROPOSED" data-max-step="5" aria-roledescription="投影片" aria-label="S03，這次展示的知識維護工作"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">01 / 產物與問題</p><p class="slide-kind">S03 · 01:30–03:00 · DEMO-AUTHORED + DEMO-EXECUTED + PROPOSED</p></div><p class="eyebrow">本輪示範 · 不是自動 Ingest</p><h2 class="slide-title">這次展示的知識維護工作</h2><div class="slide-copy">
+      <p class="lede"><strong>LLM Wiki：</strong>由來源支持、相互連結，並由 LLM 與人協作維護的知識頁。</p>
+      <div class="flow-wrap" tabindex="0" aria-label="本輪展示的知識更新步驟">
+        <div class="flow" style="--flow-count:5">
+          <div class="flow-step" data-step="1"><h3>來源改版</h3><p>v1、v2 合成指南</p></div>
+          <div class="flow-step" data-step="2"><h3>變更提案</h3><p>互動式 Assistant 撰寫</p></div>
+          <div class="flow-step" data-step="3"><h3>頁面 diff</h3><p>三頁持久化草稿</p></div>
+          <div class="flow-step" data-step="4"><h3>結構檢查</h3><p>既有腳本實際執行</p></div>
+          <div class="flow-step" data-step="5"><h3>內容 review</h3><p>pending · 尚未核可</p></div>
+        </div>
+      </div>
+      <p class="small-note"><strong>本輪：</strong>Assistant 撰寫產物，既有腳本執行檢查。<strong>尚未：</strong>自動 Ingest、RAG 問答、人工核可或發布。</p>
+    </div><p class="source-line">來源與產物：<a href="#source-src-03">SRC-03</a>、<a href="#source-src-14">SRC-14</a>、<a href="#source-src-15">SRC-15</a> · 工具執行與 Assistant 草稿分開標示；review 狀態留為 pending。</p><section class="reader-notes"><h3>講者稿</h3><p>這裡用 LLM Wiki 指一組來源支持、互相連結且持續維護的頁面。本輪由互動式 Assistant 產生提案與修改，再用專案既有腳本檢查。我們沒有執行整套自動 Ingest，也沒有宣稱系統自行找出了全部影響範圍。可檢查的證據是輸入、修改和工具輸出。</p><h4>轉場</h4><p>問答評測能說明哪些責任？</p><h4>來源與證據</h4><p><a href="#source-src-03">SRC-03</a>、<a href="#source-src-14">SRC-14</a>、<a href="#source-src-15">SRC-15</a> · 工具執行與 Assistant 草稿分開標示；review 狀態留為 pending。</p><h4>驗收</h4><p>第 3 分鐘前定義本例的 LLM Wiki；流程只描述本輪範圍，不畫成已部署的自動 pipeline。</p></section></div></article>
+
+    <article id="s04" class="slide" data-section="S04" data-title="問答評測能定位哪些問題" data-timing="03:00–04:15" data-kind="MEASURED" aria-roledescription="投影片" aria-label="S04，問答評測能定位哪些問題"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">01 / 產物與問題</p><p class="slide-kind">S04 · 03:00–04:15 · MEASURED</p></div><p class="eyebrow">既有 RAG 脈絡 · 固定歷史快照</p><h2 class="slide-title">問答評測能定位哪些問題</h2><div class="slide-copy">
+      <div class="case-stations">
+        <div class="case-station"><p>Document Hit@4</p><strong>115 / 116</strong><p>有目標證據標註的題目</p></div>
+        <div class="case-station"><p>Answer Accuracy</p><strong>151 / 156</strong><p>全體固定測試題</p></div>
+      </div>
+      <div class="investigation"><strong>單一案例：</strong><code>v3-blind-ans-05</code> · 檢索證據 recall 1.0 → 答案證據 recall 0.0</div>
+      <p class="small-note">2026-09-23 frozen blind L3 · 單次固定快照 · 兩項指標的分母不同。RAG 報告沒有測量 Wiki 導入效果。</p>
+      <p class="conclusion">來源被取回後，回答仍可能遺漏；知識更新需要自己的驗證。</p>
+    </div><p class="source-line">來源與產物：<a href="#source-src-01">SRC-01</a> · 分母、freeze date 與單次量測限制同時呈現。</p><section class="reader-notes"><h3>講者稿</h3><p>既有報告分別量測文件命中與答案評分，分母不同。其中一筆案例有檢索證據，答案卻沒有涵蓋。這說明查詢階段需要自己的診斷；今天的 Wiki 案例處理另一個責任：來源改版後，知識內容是否同步更新。這份 RAG 報告沒有證明 Wiki 改善了準確率。</p><h4>轉場</h4><p>把展示範圍收斂到一個能完整追查的更新任務。</p><h4>來源與證據</h4><p><a href="#source-src-01">SRC-01</a> · 分母、freeze date 與單次量測限制同時呈現。</p><h4>驗收</h4><p>只呈現兩個總體指標與一筆診斷；不作百分點相減，不拿 RAG 數字證明 Wiki 效益。</p></section></div></article>
+
+    <article id="s05" class="slide" data-section="S05" data-title="這次更新任務的完成條件" data-timing="04:15–05:00" data-kind="FRAMING" aria-roledescription="投影片" aria-label="S05，這次更新任務的完成條件"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">01 / 產物與問題</p><p class="slide-kind">S05 · 04:15–05:00 · FRAMING</p></div><p class="eyebrow">DEMO-02 · 更新任務</p><h2 class="slide-title">這次更新任務的完成條件</h2><div class="slide-copy">
+      <table class="data-table">
+        <thead><tr><th>完成條件</th><th>本例要保留的證據</th></tr></thead>
+        <tbody>
+          <tr><td class="number">01</td><td>找到需要修改的既有知識頁</td></tr>
+          <tr><td class="number">02</td><td>保留來源仍有效的版本範圍</td></tr>
+          <tr><td class="number">03</td><td>讓修改、引用與工具結果都能檢查</td></tr>
+        </tbody>
+      </table>
+      <p class="conclusion">今天展示修改與驗證；效益與自動化程度需要另測。</p>
+    </div><p class="source-line">來源與產物：<a href="#source-src-18">SRC-18</a> · 固定案例定義見 DEMO-02。</p><section class="reader-notes"><h3>講者稿</h3><p>這次更新有三個完成條件：知道要動哪些頁、保留仍有效的舊條件、讓修改可供檢查。接下來每個工具與設計選擇，都用這三個條件來看。</p><h4>轉場</h4><p>先讀完整的來源差異。</p><h4>來源與證據</h4><p><a href="#source-src-18">SRC-18</a> · 固定案例定義見 DEMO-02。</p><h4>驗收</h4><p>不承諾自動影響分析的召回率或人力效益。</p></section></div></article>
+
+    <article id="s06" class="slide" data-section="S06" data-title="v2 改動的範圍" data-timing="05:00–06:30" data-kind="DEMO-AUTHORED" aria-roledescription="投影片" aria-label="S06，v2 改動的範圍"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">02 / 來源更新</p><p class="slide-kind">S06 · 05:00–06:30 · DEMO-AUTHORED</p></div><p class="eyebrow">DEMO-02 · 來源版本對照</p><h2 class="slide-title">v2 改動的範圍</h2><div class="slide-copy">
+      <table class="data-table">
+        <thead><tr><th>來源版本</th><th>適用條件</th><th>處理規則</th></tr></thead>
+        <tbody>
+          <tr><td>v1 · 4.x</td><td>受管理筆電、DEMO-101</td><td>由示範服務台確認登錄紀錄</td></tr>
+          <tr><td>v2 · 4.1 及以上</td><td>同一裝置與錯誤碼</td><td>先同步裝置狀態一次；仍失敗再交服務台</td></tr>
+          <tr><td>v2 · 4.0</td><td>只取代 4.1+ 步驟</td><td>沿用 v1 流程</td></tr>
+          <tr><td>版本不明</td><td>適用版本尚未確認</td><td>先追問版本</td></tr>
+        </tbody>
+      </table>
+      <p class="small-note">新步驟來自 v2 原文。版本日期較新不代表所有舊主張都自動失效。</p>
+      <p><a href="evidence/wiki-update-demo/baseline-v1/raw/originals/examplevpn-guide-v1.md">開啟來源 v1</a> · <a href="evidence/wiki-update-demo/revised-v2/raw/originals/examplevpn-guide-v2.md">開啟來源 v2</a></p>
+    </div><p class="source-line">來源與產物：<a href="#source-src-18">SRC-18</a> · 兩版 raw 原件皆可由相對連結開啟。</p><section class="reader-notes"><h3>講者稿</h3><p>更新不是把 v1 全部換成 v2。兩份來源仍共用裝置與錯誤碼條件，但 v2 只改 4.1 以上的處理步驟。若只留下「先同步一次」，就會把 4.0 也帶到錯誤路徑。這個版本邊界必須保留。</p><h4>轉場</h4><p>LLM 在這個任務中應該產出什麼？</p><h4>來源與證據</h4><p><a href="#source-src-18">SRC-18</a> · 兩版 raw 原件皆可由相對連結開啟。</p><h4>驗收</h4><p>新操作逐項來自保存的 v2 原文；不因日期較新就推定 v1 全部被取代。</p></section></div></article>
+
+    <article id="s07" class="slide" data-section="S07" data-title="LLM 的輸入、提案與修改" data-timing="06:30–08:00" data-kind="DEMO-AUTHORED + PROPOSED" data-max-step="5" aria-roledescription="投影片" aria-label="S07，LLM 的輸入、提案與修改"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">02 / 來源更新</p><p class="slide-kind">S07 · 06:30–08:00 · DEMO-AUTHORED + PROPOSED</p></div><p class="eyebrow">人與工具的責任邊界</p><h2 class="slide-title">LLM 的輸入、提案與修改</h2><div class="slide-copy">
+      <div class="flow-wrap" tabindex="0" aria-label="LLM Wiki 更新中的輸入、修改、檢查與審查">
+        <div class="flow" style="--flow-count:5">
+          <div class="flow-step" data-step="1"><h3>輸入</h3><p>來源 v1／v2、既有 concept／entity／query、格式規約</p></div>
+          <div class="flow-step" data-step="2"><h3>變更提案</h3><p>新增 v2 摘要，列出三頁修訂</p></div>
+          <div class="flow-step" data-step="3"><h3>修改內容</h3><p>版本分支與來源引用寫入草稿</p></div>
+          <div class="flow-step" data-step="4"><h3>工具檢查</h3><p>lint 與 graph report；結果有邊界</p></div>
+          <div class="flow-step" data-step="5"><h3>人工責任</h3><p>review queue pending；尚未核可</p></div>
+        </div>
+      </div>
+      <div class="two-column">
+        <p class="small-note"><strong>提案限制：</strong>保留 4.0、兩份來源歸檔，三頁都維持 draft。</p>
+        <p class="small-note"><strong>本輪限制：</strong>互動式 Assistant 撰寫；不是保存過的模型 API prompt 或自動化可靠度實驗。</p>
+      </div>
+      <p><a href="evidence/wiki-update-demo/decisions/v2-change-plan.md">查看實際變更提案</a> · <a href="evidence/wiki-update-demo/revised-v2/ops/review-queue.md">查看待審查清單</a></p>
+    </div><p class="source-line">來源與產物：<a href="#source-src-14">SRC-14</a>、<a href="#source-src-15">SRC-15</a>、<a href="#source-src-16">SRC-16</a> · 提案與 review queue 是可直接檢查的保存檔。</p><section class="reader-notes"><h3>講者稿</h3><p>LLM 在這裡協助解讀來源差異，提出要改的頁面，再寫出有引用的草稿。腳本可以檢查 schema 與連結，但不會自然理解「只取代 4.1 以上」。本輪提案與草稿由互動式 Assistant 寫出，並保留可讀產物與待審查狀態；這還不能代表大規模自動發現的可靠度。</p><h4>轉場</h4><p>第一項設計取捨是，為什麼保留三層內容？</p><h4>來源與證據</h4><p><a href="#source-src-14">SRC-14</a>、<a href="#source-src-15">SRC-15</a>、<a href="#source-src-16">SRC-16</a> · 提案與 review queue 是可直接檢查的保存檔。</p><h4>驗收</h4><p>清楚區分 Assistant 撰寫、工具執行與人工確認；提案不包含私有推理逐字稿，也不宣稱模型 API 實驗。</p></section></div></article>
+
+    <article id="s08" class="slide" data-section="S08" data-title="決策一：保留原件、Canonical 與 Wiki" data-timing="08:00–09:30" data-kind="DOCUMENTED + DEMO-AUTHORED" aria-roledescription="投影片" aria-label="S08，決策一：保留原件、Canonical 與 Wiki"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">03 / 架構決策</p><p class="slide-kind">S08 · 08:00–09:30 · DOCUMENTED + DEMO-AUTHORED</p></div><p class="eyebrow">設計決策 01 · 可追查性</p><h2 class="slide-title">決策一：保留原件、Canonical 與 Wiki</h2><div class="slide-copy">
+      <div class="two-column">
+        <div>
+          <p class="eyebrow">替代方案</p>
+          <h3>只保留整理後頁面</h3>
+          <p>檔案較少；發現遺漏時，難追查來源或整理過程。</p>
+        </div>
+        <div>
+          <p class="eyebrow">本例選擇</p>
+          <h3>原件 + canonical + Wiki 摘要</h3>
+          <p>回查輸入、檢查轉換、重用知識；代價是更多版本與 lineage 需要管理。</p>
+        </div>
+      </div>
+      <div class="three-column editorial-rule" style="margin-top:1.4rem">
+        <div class="doc-column"><h3>RAW / ORIGINALS</h3><p>保留當時收到的輸入</p></div>
+        <div class="doc-column canonical"><h3>RAW / SOURCES</h3><p>保留完整 canonical 內容</p></div>
+        <div class="doc-column summary"><h3>WIKI / SOURCES</h3><p>可閱讀的摘要與主張連結</p></div>
+      </div>
+      <p class="small-note">這次原件已是 Markdown；沒有發生多模態轉換。canonical 與原件內容相同，是保留責任的展示。</p>
+    </div><p class="source-line">來源與產物：<a href="#source-src-03">SRC-03</a>、<a href="#source-src-18">SRC-18</a> · 實際兩版原件與摘要可在案例包中檢查。</p><section class="reader-notes"><h3>講者稿</h3><p>只留整理後頁面比較簡單，但遇到爭議時很難判斷是來源有問題，還是整理時遺漏。這個範本保留三層，換取可追查性，也承擔更多版本與產物管理成本。這次原件本來就是 Markdown，沒有表演文件轉換。</p><h4>轉場</h4><p>第二項取捨是，直接寫頁面，還是先提出變更範圍？</p><h4>來源與證據</h4><p><a href="#source-src-03">SRC-03</a>、<a href="#source-src-18">SRC-18</a> · 實際兩版原件與摘要可在案例包中檢查。</p><h4>驗收</h4><p>分開標示原件、canonical 與摘要；不把相同 Markdown 複本說成轉檔成果。</p></section></div></article>
+
+    <article id="s09" class="slide" data-section="S09" data-title="決策二：先提出變更範圍" data-timing="09:30–11:00" data-kind="DOCUMENTED + DEMO-AUTHORED" aria-roledescription="投影片" aria-label="S09，決策二：先提出變更範圍"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">03 / 架構決策</p><p class="slide-kind">S09 · 09:30–11:00 · DOCUMENTED + DEMO-AUTHORED</p></div><p class="eyebrow">設計決策 02 · 先看修改計畫</p><h2 class="slide-title">決策二：先提出變更範圍</h2><div class="slide-copy">
+      <div class="two-column">
+        <div>
+          <h3>直接改寫</h3>
+          <p>少一個步驟，但維護者較難先檢查修改範圍。</p>
+        </div>
+        <div>
+          <h3>先提案再改寫</h3>
+          <p>先看變更落點；代價是提案維護與生成成本。</p>
+        </div>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>實際提案的落點</th><th>本輪約束</th></tr></thead>
+        <tbody>
+          <tr><td>新增 v2 source summary</td><td rowspan="4">保留 4.0 分支 · 保留 v1 歸檔 · 全部維持 draft</td></tr>
+          <tr><td>更新登錄 concept</td></tr>
+          <tr><td>更新用戶端 entity</td></tr>
+          <tr><td>更新固定問題 query</td></tr>
+        </tbody>
+      </table>
+      <p><a href="evidence/wiki-update-demo/decisions/v2-change-plan.md">開啟保存的變更提案</a></p>
+    </div><p class="source-line">來源與產物：<a href="#source-src-04">SRC-04</a>、<a href="#source-src-16">SRC-16</a> · 不把已知三頁目標包裝成召回率實驗。</p><section class="reader-notes"><h3>講者稿</h3><p>直接讓模型重寫頁面容易開始，但維護者很難先知道它打算動哪裡。先寫變更提案，讓頁面選擇和版本範圍成為可審查的產物。本輪三份下游頁是教學案例中已知的目標，不是未知大型 Wiki 的自動影響分析成功率。</p><h4>轉場</h4><p>頁面關係工具能提供哪些檢查線索？</p><h4>來源與證據</h4><p><a href="#source-src-04">SRC-04</a>、<a href="#source-src-16">SRC-16</a> · 不把已知三頁目標包裝成召回率實驗。</p><h4>驗收</h4><p>提案只列結論與依據；四個產物落點及三項保留條件須可檢查。</p></section></div></article>
+
+    <article id="s10" class="slide" data-section="S10" data-title="關係圖能提示，不能替代判讀" data-timing="11:00–12:30" data-kind="DEMO-EXECUTED" aria-roledescription="投影片" aria-label="S10，關係圖能提示，不能替代判讀"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">04 / 工具檢查</p><p class="slide-kind">S10 · 11:00–12:30 · DEMO-EXECUTED</p></div><p class="eyebrow">stale-v2 · 實際 Graph insights</p><h2 class="slide-title">關係圖能提示，不能替代判讀</h2><div class="slide-copy">
+      <div class="two-column">
+        <div>
+          <p class="eyebrow">Graph report · 結構統計</p>
+          <p class="question">5 頁掃描</p>
+          <p><strong>1 頁沒有 inbound link</strong><br>v2 source summary</p>
+          <p><a href="evidence/wiki-update-demo/stale-v2/ops/graph-insights.md">開啟原始報告</a></p>
+        </div>
+        <div class="relationship-map">
+          <div class="rel-node"><strong>v1 source</strong><span>歷史摘要保留</span></div>
+          <div class="rel-arrow">仍被引用 →</div>
+          <div class="rel-node"><strong>Concept / Query</strong><span>stale snapshot 仍連向 v1</span></div>
+          <div class="rel-arrow">另存 v2 →</div>
+          <div class="rel-node"><strong>v2 summary</strong><span>index 有列入；no inbound</span></div>
+        </div>
+      </div>
+      <p class="small-note">index 列表不計入 Concept 間 inbound 統計。修訂後同樣可能有一頁 no-inbound；需看實際是哪一頁。</p>
+    </div><p class="source-line">來源與產物：<a href="#source-src-15">SRC-15</a>、<a href="#source-src-18">SRC-18</a> · stale-v2 與 revised-v2 的 graph report 都有相同總數，但孤立來源不同。</p><section class="reader-notes"><h3>講者稿</h3><p>工具掃描五個頁面，指出 v2 摘要沒有來自其他知識頁的 inbound link。這是值得檢查的位置，但不是語義上的更新判定。修訂後 no-inbound 數量仍可能是一，因為保留歷史的 v1 頁不再被現行問答引用；要看實際是哪個頁面。</p><h4>轉場</h4><p>結構檢查對這份過時內容給出什麼結果？</p><h4>來源與證據</h4><p><a href="#source-src-15">SRC-15</a>、<a href="#source-src-18">SRC-18</a> · stale-v2 與 revised-v2 的 graph report 都有相同總數，但孤立來源不同。</p><h4>驗收</h4><p>Graph 數值照報告呈現；不稱它為語義影響分析或 blocking gate。</p></section></div></article>
+
+    <article id="s11" class="slide" data-section="S11" data-title="內容過時，結構檢查仍通過" data-timing="12:30–14:00" data-kind="DEMO-EXECUTED + DEMO-AUTHORED" data-max-step="3" aria-roledescription="投影片" aria-label="S11，內容過時，結構檢查仍通過"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">04 / 工具檢查</p><p class="slide-kind">S11 · 12:30–14:00 · DEMO-EXECUTED + DEMO-AUTHORED</p></div><p class="eyebrow">stale-v2 · 刻意注入的教學故障</p><h2 class="slide-title">內容過時，結構檢查仍通過</h2><div class="slide-copy">
+      <div class="two-column">
+        <div>
+          <p class="eyebrow" data-step="1">來源 v2</p>
+          <blockquote class="knowledge-excerpt" data-step="1">4.1 及以上先同步裝置狀態一次；仍失敗再交服務台。</blockquote>
+          <p class="eyebrow" data-step="2">既有 query</p>
+          <blockquote class="knowledge-excerpt" data-step="2">請由示範服務台確認登錄紀錄。</blockquote>
+        </div>
+        <div>
+          <p class="eyebrow" data-step="3">保存的工具輸出 · exit 0</p>
+          <pre class="code-window" data-step="3"><code>wiki-lint: ok</code></pre>
+          <p class="small-note" data-step="3">結構、連結與來源配對有效；固定 4.1 問題仍漏掉新步驟。</p>
+          <p data-step="3"><a href="evidence/wiki-update-demo/records/stale-v2-wiki-lint.txt">開啟原始 lint 輸出</a> · <a href="evidence/wiki-update-demo/stale-v2/wiki/queries/demo-101.md">開啟該 snapshot 的 query</a></p>
+        </div>
+      </div>
+    </div><p class="source-line">來源與產物：<a href="#source-src-15">SRC-15</a>、<a href="#source-src-18">SRC-18</a> · 不是 LLM 自動發現或處理的失敗。</p><section class="reader-notes"><h3>講者稿</h3><p>這份快照刻意加入 v2 來源，但沒有更新下游問答。工具實際回傳通過，因為文件結構、連結和原有引用仍成立；對固定的 4.1 問題來說，答案卻少了來源新增的第一步。顯示 exit 0 後停兩秒。這是格式驗證的能力邊界，不是線上事故或 lint bug。</p><h4>轉場</h4><p>結構檢查也能攔下明確的缺頁問題。</p><h4>來源與證據</h4><p><a href="#source-src-15">SRC-15</a>、<a href="#source-src-18">SRC-18</a> · 不是 LLM 自動發現或處理的失敗。</p><h4>驗收</h4><p>短輸出逐字取自保存的 lint 結果；明確說明是刻意注入的合成故障，停兩秒。</p></section></div></article>
+
+    <article id="s12" class="slide" data-section="S12" data-title="缺少來源摘要時，檢查能攔下" data-timing="14:00–15:30" data-kind="DEMO-EXECUTED" aria-roledescription="投影片" aria-label="S12，缺少來源摘要時，檢查能攔下"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">04 / 工具檢查</p><p class="slide-kind">S12 · 14:00–15:30 · DEMO-EXECUTED</p></div><p class="eyebrow">missing-summary-v2 · 獨立故障 fixture</p><h2 class="slide-title">缺少來源摘要時，檢查能攔下</h2><div class="slide-copy">
+      <div class="two-column">
+        <div>
+          <p class="question">4 個問題</p>
+          <p><strong>3 × broken link</strong><br>concept、entity、query 都指向不存在的 v2 summary</p>
+          <p><strong>1 × missing summary page</strong><br>raw archive 有 v2，wiki/sources 缺頁</p>
+          <p class="small-note">在獨立副本中刻意移除來源摘要；不是 production incident。</p>
+        </div>
+        <div>
+          <p class="eyebrow">保存的 stderr · exit 1</p>
+          <pre class="code-window output-excerpt"><code>wiki-lint: 4 issue(s)
+broken link: wiki/concepts/device-enrollment.md -&gt; ../sources/examplevpn-guide-v2.md
+broken link: wiki/entities/examplevpn-client.md -&gt; ../sources/examplevpn-guide-v2.md
+broken link: wiki/queries/demo-101.md -&gt; ../sources/examplevpn-guide-v2.md
+raw archive missing wiki/sources summary page: raw/sources/examplevpn-guide-v2.md (expected wiki/sources/examplevpn-guide-v2.md)</code></pre>
+          <p><a href="evidence/wiki-update-demo/records/missing-summary-v2-wiki-lint.txt">開啟完整原始輸出</a></p>
+        </div>
+      </div>
+    </div><p class="source-line">來源與產物：<a href="#source-src-15">SRC-15</a> · graph script 另產生結構報告，不是 blocking lint gate。</p><section class="reader-notes"><h3>講者稿</h3><p>我們在另一份副本中移除來源摘要。工具抓到三個引用斷鏈和一個 canonical 找不到對應摘要的問題。這些是規則能明確判斷的事；前一頁與這一頁共同說明，機械檢查有用，但通過仍不能保證內容正確。</p><h4>轉場</h4><p>真正的內容修訂長什麼樣子？</p><h4>來源與證據</h4><p><a href="#source-src-15">SRC-15</a> · graph script 另產生結構報告，不是 blocking lint gate。</p><h4>驗收</h4><p>保留四個 issue 的名稱與數量；畫面只節錄輸出，完整 stderr 可開啟。</p></section></div></article>
+
+    <article id="s13" class="slide" data-section="S13" data-title="三份知識頁的實際修訂" data-timing="15:30–17:00" data-kind="DEMO-AUTHORED + DEMO-EXECUTED" aria-roledescription="投影片" aria-label="S13，三份知識頁的實際修訂"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">04 / 工具檢查</p><p class="slide-kind">S13 · 15:30–17:00 · DEMO-AUTHORED + DEMO-EXECUTED</p></div><p class="eyebrow">revised-v2 · 三頁維持 draft</p><h2 class="slide-title">三份知識頁的實際修訂</h2><div class="slide-copy">
+      <div class="two-column">
+        <div>
+          <p class="eyebrow">實際 query diff · 節錄 8 行</p>
+          <pre class="code-window projection-diff"><code>-    resource: ../sources/examplevpn-guide-v1.md
++    resource: ../sources/examplevpn-guide-v2.md
+
+-答案：請由示範服務台確認登錄紀錄。
++答案：請先使用示範介面的「同步裝置狀態」一次。
++若仍顯示 DEMO-101，再交示範服務台確認登錄紀錄。
+
+-[^guide]: [示範指南](../sources/examplevpn-guide-v1.md)
++[^guide]: [示範指南](../sources/examplevpn-guide-v2.md)</code></pre>
+        </div>
+        <div>
+          <ul class="annotation-list">
+            <li><b>Concept</b><span>4.1+ 先同步；4.0 沿用原流程；版本不明先追問。</span></li>
+            <li><b>Entity</b><span>更新同一版本範圍與支援條件。</span></li>
+            <li><b>Query</b><span>固定 4.1 問題新增同步一步，引用改向 v2。</span></li>
           </ul>
-          <p class="conclusion">目前資訊不足以選定處理方式</p>
-          <p class="source-line">ExampleVPN 為合成教學案例 · <a href="#source-demo-01">DEMO-01</a></p>
+          <p class="small-note">本輪 Assistant 撰寫的修訂；人工仍可逐行檢查或拒絕。</p>
+          <p><a href="evidence/wiki-update-demo/records/content-revision.diff">開啟完整三頁 diff</a></p>
         </div>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>如果系統立刻回答重新安裝，聽起來很有行動感，但這句提問其實沒有給我們錯誤訊息、裝置狀態或版本。問題可能需要追問，也可能已有適用的指南。我們先保留這個案例，後面會用它追蹤來源如何被整理，以及回答怎麼取得足夠依據。</p>
-          <h4>轉場</h4><p>要處理這個缺口，需要先看一次回答穿過哪些系統。</p>
-          <h4>來源與主張類型</h4><p><a href="#source-demo-01">DEMO-01 合成教學案例</a>。類型：ILLUSTRATIVE。</p>
-          <h4>驗收</h4><p>不提前出現 DEMO-101；不把未知條件當成已知；不展示真實使用者對話。</p>
-        </section>
       </div>
-    </article>
+    </div><p class="source-line">來源與產物：<a href="#source-src-16">SRC-16</a>、<a href="#source-src-17">SRC-17</a> · 完整 68 行修改見保存的 diff。</p><section class="reader-notes"><h3>講者稿</h3><p>這份 diff 同時改了答案和引用。Concept 保留版本分支，entity 更新適用性，query 回答固定的 4.1 問題。這些頁面是本輪 Assistant 依合成來源撰寫的草稿，不是不可檢查的黑盒輸出；人工可以逐行確認，必要時拒絕修改。</p><h4>轉場</h4><p>草稿寫好之後，為什麼仍保留 pending review？</p><h4>來源與證據</h4><p><a href="#source-src-16">SRC-16</a>、<a href="#source-src-17">SRC-17</a> · 完整 68 行修改見保存的 diff。</p><h4>驗收</h4><p>畫面節錄不超過十行；每項展示都來自保存檔；三份頁面保持 draft。</p></section></div></article>
 
-    <article id="s03" class="slide" data-section="S03" data-title="企業問答的責任分工" data-timing="02:00–03:15" data-kind="IMPLEMENTED + PROPOSED" data-max-step="4" aria-roledescription="投影片" aria-label="S03，企業問答的責任分工">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">01 / 問題與系統邊界</p><p class="slide-kind">S03 · 02:00–03:15 · IMPLEMENTED + PROPOSED</p></div>
-        <p class="eyebrow">系統地圖</p><h2 class="slide-title">企業問答的責任分工</h2>
-        <div class="lanes" aria-label="四條責任泳道">
-          <div class="lane" data-step="1"><h3>服務入口</h3><p>Teams　／　使用者身分　／　對話</p></div>
-          <div class="lane" data-step="2"><h3>業務流程</h3><p>辨識問題　／　追問　／　工單　／　人工接手</p></div>
-          <div class="lane" data-step="3"><h3>知識服務</h3><p>取得證據　／　產生回答　／　提供來源 <span class="boundary">實線：可定位的服務邊界</span></p></div>
-          <div class="lane" data-step="4"><h3>知識維護</h3><p>來源整理　／　責任人　／　版本　／　更新</p></div>
-        </div>
-        <p class="proposed-link" data-step="4">LLM Wiki 範本 <span aria-hidden="true">⇢</span> 知識服務　·　虛線：接軌設計，尚未宣稱已整合</p>
-        <p class="conclusion" data-step="4">一次可靠的回答，需要這些責任彼此對齊</p>
-        <p class="source-line">來源：<a href="#source-src-07">SRC-07</a>、<a href="#source-src-08">SRC-08</a>、<a href="#source-src-03">SRC-03</a></p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>Teams 接收訊息，業務流程負責追問、工單與人員接手，知識服務處理證據與回答。這次另外要放大的，是來源怎麼變成可維護的知識。圖上的虛線代表接軌方向；Wiki 範本與 Teams Agent 是不同的實作脈絡，不能因為畫在一起就當成整合已完成。</p>
-          <h4>轉場</h4><p>先放大知識服務裡的一次查詢。</p>
-          <h4>來源與主張類型</h4><p><a href="#source-src-07">SRC-07</a>、<a href="#source-src-08">SRC-08</a>、<a href="#source-src-03">SRC-03</a>。類型：IMPLEMENTED + PROPOSED。</p>
-          <h4>驗收</h4><p>業務流程與檢索內部流程分層；原始碼存在與部署驗收分開。</p>
-        </section>
+    <article id="s14" class="slide" data-section="S14" data-title="決策三：草稿寫入與核可分開" data-timing="17:00–18:30" data-kind="DOCUMENTED + DEMO-AUTHORED + PROPOSED" aria-roledescription="投影片" aria-label="S14，決策三：草稿寫入與核可分開"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">05 / 執行結果</p><p class="slide-kind">S14 · 17:00–18:30 · DOCUMENTED + DEMO-AUTHORED + PROPOSED</p></div><p class="eyebrow">設計決策 03 · review 邊界</p><h2 class="slide-title">決策三：草稿寫入與核可分開</h2><div class="slide-copy">
+      <table class="data-table">
+        <thead><tr><th>選擇</th><th>得到什麼</th><th>必須承擔</th></tr></thead>
+        <tbody>
+          <tr><td>先核可再產生</td><td>寫入節奏受控</td><td>等待人審，草稿較晚可見</td></tr>
+          <tr><td>先保存草稿，再做內容 review</td><td>可先看完整差異、集中待辦</td><td>draft 必須與 serving 內容分開管理</td></tr>
+        </tbody>
+      </table>
+      <div class="review-rails">
+        <div class="review-rail"><p class="eyebrow">實際 queue</p><h3>pending human review</h3><p>concept · entity · query</p><p>保留 4.0；尚無人工核可紀錄</p></div>
+        <div class="review-rail later"><p class="eyebrow">後續發布</p><h3>需另行驗證</h3><p>來源准入、內容核可、發布與權限是不同責任。</p></div>
       </div>
-    </article>
+      <p><a href="evidence/wiki-update-demo/revised-v2/ops/review-queue.md">開啟保存的 review queue</a></p>
+    </div><p class="source-line">來源與產物：<a href="#source-src-04">SRC-04</a>、<a href="#source-src-05">SRC-05</a>、<a href="#source-src-14">SRC-14</a> · 本輪沒有執行 governance admission gate。</p><section class="reader-notes"><h3>講者稿</h3><p>先保存草稿讓人看到完整差異，也可能降低等待期間的資訊落差；代價是 draft 與可提供服務的內容必須分開管理。這次 queue 仍是 pending，沒有人工核可。來源能否進入環境的准入審查是更前面的另一個門檻，不能用後段內容 review 取代。</p><h4>轉場</h4><p>把本次確實驗證到的事情列清楚。</p><h4>來源與證據</h4><p><a href="#source-src-04">SRC-04</a>、<a href="#source-src-05">SRC-05</a>、<a href="#source-src-14">SRC-14</a> · 本輪沒有執行 governance admission gate。</p><h4>驗收</h4><p>不稱 status:draft 自動阻止 serving；發布 gate 是整合要求，仍需實作與驗證。</p></section></div></article>
 
-    <article id="s04" class="slide" data-section="S04" data-title="Agentic RAG 的查詢流程" data-timing="03:15–04:45" data-kind="DOCUMENTED + IMPLEMENTED" data-max-step="5" aria-roledescription="投影片" aria-label="S04，Agentic RAG 的查詢流程">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">02 / Agentic RAG 與診斷</p><p class="slide-kind">S04 · 03:15–04:45 · DOCUMENTED + IMPLEMENTED</p></div>
-        <p class="eyebrow">概念化流程 · 非逐函式呼叫圖</p><h2 class="slide-title">Agentic RAG 的查詢流程</h2>
-        <div class="budget-band">全流程受時間、呼叫次數與證據 token 預算限制</div>
-        <div class="flow-wrap" tabindex="0" aria-label="可水平捲動的查詢流程">
-          <div class="flow" style="--flow-count:5">
-            <div class="flow-step" data-step="1"><h3>Query + user context</h3><p>問題與使用者脈絡</p></div>
-            <div class="flow-step" data-step="2"><h3>Retrieval</h3><p>詞彙與向量訊號</p></div>
-            <div class="flow-step" data-step="3"><h3>Relevance check</h3><p>判斷候選是否足夠</p></div>
-            <div class="flow-step" data-step="4"><h3>Evidence selection</h3><p>選擇可交給回答的證據</p></div>
-            <div class="flow-step" data-step="5"><h3>Answer + citations</h3><p>回答並提供來源</p></div>
-          </div>
-        </div>
-        <p class="branch-note" data-step="5"><strong>條件分支</strong>　相關性不足時，必要才改寫查詢並重查；不是無限循環。</p>
-        <p class="source-line">依專案結構整理 · <a href="#source-src-13">SRC-13</a></p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>Agentic RAG 讓查詢過程能根據結果調整。先找到候選，再判斷相關性，必要時改寫問題或補查，最後選擇證據交給回答階段。這裡的自主性仍需要預算。每次多查一次，都會增加延遲或成本；每個候選也不一定能放進最後的 context。</p>
-          <h4>轉場</h4><p>所以除了能不能查到資料，我們也要決定何時繼續、何時追問、何時停止。</p>
-          <h4>來源與主張類型</h4><p><a href="#source-src-13">SRC-13</a>。類型：DOCUMENTED + IMPLEMENTED。</p>
-          <h4>驗收</h4><p>不虛構每題都有 planner；不標示未測量的逐階段毫秒數；不以無限回圈表示自主搜尋。</p>
-        </section>
-      </div>
-    </article>
-
-    <article id="s05" class="slide" data-section="S05" data-title="查詢控制與停止條件" data-timing="04:45–06:00" data-kind="ILLUSTRATIVE + PROPOSED" data-max-step="4" aria-roledescription="投影片" aria-label="S05，查詢控制與停止條件">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">02 / Agentic RAG 與診斷</p><p class="slide-kind">S05 · 04:45–06:00 · ILLUSTRATIVE + PROPOSED</p></div>
-        <p class="eyebrow">設計判準</p><h2 class="slide-title">查詢控制與停止條件</h2>
-        <div class="two-column">
-          <div>
-            <p class="eyebrow">合成教學案例 · DEMO-01</p>
-            <blockquote class="knowledge-excerpt">我在筆電上登入 ExampleVPN，一直進不去。</blockquote>
-            <ul class="unknown-list"><li><b>錯誤訊息</b><span>未知</span></li><li><b>裝置狀態</b><span>未知</span></li><li><b>用戶端版本</b><span>未知</span></li></ul>
-            <p class="source-line">ExampleVPN 為合成教學案例</p>
-          </div>
-          <div>
-            <table class="data-table">
-              <thead><tr><th>目前資訊</th><th>合理的下一步</th></tr></thead>
-              <tbody>
-                <tr data-step="1"><td>關鍵條件未知</td><td>追問錯誤訊息、裝置與版本</td></tr>
-                <tr data-step="2"><td>已找到適用證據</td><td>回答並附來源</td></tr>
-                <tr data-step="3"><td>資料互相衝突或不適用</td><td>說明缺口，轉人工確認</td></tr>
-                <tr data-step="4"><td>執行預算用完</td><td>回報未完成原因，保留後續路徑</td></tr>
-              </tbody>
-            </table>
-            <p class="small-note">設計判準；不等同每一條已部署</p>
-          </div>
-        </div>
-        <p class="conclusion">查詢策略能改善證據取得；文件本身的缺口仍需處理</p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>同樣是沒有回答，缺少使用者條件、來源不足和執行逾時是不同原因，後續處理也不同。這張表是我們用來檢查設計的判準。Agent 可以透過追問補足資訊，透過重查取得證據，但文件若沒有適用範圍，還是需要從來源整理這一端處理。</p>
-          <h4>轉場</h4><p>接著用評測把「看起來能回答」拆成可檢查的結果。</p>
-          <h4>來源與主張類型</h4><p><a href="#source-demo-01">DEMO-01</a>。本頁為設計判準。類型：ILLUSTRATIVE + PROPOSED。</p>
-          <h4>驗收</h4><p>逾時與查無資料分開；不把 Wiki 當成所有執行失敗的解法。</p>
-        </section>
-      </div>
-    </article>
-
-    <article id="s06" class="slide" data-section="S06" data-title="評測資料與判定範圍" data-timing="06:00–07:30" data-kind="MEASURED" data-max-step="3" aria-roledescription="投影片" aria-label="S06，評測資料與判定範圍">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">02 / Agentic RAG 與診斷</p><p class="slide-kind">S06 · 06:00–07:30 · MEASURED</p></div>
-        <p class="eyebrow">固定資料集與指定版本</p><h2 class="slide-title">評測資料與判定範圍</h2>
-        <div class="two-column">
-          <div>
-            <p class="question">156 題</p><p class="lede">frozen blind test · L3 live-model run</p>
-            <div class="flow-wrap" aria-label="題目組成比例">
-              <div class="bar-track" style="height:1.5rem"><span class="bar-fill" style="width:87.18%"></span><span class="bar-fill" style="position:absolute;left:87.18%;width:12.82%;background:#9eaaae"></span></div>
-              <p class="source-line"><strong>136 題單輪</strong> + <strong>20 題多輪</strong></p>
-            </div>
-            <div data-step="2" style="margin-top:1.2rem;padding-top:.8rem;border-top:2px solid var(--accent)">
-              <p class="eyebrow">另一種分類維度</p><p><strong>116 題</strong>有目標證據標註</p>
-            </div>
-          </div>
-          <div>
-            <p class="eyebrow">三個檢查點</p>
-            <div class="lanes">
-              <div class="lane" data-step="1"><h3>目標文件</h3><p>有沒有進來？</p></div>
-              <div class="lane" data-step="1"><h3>答案</h3><p>是否符合評測？</p></div>
-              <div class="lane" data-step="1"><h3>引用</h3><p>是否對齊？</p></div>
-            </div>
-            <p class="small-note warning-note" data-step="3">指定模型與 knowledge release 的單次結果；未涵蓋真實群組受限語料。</p>
-          </div>
-        </div>
-        <p class="source-line">資料集 retrieval_eval_v3_blind.json · test split · 報告於 2026-09-23 完成 · <a href="#source-src-01">SRC-01</a></p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>這次量測共有 156 題，包含 20 題多輪；其中 116 題有目標證據標註。因此不同指標的分母可能不同。這是固定資料集、模型與知識 release 上的一次執行，適合用來定位這個版本的問題。它沒有涵蓋真正的群組受限文件，所以不能只靠零洩漏次數就宣稱 ACL 已完成驗證。</p>
-          <h4>轉場</h4><p>在這個範圍內，檢索命中與最後答案分別得到什麼結果？</p>
-          <h4>來源與主張類型</h4><p><a href="#source-src-01">SRC-01</a>。類型：MEASURED。</p>
-          <h4>驗收</h4><p>156、136、20、116 均正確；圖中不暗示分類互斥；不稱生產流量測試。</p>
-        </section>
-      </div>
-    </article>
-
-    <article id="s07" class="slide" data-section="S07" data-title="文件命中與答案正確率" data-timing="07:30–09:00" data-kind="MEASURED" data-max-step="3" aria-roledescription="投影片" aria-label="S07，文件命中與答案正確率">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">02 / Agentic RAG 與診斷</p><p class="slide-kind">S07 · 07:30–09:00 · MEASURED</p></div>
-        <p class="eyebrow">EVAL-L3-01 · 單次固定快照</p><h2 class="slide-title">文件命中與答案正確率</h2>
-        <div class="bar-group">
-          <div class="bar-row" data-step="1"><b>Document Hit@4</b><div class="bar-track" role="img" aria-label="Document Hit at 4，99.14 percent"><span class="bar-fill" style="width:99.14%"></span></div><span class="bar-value">99.14%</span></div>
-          <div class="axis"><span>0%</span><span>50%</span><span>100%</span></div>
-          <p class="source-line" data-step="1"><strong>115 / 116 題</strong>　有目標證據標註的案例</p>
-          <div class="bar-row" data-step="2"><b>Answer Accuracy</b><div class="bar-track" role="img" aria-label="Answer Accuracy，96.79 percent"><span class="bar-fill" style="width:96.79%"></span></div><span class="bar-value">96.79%</span></div>
-          <div class="axis" data-step="2"><span>0%</span><span>50%</span><span>100%</span></div>
-          <p class="source-line" data-step="2"><strong>151 / 156 題</strong>　全部 test cases · 多輪為 18/20（90%）</p>
-        </div>
-        <p class="small-note warning-note" data-step="3">兩項指標分母不同，不以百分點相減解讀流失。</p>
-        <p class="conclusion">找到目標文件後，答案與引用仍需要各自檢查</p>
-        <p class="source-line">SRC-01 · 2026-09-23 frozen blind L3 live report · <a href="#source-src-01">查看來源與版本</a></p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>有證據標註的題目中，115 題能在前四份文件命中目標。全體 156 題的答案正確率則是 151 題。這兩個分母不同，我們不直接相減。它們提醒我們，文件命中只是其中一個檢查點；還要看證據是否被使用、回答是否遺漏，以及引用是否真的對到主張。</p>
-          <h4>轉場</h4><p>下一頁把平均數拆成一筆可以追蹤的失敗。</p>
-          <h4>來源與主張類型</h4><p><a href="#source-src-01">SRC-01</a>、EVAL-L3-01。類型：MEASURED。</p>
-          <h4>驗收</h4><p>百分比四捨五入至小數第二位；分母與單次測量範圍可在投影上讀到。</p>
-        </section>
-      </div>
-    </article>
-
-    <article id="s08" class="slide" data-section="S08" data-title="一筆答案遺漏案例的證據路徑" data-timing="09:00–10:45" data-kind="MEASURED" data-max-step="4" aria-roledescription="投影片" aria-label="S08，一筆答案遺漏案例的證據路徑">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">02 / Agentic RAG 與診斷</p><p class="slide-kind">S08 · 09:00–10:45 · MEASURED</p></div>
-        <p class="eyebrow">Case ID · v3-blind-ans-05</p><h2 class="slide-title">一筆答案遺漏案例的證據路徑</h2>
-        <div class="case-stations">
-          <div class="case-station" data-step="1"><p>候選文件</p><strong class="good">1.0</strong><p>candidateRecallAt24</p><span class="evidence-token" aria-label="目標證據存在">E</span></div>
-          <div class="case-station" data-step="2"><p>檢索證據</p><strong class="good">1.0</strong><p>retrievalEvidenceRecall</p><span class="evidence-token" aria-label="目標證據存在">E</span></div>
-          <div class="case-station" data-step="3"><p>答案證據</p><strong class="empty">0.0</strong><p>answerEvidenceRecall</p><span class="evidence-token missing" aria-label="答案未涵蓋目標證據">E</span></div>
-        </div>
-        <p class="source-line">同一個目標 evidence token 沿候選、檢索與答案追蹤</p>
-        <div class="two-column" style="margin-top:1rem">
-          <p class="small-note" data-step="3">Failure category: <code>ANSWER_OMISSION</code></p>
-          <p class="conclusion" data-step="3" style="margin-top:0">候選與檢索證據已涵蓋目標；答案未涵蓋該證據</p>
-          <p class="small-note warning-note" data-step="3" style="margin-top:0">單一案例的報告診斷值；不能單憑此定位具體程式根因。</p>
-        </div>
-        <p class="investigation" data-step="4">調查支線：證據傳遞　→　prompt　→　生成　→　評分 trace</p>
-        <p class="source-line">僅展示案例 ID 與診斷值，不呈現原始問題或回答 · <a href="#source-src-01">SRC-01</a></p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>這是報告中的實際案例 ID。候選與檢索證據召回值都是 1，答案證據召回是 0，分類為答案遺漏。它支持我們把調查重點往後段移動，但還不足以只憑三個數字判定是哪個函式或模型決策造成的。這也是為什麼先分類很重要：若一開始就換 embedding，未必處理到這個案例的問題。</p>
-          <h4>轉場</h4><p>把這種診斷方法套到整體，就能清楚區分各層責任。</p>
-          <h4>來源與主張類型</h4><p><a href="#source-src-01">SRC-01</a> 的 failures 中指定 case。類型：MEASURED。</p>
-          <h4>驗收</h4><p>三項數值逐欄對應；不將 retrieval recall 1.0 描述成已驗證 prompt 內必然完整保留所有證據。</p>
-        </section>
-      </div>
-    </article>
-
-    <article id="s09" class="slide" data-section="S09" data-title="問題所在層與工程處置" data-timing="10:45–12:15" data-kind="MEASURED + FRAMING" aria-roledescription="投影片" aria-label="S09，問題所在層與工程處置">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">02 / Agentic RAG 與診斷</p><p class="slide-kind">S09 · 10:45–12:15 · MEASURED + FRAMING</p></div>
-        <p class="eyebrow">從診斷連到工程責任</p><h2 class="slide-title">問題所在層與工程處置</h2>
+    <article id="s15" class="slide" data-section="S15" data-title="本次執行結果與仍未回答的問題" data-timing="18:30–20:00" data-kind="DEMO-EXECUTED" aria-roledescription="投影片" aria-label="S15，本次執行結果與仍未回答的問題"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">05 / 執行結果</p><p class="slide-kind">S15 · 18:30–20:00 · DEMO-EXECUTED</p></div><p class="eyebrow">四份保存快照 · lint 原始結果</p><h2 class="slide-title">本次執行結果與仍未回答的問題</h2><div class="slide-copy">
+      <div class="two-column">
         <table class="data-table">
-          <thead><tr><th>問題所在層</th><th>檢查內容</th><th>對應工作</th></tr></thead>
+          <thead><tr><th>Snapshot</th><th>Lint exit</th><th>內容狀態</th></tr></thead>
           <tbody>
-            <tr><td class="strong">來源</td><td>範圍、版本、矛盾、責任人是否清楚</td><td>知識整理與維護 <span class="type-note">設計關注</span></td></tr>
-            <tr><td class="strong">取得與傳遞</td><td>授權、召回、選擇、context 是否正確</td><td>檢索與證據管線</td></tr>
-            <tr><td class="strong">回答與引用</td><td>主張是否完整、引用是否支持主張</td><td>生成與引用修正 <span class="type-note accent">答案遺漏 5 · 引用錯誤 3</span></td></tr>
+            <tr><td>baseline-v1</td><td class="number">0</td><td>v1 草稿</td></tr>
+            <tr><td>stale-v2</td><td class="number">0</td><td>刻意保留過時步驟</td></tr>
+            <tr><td>missing-summary-v2</td><td class="number">1</td><td>刻意缺頁，4 個問題</td></tr>
+            <tr><td>revised-v2</td><td class="number">0</td><td>已修訂，待人審</td></tr>
           </tbody>
         </table>
-        <p class="conclusion">LLM Wiki 處理的是來源整理與維護這一層</p>
-        <p class="small-note warning-note">報告中的 8 筆 failure entries 不等同 8 題答案錯誤；沒有 Wiki 前後效益實驗。</p>
-        <p class="source-line"><a href="#source-src-01">SRC-01</a>、<a href="#source-src-03">SRC-03</a>–<a href="#source-src-06">SRC-06</a></p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>這份報告實際量到的是答案遺漏與引用錯誤。我們應該修這些問題。同時，來源是否說清楚版本、適用範圍與責任人，是另一項需要獨立管理的工程工作。接下來介紹的 LLM Wiki，是處理這層責任的做法；目前沒有同條件前後實驗，不能說這些錯誤已被 Wiki 解決。</p>
-          <h4>轉場</h4><p>先定義一份可維護的知識，至少要帶著哪些資訊。</p>
-          <h4>來源與主張類型</h4><p><a href="#source-src-01">SRC-01</a>、<a href="#source-src-03">SRC-03</a>–<a href="#source-src-06">SRC-06</a>。類型：MEASURED + FRAMING。</p>
-          <h4>驗收</h4><p>8 筆 failure entries 不等同 8 題答案錯誤；來源問題不冒充本報告的實測分類。</p>
-        </section>
-      </div>
-    </article>
-
-    <article id="s10" class="slide" data-section="S10" data-title="LLM Wiki 的知識單位" data-timing="12:15–13:30" data-kind="DOCUMENTED + ILLUSTRATIVE" aria-roledescription="投影片" aria-label="S10，LLM Wiki 的知識單位">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">03 / LLM Wiki 的具體做法</p><p class="slide-kind">S10 · 12:15–13:30 · DOCUMENTED + ILLUSTRATIVE</p></div>
-        <p class="eyebrow">DEMO-01 · 合成教學案例</p><h2 class="slide-title">LLM Wiki 的知識單位</h2>
-        <div class="two-column">
-          <div>
-            <blockquote class="knowledge-excerpt">本例的 LLM Wiki：由來源支持、以 Markdown 頁面與連結組織，並由 Agent 和人共同維護的知識集合。</blockquote>
-            <p class="source-line">ExampleVPN 4.x · 受管理筆電 · DEMO-101 · <a href="#source-demo-01">[D1]</a></p>
-          </div>
-          <ul class="annotation-list" aria-label="知識維護資訊">
-            <li><b>說什麼</b><span>主張與操作內容</span></li>
-            <li><b>何時適用</b><span>版本、日期、條件</span></li>
-            <li><b>根據什麼</b><span>來源與逐項引用</span></li>
-            <li><b>由誰負責</b><span>owner、審查紀錄</span></li>
-            <li><b>如何維護</b><span>狀態、更新與關聯頁</span></li>
-          </ul>
+        <div>
+          <p class="question">結構通過 ≠ 內容核可</p>
+          <p>三頁實際 diff 已保存。</p>
+          <p>v1 原件與 canonical 在快照間 SHA-256 相同。</p>
+          <p class="small-note">不能由此推論不可變權限、Git history gate 或 serving 驗收。</p>
         </div>
-        <p class="conclusion">內容可重用，條件與來源也必須一起保留</p>
-        <p class="source-line"><a href="#source-src-03">SRC-03</a>、<a href="#source-src-06">SRC-06</a>、<a href="#source-src-11">SRC-11</a></p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>這裡用 LLM Wiki 指的是一種來源支持的知識集合，頁面會被整理、互相連結，也要有人負責。整理後的文字仍需要保存適用條件。我們採用的範本以 Markdown 和 OKF v0.2 表達內容，再加上本專案的歸檔與治理規約。這是這個範本的設計，不代表所有叫 LLM Wiki 的工具都採用相同格式。</p>
-          <h4>轉場</h4><p>先沿著一份輸入文件，看它如何變成這種知識頁。</p>
-          <h4>來源與主張類型</h4><p><a href="#source-src-03">SRC-03</a>、<a href="#source-src-06">SRC-06</a>、<a href="#source-src-11">SRC-11</a>；<a href="#source-demo-01">DEMO-01</a>。類型：DOCUMENTED + ILLUSTRATIVE。</p>
-          <h4>驗收</h4><p>LLM Wiki 不被誤定義成單一產品或通用標準；OKF 與本倉擴充分開。</p>
-        </section>
       </div>
-    </article>
+      <p><a href="evidence/wiki-update-demo/records/runs.json">開啟命令、stdout、stderr、exit code 與 hashes</a></p>
+    </div><p class="source-line">來源與產物：<a href="#source-src-15">SRC-15</a>、<a href="#source-src-17">SRC-17</a> · 四次 lint 的原始結果與工具 provenance 保存在 runs.json。</p><section class="reader-notes"><h3>講者稿</h3><p>能證明的是產物存在、工具確實執行、修改可回看，而且舊來源在快照間保持相同。這個構造案例也證明結構 lint 會讓過時內容通過。尚未量到自動化成功率、工時、成本或線上答案改善，不能從四份教學快照外推。</p><h4>轉場</h4><p>要把草稿放進 Teams，接下來看兩個整合責任。</p><h4>來源與證據</h4><p><a href="#source-src-15">SRC-15</a>、<a href="#source-src-17">SRC-17</a> · 四次 lint 的原始結果與工具 provenance 保存在 runs.json。</p><h4>驗收</h4><p>準確呈現 0／0／1／0；雜湊比較不冒充不可變存取控制；exit 0 不等於全系統驗收。</p></section></div></article>
 
-    <article id="s11" class="slide" data-section="S11" data-title="一份來源的 Ingest 流程" data-timing="13:30–15:00" data-kind="DOCUMENTED" data-max-step="3" aria-roledescription="投影片" aria-label="S11，一份來源的 Ingest 流程">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">03 / LLM Wiki 的具體做法</p><p class="slide-kind">S11 · 13:30–15:00 · DOCUMENTED</p></div>
-        <p class="eyebrow">簡化投影 · 完整規約另有 0–16 步</p><h2 class="slide-title">一份來源的 Ingest 流程</h2>
-        <div class="flow-wrap" tabindex="0" aria-label="可水平捲動的六階段來源流程">
-          <div class="flow" style="--flow-count:6;min-width:940px">
-            <div class="flow-step" data-step="1"><h3>輸入</h3><p>文件、責任與來源資訊</p></div>
-            <div class="flow-step" data-step="1"><h3>准入檢查</h3><p>分類、PII、來源核可</p></div>
-            <div class="flow-step" data-step="2"><h3>轉換與歸檔</h3><p>原件、canonical、必要視覺證據</p></div>
-            <div class="flow-step" data-step="2"><h3>分析</h3><p>概念、實體、既有連結、矛盾與缺口</p></div>
-            <div class="flow-step" data-step="3"><h3>知識頁與連結</h3><p>來源摘要、概念、實體、index</p></div>
-            <div class="flow-step" data-step="3"><h3>Review 與留痕</h3><p>待查核項目、log、快取</p></div>
-          </div>
+    <article id="s16" class="slide" data-section="S16" data-title="接軌點：KnowledgeService" data-timing="20:00–21:30" data-kind="IMPLEMENTED + PROPOSED" data-max-step="4" aria-roledescription="投影片" aria-label="S16，接軌點：KnowledgeService"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">06 / 系統接軌</p><p class="slide-kind">S16 · 20:00–21:30 · IMPLEMENTED + PROPOSED</p></div><p class="eyebrow">業務流程與知識查詢的接口</p><h2 class="slide-title">接軌點：KnowledgeService</h2><div class="slide-copy">
+      <div class="flow-wrap" tabindex="0" aria-label="Teams workflow 透過 KnowledgeService 查詢知識">
+        <div class="flow" style="--flow-count:4">
+          <div class="flow-step" data-step="1"><h3>Teams workflow</h3><p>追問、工單、人工接手</p></div>
+          <div class="flow-step" data-step="2"><h3>KnowledgeService</h3><p>search(query, user_context, …)</p></div>
+          <div class="flow-step" data-step="3"><h3>KnowledgeResult</h3><p>found · answer · sources · images · backend</p></div>
+          <div class="flow-step" data-step="4"><h3>Wiki bundle</h3><p>需驗證欄位、權限與來源 URI 映射</p></div>
         </div>
-        <p class="branch-note" data-step="2"><strong>分析支線</strong>　先整理關聯與缺口，再撰寫知識頁。</p>
-        <p class="small-note" data-step="3">來源核可是寫入前門檻；內容 review 位於後段，兩者責任不同。</p>
-        <p class="source-line"><a href="#source-src-04">SRC-04</a>、<a href="#source-src-05">SRC-05</a></p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>Ingest 的第一件事是確認資料能不能被處理與保存。接著才轉換、歸檔，並先分析概念、實體及既有知識關聯，再寫 Wiki 頁。範本要求保留來源摘要，最後更新索引、review queue 與日誌。來源准入會阻擋不合適的輸入；後段的內容 review 可以非同步進行，兩者目的不同。</p>
-          <h4>轉場</h4><p>其中最容易混淆的，是原件、canonical 與 Wiki 摘要為什麼需要分開。</p>
-          <h4>來源與主張類型</h4><p><a href="#source-src-04">SRC-04</a>、<a href="#source-src-05">SRC-05</a>。類型：DOCUMENTED。</p>
-          <h4>驗收</h4><p>來源核可在歸檔前；內容 review 不被畫成所有 Wiki 寫入前的必經核准；SHA 快取只在筆記提及，不搶主線。</p>
-        </section>
       </div>
-    </article>
+      <div class="proposed-bridge">Wiki adapter 尚未完成：確認 scope 對應、實際權限過濾、來源 URI 能否解析。虛線代表 proposed 接軌。</div>
+      <p class="small-note">本輪 demo 沒有經過 Teams 或 KnowledgeService runtime。</p>
+    </div><p class="source-line">來源與產物：<a href="#source-src-07">SRC-07</a>、<a href="#source-src-08">SRC-08</a> · KnowledgeService 介面已存在；Wiki adapter 與本輪 demo runtime 均未驗證。</p><section class="reader-notes"><h3>講者稿</h3><p>Teams 的工單與接手流程有自己的責任，KnowledgeService 提供查詢與結果介面。Wiki 內容接過來，需要確認範圍欄位能對應、權限真的被執行、來源能被點開。介面存在讓工作有明確邊界，但不代表 bundle 已直接相容。</p><h4>轉場</h4><p>第二個整合責任，是知識版本怎麼進入執行中的服務。</p><h4>來源與證據</h4><p><a href="#source-src-07">SRC-07</a>、<a href="#source-src-08">SRC-08</a> · KnowledgeService 介面已存在；Wiki adapter 與本輪 demo runtime 均未驗證。</p><h4>驗收</h4><p>最多四個主要節點；接口摘錄與固定程式碼版本一致；不展示 release 圖。</p></section></div></article>
 
-    <article id="s12" class="slide" data-section="S12" data-title="原件、Canonical 與 Wiki 摘要" data-timing="15:00–16:45" data-kind="DOCUMENTED + ILLUSTRATIVE" data-max-step="3" aria-roledescription="投影片" aria-label="S12，原件、Canonical 與 Wiki 摘要">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">03 / LLM Wiki 的具體做法</p><p class="slide-kind">S12 · 15:00–16:45 · DOCUMENTED + ILLUSTRATIVE</p></div>
-        <p class="eyebrow">合成教學案例 · 同一組適用條件，三種資料產物</p><h2 class="slide-title">原件、Canonical 與 Wiki 摘要</h2>
+    <article id="s17" class="slide" data-section="S17" data-title="知識更新與應用發布" data-timing="21:30–23:00" data-kind="DOCUMENTED + PROPOSED" data-max-step="4" aria-roledescription="投影片" aria-label="S17，知識更新與應用發布"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">06 / 系統接軌</p><p class="slide-kind">S17 · 21:30–23:00 · DOCUMENTED + PROPOSED</p></div><p class="eyebrow">Knowledge release · 獨立於應用 image</p><h2 class="slide-title">知識更新與應用發布</h2><div class="slide-copy">
+      <div class="flow-wrap" tabindex="0" aria-label="知識內容進入服務及回滾的發布流程">
+        <div class="flow" style="--flow-count:4">
+          <div class="flow-step" data-step="1"><h3>已核可內容</h3><p>需先完成內容責任</p></div>
+          <div class="flow-step" data-step="2"><h3>Immutable release</h3><p>manifest、版本與相容資訊</p></div>
+          <div class="flow-step" data-step="3"><h3>Active pointer</h3><p>指向已驗證知識版本</p></div>
+          <div class="flow-step" data-step="4"><h3>Agent 載入</h3><p>讀取指定版本並驗證</p></div>
+        </div>
+      </div>
+      <p class="proposed-bridge">回滾：選回已驗證的舊 release · 應用程式 image 與知識 release 分開管理</p>
+      <p class="small-note">現有操作契約；Wiki bundle 接入與本輪發布結果仍待驗證。</p>
+    </div><p class="source-line">來源與產物：<a href="#source-src-09">SRC-09</a> · release 與回滾依操作文件描述，不是 DEMO-02 的執行路徑。</p><section class="reader-notes"><h3>講者稿</h3><p>修完 Markdown 還不等於線上已用到它。Teams 專案的操作契約把知識 release 與應用程式 image 分開，Agent 讀取指定版本並驗證。Wiki 要接進來，也要走相同的發布責任，不能讓草稿因檔案存在就被服務讀取。這頁說明契約與接軌要求，不代表本輪發布驗收。</p><h4>轉場</h4><p>這樣的責任邊界也影響如何選知識平台。</p><h4>來源與證據</h4><p><a href="#source-src-09">SRC-09</a> · release 與回滾依操作文件描述，不是 DEMO-02 的執行路徑。</p><h4>驗收</h4><p>不說已部署或回滾成功；本輪 snapshot hash 與 runtime release hash 是不同證據。</p></section></div></article>
+
+    <article id="s18" class="slide" data-section="S18" data-title="平台選型只比較介面後面的責任" data-timing="23:00–24:30" data-kind="MEASURED + EXTERNAL + PROPOSED" aria-roledescription="投影片" aria-label="S18，平台選型只比較介面後面的責任"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">07 / 選型與量測</p><p class="slide-kind">S18 · 23:00–24:30 · MEASURED + EXTERNAL + PROPOSED</p></div><p class="eyebrow">證據程度不同 · 不用功能星等</p><h2 class="slide-title">平台選型只比較介面後面的責任</h2><div class="slide-copy">
+      <table class="data-table">
+        <thead><tr><th>對象</th><th>本次可引用的依據</th><th>尚需回答</th></tr></thead>
+        <tbody>
+          <tr><td>Hybrid</td><td>既有介面與歷史 A/B</td><td>語料與維護需求改變後的表現</td></tr>
+          <tr><td>File Search</td><td>同條件 30 題實驗；完整數據在 A04</td><td>權限語義、同步、引用粒度與維運成本</td></tr>
+          <tr><td>WeKnora</td><td>官方描述涵蓋 RAG、Agent、Wiki</td><td>是否符合本系統介面與治理需求</td></tr>
+        </tbody>
+      </table>
+      <p class="conclusion">企業流程規則留在 workflow；知識平台在明確契約下評估。</p>
+      <p><a href="#a04">看完整 A/B 條件與限制</a> · <a href="#source-src-10">WeKnora 官方來源</a></p>
+    </div><p class="source-line">來源與產物：<a href="#source-src-02">SRC-02</a>、<a href="#source-src-10">SRC-10</a> · 外部官方描述查閱日為 2026-09-27；發布前需確認版本。</p><section class="reader-notes"><h3>講者稿</h3><p>我們有 Hybrid 與 File Search 的歷史 A/B，但它是小語料與特定計分方式，完整條件放附錄。WeKnora 是官方文件上的外部參照，尚未在這裡整合。比較標準是後端能否滿足權限、來源、更新和成本的契約，而不是功能名稱。</p><h4>轉場</h4><p>下一次量測要能回答這些問題。</p><h4>來源與證據</h4><p><a href="#source-src-02">SRC-02</a>、<a href="#source-src-10">SRC-10</a> · 外部官方描述查閱日為 2026-09-27；發布前需確認版本。</p><h4>驗收</h4><p>三者證據程度清楚；不增加第二組大型評測圖，也不隱藏 WeKnora 尚未整合。</p></section></div></article>
+
+    <article id="s19" class="slide" data-section="S19" data-title="下一次量測：更新品質與維護成本" data-timing="24:30–26:00" data-kind="PROPOSED" aria-roledescription="投影片" aria-label="S19，下一次量測：更新品質與維護成本"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">07 / 選型與量測</p><p class="slide-kind">S19 · 24:30–26:00 · PROPOSED</p></div><p class="eyebrow">待執行 · 不預填成效數字</p><h2 class="slide-title">下一次量測：更新品質與維護成本</h2><div class="slide-copy">
+      <table class="data-table">
+        <thead><tr><th>要量什麼</th><th>觀察方式</th></tr></thead>
+        <tbody>
+          <tr><td>修改範圍是否正確</td><td>預先標註 holdout 變更集上的 precision／recall</td></tr>
+          <tr><td>有效條件是否保留</td><td>版本、scope 與引用的內容回歸案例</td></tr>
+          <tr><td>人工負擔</td><td>review 時間、退回原因與修改次數</td></tr>
+          <tr><td>執行成本</td><td>端到端時間、模型用量與實際費用</td></tr>
+        </tbody>
+      </table>
+      <p class="small-note">比較人工維護與 LLM 輔助；固定來源事實、題目與驗收條件。候選內容不得暗中增加來源事實。</p>
+    </div><p class="source-line">來源與產物：<a href="#source-src-07">SRC-07</a>、<a href="#source-src-09">SRC-09</a> · 實驗設計為 proposed；沒有填入虛構數值。</p><section class="reader-notes"><h3>講者稿</h3><p>要判斷這個做法是否值得，需要測影響範圍、內容回歸、審稿工時和執行成本。下一次應用事先標註且未參與提示調整的更新案例，比較人工與 LLM 輔助結果。這次三頁教學修訂只能提供可重跑的起點，不能推算改善百分比。</p><h4>轉場</h4><p>最後把方法縮成一次小實驗。</p><h4>來源與證據</h4><p><a href="#source-src-07">SRC-07</a>、<a href="#source-src-09">SRC-09</a> · 實驗設計為 proposed；沒有填入虛構數值。</p><h4>驗收</h4><p>標示待執行；計入 review 工時與實際成本；不以 token 數代替完整維護成本。</p></section></div></article>
+
+    <article id="s20" class="slide theme-dark" data-section="S20" data-title="從一次來源更新開始" data-timing="26:00–28:00" data-kind="SYNTHESIS" aria-roledescription="投影片" aria-label="S20，從一次來源更新開始"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">08 / 收束</p><p class="slide-kind">S20 · 26:00–28:00 · SYNTHESIS</p></div><p class="eyebrow">回到開場的來源差異</p><h2 class="slide-title">從一次來源更新開始</h2><div class="slide-copy closing-layout">
+      <div>
+        <p class="closing-title">來源更新之後，知識也要留下可檢查的修改紀錄。</p>
+        <ol class="closing-list">
+          <li>選一份會更新的來源，保留更新前後版本。</li>
+          <li>用固定問題追查受影響頁面與引用。</li>
+          <li>保存提案、diff、工具結果和 review，再決定是否擴大自動化。</li>
+        </ol>
+        <p class="source-line">主簡報 28 分鐘 · 另留 2 分鐘緩衝與提問。</p>
+      </div>
+      <div class="closing-evidence">
+        <p class="eyebrow">DEMO-02 · 可檢查產物</p>
+        <p><a href="evidence/wiki-update-demo/records/content-revision.diff">三頁實際 diff</a></p>
+        <p><a href="evidence/wiki-update-demo/records/runs.json">工具執行與 hashes</a></p>
+        <p><a href="evidence/wiki-update-demo/revised-v2/ops/review-queue.md">待人工審查清單</a></p>
+        <p><a href="evidence/wiki-update-demo/README.md">案例包與重跑說明</a></p>
+      </div>
+    </div><p class="source-line">來源與產物：<a href="#source-src-14">SRC-14</a>、<a href="#source-src-15">SRC-15</a>、<a href="#source-src-16">SRC-16</a>、<a href="#source-src-17">SRC-17</a>、<a href="#source-src-18">SRC-18</a> · 停留畫面 20–30 秒，預留兩分鐘問答緩衝。</p><section class="reader-notes"><h3>講者稿</h3><p>這次看到來源更新會改變答案，但結構正確仍可能留下過時步驟。LLM 可以協助提出修訂；原件、來源、diff 和工具結果讓修改可被檢查，內容核可仍需要明確責任。回到團隊，先找一份常更新的文件，保存兩個版本，配一組固定問題，把更新走過一次。看清楚失敗與審稿成本，再決定擴大哪些自動化。案例包保留四份快照與檢查輸出。謝謝，歡迎討論。</p><h4>轉場</h4><p>主簡報結束。若有指標、欄位或重跑問題，可從總覽開啟 A01–A05。</p><h4>來源與證據</h4><p><a href="#source-src-14">SRC-14</a>、<a href="#source-src-15">SRC-15</a>、<a href="#source-src-16">SRC-16</a>、<a href="#source-src-17">SRC-17</a>、<a href="#source-src-18">SRC-18</a> · 停留畫面 20–30 秒，預留兩分鐘問答緩衝。</p><h4>驗收</h4><p>結語回到開場的來源改版；不把草稿、lint 通過或示範產物當正式上線。</p></section></div></article>
+
+    <article id="a01" class="slide" data-section="A01" data-title="156 題評測的指標與分母" data-timing="附錄" data-kind="MEASURED" aria-roledescription="附錄投影片" aria-label="A01，156 題評測的指標與分母"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">技術附錄</p><p class="slide-kind">A01 · 附錄 · MEASURED</p></div><p class="eyebrow">EVAL-L3-01 · 固定報告快照</p><h2 class="slide-title">156 題評測的指標與分母</h2><div class="slide-copy">
+      <table class="data-table">
+        <thead><tr><th>指標</th><th>結果</th><th>分母與解讀</th></tr></thead>
+        <tbody>
+          <tr><td>Case count</td><td class="number">156</td><td>全部測試題</td></tr>
+          <tr><td>Evidence-labeled cases</td><td class="number">116</td><td>有目標證據標註</td></tr>
+          <tr><td>單輪／多輪題</td><td class="number">136 / 20</td><td>題型組成</td></tr>
+          <tr><td>Document Hit@4</td><td class="number">115 / 116</td><td>證據標註子集的文件命中</td></tr>
+          <tr><td>Answer Accuracy</td><td class="number">151 / 156</td><td>全部 test cases</td></tr>
+          <tr><td>Multi-turn Answer Accuracy</td><td class="number">18 / 20</td><td>多輪子集</td></tr>
+          <tr><td>Citation Precision</td><td class="number">98.82%</td><td>報告彙總值；不直接換算引用筆數</td></tr>
+          <tr><td>ACL leakage count</td><td class="number">0</td><td>沒有 group-gated 文件，涵蓋不足</td></tr>
+        </tbody>
+      </table>
+      <p class="small-note">程式 commit bdd3894 · release-4f49088db9ca · freezeVersion 5 · test split · 2026-09-22 UTC（臺灣時間 9/23）。</p>
+    </div><p class="source-line">來源與產物：<a href="#source-src-01">SRC-01</a> · 完整 report、dataset hash 與模型 metadata 可由來源索引開啟。</p><section class="reader-notes"><h3>講者稿</h3><p>不同指標回答不同問題。文件命中檢查能否取回目標，答案正確率檢查評測中的答案條件，引用精確率有自己的彙總定義。這些數字屬同一固定快照，不能推廣到其他模型、語料或使用者群組。</p><h4>轉場</h4><p>不預設順序；由相關頁面的附錄連結返回。</p><h4>來源與證據</h4><p><a href="#source-src-01">SRC-01</a> · 完整 report、dataset hash 與模型 metadata 可由來源索引開啟。</p><h4>驗收</h4><p>保留所有分母與快照限制；raw recallAt4 不改稱 Document Hit@4。</p></section></div></article>
+
+    <article id="a02" class="slide" data-section="A02" data-title="答案遺漏與引用錯誤" data-timing="附錄" data-kind="MEASURED" aria-roledescription="附錄投影片" aria-label="A02，答案遺漏與引用錯誤"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">技術附錄</p><p class="slide-kind">A02 · 附錄 · MEASURED</p></div><p class="eyebrow">兩種診斷軸 · 不可合併計數</p><h2 class="slide-title">答案遺漏與引用錯誤</h2><div class="slide-copy">
+      <div class="two-column">
         <table class="data-table">
-          <thead><tr><th>層</th><th>保存內容</th><th>更新方式</th></tr></thead>
-          <tbody>
-            <tr data-step="1"><td><code>raw/originals</code></td><td>原始輸入的位元副本</td><td>保留原件，新版本另存</td></tr>
-            <tr data-step="2"><td><code>raw/sources</code></td><td>盡量完整還原的 canonical Markdown</td><td>新修訂另建歸檔</td></tr>
-            <tr data-step="3"><td><code>wiki/sources</code></td><td>可閱讀的來源摘要與主張連結</td><td>依來源更新知識頁</td></tr>
-          </tbody>
+          <thead><tr><th>Failure taxonomy</th><th>Count</th></tr></thead>
+          <tbody><tr><td>ANSWER_OMISSION</td><td class="number">5</td></tr><tr><td>BAD_CITATION</td><td class="number">3</td></tr></tbody>
         </table>
-        <div class="three-column" style="margin-top:1.2rem">
-          <div class="doc-column" data-step="1"><h3>原件 · GUIDE v2.0</h3><div class="doc-fragment"><p>ExampleVPN 裝置登錄與登入指南</p><p><span class="highlight">受管理筆電</span> · ExampleVPN 4.x</p><p>範圍表與處理說明</p></div></div>
-          <div class="doc-column canonical" data-step="2"><h3>CANONICAL · 完整還原</h3><div class="doc-fragment"><p><span class="highlight">受管理筆電</span>、版本 4.x</p><p>DEMO-101 表示裝置登錄尚未完成。</p><p>服務台查紀錄；未涵蓋條件保留。</p></div></div>
-          <div class="doc-column summary" data-step="3"><h3>WIKI · 可重用摘要</h3><div class="doc-fragment"><p><span class="highlight">受管理筆電、4.x、DEMO-101</span></p><p>服務台確認裝置登錄。<a href="#source-demo-01">[D1]</a></p></div></div>
-        </div>
-        <p class="conclusion" data-step="3">摘要可以變短，適用條件不能消失</p>
-        <p class="source-line"><a href="#source-src-03">SRC-03</a>、<a href="#source-src-04">SRC-04</a> · 合成內容：<a href="#source-demo-01">DEMO-01</a></p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>原件讓我們回到當時收到的資料，canonical 讓不同格式的內容能以一致文字形式被檢查，Wiki 摘要則支援閱讀與重用。摘要可以變短，適用條件不能消失。若來源更新，我們留下新的歸檔，讓讀者仍能追查先前版本的依據。</p>
-          <h4>轉場</h4><p>要讓這些頁面能被管理，光有正文還不夠。</p>
-          <h4>來源與主張類型</h4><p><a href="#source-src-03">SRC-03</a>、<a href="#source-src-04">SRC-04</a>、<a href="#source-demo-01">DEMO-01</a>。類型：DOCUMENTED + ILLUSTRATIVE。</p>
-          <h4>驗收</h4><p>canonical 不稱摘要；資料減量不表示無損壓縮；原件不可變不等於自動獲准公開。</p>
-        </section>
-      </div>
-    </article>
-
-    <article id="s13" class="slide" data-section="S13" data-title="知識頁的來源與生命週期" data-timing="16:45–18:15" data-kind="DOCUMENTED + ILLUSTRATIVE" aria-roledescription="投影片" aria-label="S13，知識頁的來源與生命週期">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">03 / LLM Wiki 的具體做法</p><p class="slide-kind">S13 · 16:45–18:15 · DOCUMENTED + ILLUSTRATIVE</p></div>
-        <p class="eyebrow">合成教學案例 · metadata 摘錄，非完整 schema</p><h2 class="slide-title">知識頁的來源與生命週期</h2>
-        <div class="yaml-grid">
-          <pre class="code-window" aria-label="YAML 欄位摘錄"><code>type: concept
-title: ExampleVPN device enrollment
-sources:
-  - id: guide
-    resource: "#source-demo-01"
-status: draft
-stale_after: "2026-12-01"
-owner: team:demo-it
-classification: public
-access_scope: public</code></pre>
-          <ul class="field-legend">
-            <li><code>sources</code>　主張回到哪份來源。</li>
-            <li><code>status</code> / <code>stale_after</code>　內容狀態與重看日期。</li>
-            <li><code>owner</code>　負責維護與判斷的人或團隊。</li>
-            <li><code>classification</code> / <code>access_scope</code>　治理資訊；實際授權仍由服務執行。</li>
-          </ul>
-        </div>
-        <p class="small-note warning-note">節錄；完整合成頁面見附錄 A03。欄位存在本身不會自動完成授權控制。</p>
-        <p class="source-line"><a href="#source-src-05">SRC-05</a>、<a href="#source-src-06">SRC-06</a>、<a href="#source-src-11">SRC-11</a></p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>這些欄位讓知識除了文字之外，還有可追蹤的維護資訊。sources 指向依據，status 和 stale_after 提醒我們內容狀態，owner 承擔內容責任。分類欄位只記錄治理決策；真正的讀取權限仍需要 repository 與應用服務執行。欄位存在本身不會自動完成授權控制。</p>
-          <h4>轉場</h4><p>除了頁面自己的資訊，頁面之間的連結也要有用途。</p>
-          <h4>來源與主張類型</h4><p><a href="#source-src-05">SRC-05</a>、<a href="#source-src-06">SRC-06</a>、<a href="#source-src-11">SRC-11</a>。類型：DOCUMENTED + ILLUSTRATIVE。</p>
-          <h4>驗收</h4><p>owner 不誤等同 generated.by；不造假 verified: human；draft 不宣稱已人審通過。</p>
-        </section>
-      </div>
-    </article>
-
-    <article id="s14" class="slide" data-section="S14" data-title="來源、概念與實體的關係" data-timing="18:15–19:30" data-kind="DOCUMENTED + ILLUSTRATIVE" data-max-step="3" aria-roledescription="投影片" aria-label="S14，來源、概念與實體的關係">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">03 / LLM Wiki 的具體做法</p><p class="slide-kind">S14 · 18:15–19:30 · DOCUMENTED + ILLUSTRATIVE</p></div>
-        <p class="eyebrow">合成教學案例 · 文件關係示意，不代表 GraphRAG</p><h2 class="slide-title">來源、概念與實體的關係</h2>
-        <div class="relationship-map" aria-label="來源支持概念，概念適用於實體，問答引用概念與來源">
-          <div class="rel-node" data-step="1"><strong>Source</strong><span>ExampleVPN 登入指南 v2.0</span></div>
-          <div class="rel-arrow" data-step="1">來源支持主張 <span aria-hidden="true">→</span></div>
-          <div class="rel-node" data-step="1"><strong>Concept</strong><span>裝置登錄與登入適用條件</span></div>
-          <div class="rel-arrow" data-step="2">概念適用於實體 <span aria-hidden="true">→</span></div>
-          <div class="rel-node" data-step="2"><strong>Entity</strong><span>ExampleVPN 4.x</span></div>
-          <div class="rel-query" data-step="3"><strong>Query</strong>　出現 DEMO-101 時應確認什麼？<br><span class="muted">問答引用概念與來源</span></div>
-        </div>
-        <p class="conclusion">來源更新時，可以沿連結檢查相關知識頁</p>
-        <p class="source-line">連結表示文件關係，不代表 runtime 圖遍歷 · <a href="#source-src-03">SRC-03</a>、<a href="#source-src-04">SRC-04</a>、<a href="#source-src-06">SRC-06</a></p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>來源頁回答資料從哪裡來，概念頁整理可重用的知識，實體頁描述具體系統，問答頁保存可重用問題。連結讓維護者知道一份指南更新後，還有哪些頁面可能需要重看。這張圖描述文件關係，不代表 runtime 一定會做圖遍歷，也不代表我們已量到 GraphRAG 的效益。</p>
-          <h4>轉場</h4><p>連結能指出影響範圍，但內容如何被確認與更新，仍需要操作規則。</p>
-          <h4>來源與主張類型</h4><p><a href="#source-src-03">SRC-03</a>、<a href="#source-src-04">SRC-04</a>、<a href="#source-src-06">SRC-06</a>。類型：DOCUMENTED + ILLUSTRATIVE。</p>
-          <h4>驗收</h4><p>箭頭方向與圖例一致；雙向連結不表示雙向因果；不宣稱自動語義矛盾判定已實現。</p>
-        </section>
-      </div>
-    </article>
-
-    <article id="s15" class="slide" data-section="S15" data-title="來源准入與內容審查" data-timing="19:30–21:00" data-kind="DOCUMENTED" data-max-step="3" aria-roledescription="投影片" aria-label="S15，來源准入與內容審查">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">03 / LLM Wiki 的具體做法</p><p class="slide-kind">S15 · 19:30–21:00 · DOCUMENTED</p></div>
-        <p class="eyebrow">治理責任沿生命週期分開</p><h2 class="slide-title">來源准入與內容審查</h2>
-        <div class="flow-wrap" aria-label="來源經過准入、產物驗證、內容 review，再進入發布流程">
-          <div class="flow" style="--flow-count:4;min-width:760px">
-            <div class="flow-step"><h3>來源</h3><p>分類、scope、PII</p></div>
-            <div class="flow-step"><h3>來源准入</h3><p>人工核可綁定來源 digest</p></div>
-            <div class="flow-step"><h3>產物驗證</h3><p>各自記錄 lineage 與 digest</p></div>
-            <div class="flow-step"><h3>知識頁</h3><p>主張與來源連結</p></div>
-          </div>
-        </div>
-        <div class="review-rails">
-          <div class="review-rail" data-step="1"><p class="eyebrow">寫入前門檻</p><h3>來源准入</h3><p>這份資料能否進入指定環境？由人工確認分類、適用範圍與 PII。</p></div>
-          <div class="review-rail later" data-step="2"><p class="eyebrow">寫入後回饋</p><h3>內容 review</h3><p>主張是否正確、完整、仍適用？Review queue 與責任人處理內容缺口。</p></div>
-        </div>
-        <p class="conclusion">來源核可與內容正確性是不同問題</p>
-        <p class="source-line" data-step="3"><a href="#source-src-04">SRC-04</a>、<a href="#source-src-05">SRC-05</a> · stable 是內容狀態，不代表正式發布</p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>來源可以保存，不表示內容每一項都已被確認；內容看起來合理，也不表示它能進公開環境。範本把兩件事分開：來源准入在寫入前完成，產物逐檔保留 lineage，內容疑問則進入 review queue。模型可以協助提出待查核項目，但不能把自己的判斷記成人工審核。</p>
-          <h4>轉場</h4><p>接著把整理好的知識帶回開場問題，看回答策略應該如何改變。</p>
-          <h4>來源與主張類型</h4><p><a href="#source-src-04">SRC-04</a>、<a href="#source-src-05">SRC-05</a>。類型：DOCUMENTED。</p>
-          <h4>驗收</h4><p>准入 approval、editorial review、runtime publication 三者不混用；不把 CI 描述為完整 DLP 或人工判讀替代品。</p>
-        </section>
-      </div>
-    </article>
-
-    <article id="s16" class="slide" data-section="S16" data-title="同一問題的回答證據鏈" data-timing="21:00–23:00" data-kind="ILLUSTRATIVE + PROPOSED" data-max-step="3" aria-roledescription="投影片" aria-label="S16，同一問題的回答證據鏈">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">03 / LLM Wiki 的具體做法</p><p class="slide-kind">S16 · 21:00–23:00 · ILLUSTRATIVE + PROPOSED</p></div>
-        <p class="eyebrow">合成教學案例 · DEMO-01</p><h2 class="slide-title">同一問題的回答證據鏈</h2>
-        <div class="two-column answer-layout">
-          <div class="dialogue" aria-label="合成教學對話">
-            <div class="dialogue-line" data-step="1"><small>使用者</small><p>我在筆電上登入 ExampleVPN，一直進不去。</p></div>
-            <div class="dialogue-line assistant" data-step="1"><small>助理</small><p>畫面顯示什麼錯誤訊息？這是受管理的筆電嗎？使用哪個用戶端版本？</p></div>
-            <div class="dialogue-line" data-step="2"><small>使用者</small><p>受管理筆電、4.x，畫面是 DEMO-101。</p></div>
-            <div class="dialogue-line assistant" data-step="3"><small>助理</small><p>依示範指南 v2.0，這組條件下的 DEMO-101 對應裝置登錄未完成。請由示範服務台確認登錄紀錄。<a href="#source-demo-01">[D1]</a> 這份指南沒有提供重新安裝作為處理步驟。</p></div>
-          </div>
-        <table class="evidence-table">
-            <tbody>
-              <tr data-step="3"><th>身分與可見範圍</th><td>合成公開知識</td></tr>
-              <tr data-step="3"><th>適用條件</th><td>受管理筆電、4.x、DEMO-101</td></tr>
-              <tr data-step="3"><th>使用來源</th><td>示範指南 v2.0 <a href="#source-demo-01">[D1]</a></td></tr>
-              <tr data-step="3"><th>支持的動作</th><td>由示範服務台確認登錄紀錄</td></tr>
-              <tr data-step="3"><th>未支持的動作</th><td>直接要求重新安裝</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="step-indicator" id="stepIndicator">1 / 3</p>
-        <p class="small-note warning-note">設計行為示範，未作為導入成效量測。</p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>現在回到同一個問題。第一次提問缺少條件，所以先追問；當使用者補上裝置、版本與錯誤碼，才選用對應指南。回答中的動作由來源支持，沒有把指南沒說的重新安裝補進去。這個示範的價值在於把條件、來源與答案連起來。這是我們希望系統遵循的行為；若要宣稱改善了準確率，還需要固定題目與設定做前後比較。</p>
-          <h4>轉場</h4><p>當這個能力進入 Teams，回答之外還有完整的服務流程。</p>
-          <h4>來源與主張類型</h4><p><a href="#source-demo-01">DEMO-01</a>；設計依據為 S10–S15。類型：ILLUSTRATIVE + PROPOSED。</p>
-          <h4>驗收</h4><p>D1 指向完整示範來源；回答沒有新增來源外的操作；沒有寫成實際成功工單或已跑通整合。</p>
-        </section>
-      </div>
-    </article>
-
-    <article id="s17" class="slide" data-section="S17" data-title="Teams IT Agent 與 KnowledgeService" data-timing="23:00–24:45" data-kind="IMPLEMENTED + DOCUMENTED + PROPOSED" data-max-step="3" aria-roledescription="投影片" aria-label="S17，Teams IT Agent 與 KnowledgeService">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">04 / 服務整合與選型</p><p class="slide-kind">S17 · 23:00–24:45 · IMPLEMENTED + DOCUMENTED + PROPOSED</p></div>
-        <p class="eyebrow">業務流程、介面與接軌設計</p><h2 class="slide-title">Teams IT Agent 與 KnowledgeService</h2>
-        <div class="workflow-strip" data-step="1" aria-label="Teams workflow">
-          <span>載入對話</span><b aria-hidden="true">→</b><span>接手分流</span><b aria-hidden="true">→</b><span>擷取問題</span><b aria-hidden="true">→</b><span>IT 分流</span><b aria-hidden="true">→</b><span>處理問題</span><b aria-hidden="true">→</b><span>接手判斷</span><b aria-hidden="true">→</b><span>回覆與保存</span>
-        </div>
-        <p class="small-note">人工已接手時，另有旁路</p>
-        <div class="two-column" style="margin-top:1rem">
-          <div class="interface-band" data-step="2">
-            <h3>KnowledgeService 介面摘錄</h3>
-            <p>search(query, user_context, ...) → KnowledgeResult</p>
-            <p>found · answer · sources · images · backend</p>
-          </div>
-          <div data-step="3">
-            <p class="eyebrow">Wiki bundle 接軌仍需驗證</p>
-            <p class="proposed-bridge">Wiki bundle　- - - →　欄位、權限、來源 URI 與 release 映射</p>
-          </div>
-        </div>
-        <div class="release-split" data-step="3"><span>應用程式 image</span><span>Knowledge release</span></div>
-        <p class="conclusion" data-step="3">介面存在；Wiki bundle 接軌仍需逐項驗證</p>
-        <p class="source-line"><a href="#source-src-07">SRC-07</a>、<a href="#source-src-08">SRC-08</a>、<a href="#source-src-09">SRC-09</a></p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>Teams 的工作還包括對話狀態、問題拆解、工單以及人員接手。KnowledgeService 提供明確的查詢介面與結果格式，所以知識後端可以在這個邊界被評估。Wiki bundle 要接入仍有實際工作：scope 與權限怎麼映射、來源連結怎麼解析、內容怎麼進入可回滾的 release。這些不能靠一個相同的函式名稱就假設已經相容。</p>
-          <h4>轉場</h4><p>有了介面邊界之後，選後端就能回到可比較的實驗。</p>
-          <h4>來源與主張類型</h4><p><a href="#source-src-07">SRC-07</a>、<a href="#source-src-08">SRC-08</a>、<a href="#source-src-09">SRC-09</a>。介面省略參數已明確標示。類型：IMPLEMENTED + DOCUMENTED + PROPOSED。</p>
-          <h4>驗收</h4><p>不把 frontmatter 自動當作 ACL；不把 KnowledgeResult 中內部 excluded 欄位說成完整公開 API；不宣稱目前雲端部署已驗收。</p>
-        </section>
-      </div>
-    </article>
-
-    <article id="s18" class="slide" data-section="S18" data-title="同一組題目的後端取捨" data-timing="24:45–26:15" data-kind="MEASURED" data-max-step="4" aria-roledescription="投影片" aria-label="S18，同一組題目的後端取捨">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">04 / 服務整合與選型</p><p class="slide-kind">S18 · 24:45–26:15 · MEASURED</p></div>
-        <p class="eyebrow" data-step="1">AB-01 · 2026-08-07 · 30 題 · 19 份文件 · 同模型 · top_k=4</p><h2 class="slide-title">同一組題目的後端取捨</h2>
-        <div class="chart-pair">
-          <div class="chart" data-step="2">
-            <h3>P50 latency · 秒 · 零起點</h3>
-            <div class="chart-row"><span>Hybrid</span><div class="chart-track" role="img" aria-label="Hybrid P50 latency 3.00 seconds"><span style="width:52.54%"></span></div><strong>3.00 s</strong></div>
-            <div class="chart-row secondary"><span>Gemini File Search</span><div class="chart-track" role="img" aria-label="Gemini File Search P50 latency 5.71 seconds"><span style="width:100%"></span></div><strong>5.71 s</strong></div>
-            <p class="source-line">尺度上限 5.71 s</p>
-          </div>
-          <div class="chart" data-step="3">
-            <h3>平均每題成本 · 美元 · 零起點</h3>
-            <div class="chart-row"><span>Hybrid</span><div class="chart-track" role="img" aria-label="Hybrid average cost per query US$0.001059"><span style="width:58.7%"></span></div><strong>US$0.001059</strong></div>
-            <div class="chart-row secondary"><span>Gemini File Search</span><div class="chart-track" role="img" aria-label="Gemini File Search average cost per query US$0.001804"><span style="width:100%"></span></div><strong>US$0.001804</strong></div>
-            <p class="source-line">尺度上限 US$0.001804</p>
-          </div>
-        </div>
-        <p class="conclusion" data-step="4">此批次的品質代理指標未拉開差距；延遲、成本與維運因素支持當時保留 Hybrid</p>
-        <p class="small-note warning-note" data-step="4">品質代理指標不等同 156 題 L3 答案正確率；30 題中的 ACL 欄位無鑑別力。</p>
-        <p class="source-line"><a href="#source-src-02">SRC-02</a> · 完整條件與限制見附錄 A04</p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>這是另一個較早的後端 A/B：同一模型、同一組 30 題、19 份文件。P50 與平均每題成本在這批次都偏向 Hybrid，因此報告維持當時選擇。這裡的品質指標主要反映來源命中等代理判準，不能和前面的 L3 答案評分拼成改善曲線。選型結論也只適用於這次條件，語料或需求改變後要重跑。</p>
-          <h4>轉場</h4><p>外部知識平台則讓我們進一步思考，哪些能力值得自己維護。</p>
-          <h4>來源與主張類型</h4><p><a href="#source-src-02">SRC-02</a>。類型：MEASURED。</p>
-          <h4>驗收</h4><p>精確數值與單位不變；不宣稱後端普遍優劣；附錄另說明報告的合成 ACL 探測。</p>
-        </section>
-      </div>
-    </article>
-
-    <article id="s19" class="slide" data-section="S19" data-title="WeKnora 與企業流程的分工" data-timing="26:15–27:15" data-kind="EXTERNAL + PROPOSED" data-max-step="3" aria-roledescription="投影片" aria-label="S19，WeKnora 與企業流程的分工">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">04 / 服務整合與選型</p><p class="slide-kind">S19 · 26:15–27:15 · EXTERNAL + PROPOSED</p></div>
-        <p class="eyebrow" data-step="1">外部參照 · 官方定位涵蓋 RAG、Agent 與 Wiki</p><h2 class="slide-title">WeKnora 與企業流程的分工</h2>
-        <div class="responsibility-band" data-step="2">
-          <h3>企業流程</h3><p>身分對接　／　服務目錄　／　工單規則　／　人工接手</p>
-        </div>
-        <div class="interface-separator" data-step="2">API 與責任介面 · 接入前逐項比較</div>
-        <div class="responsibility-band" data-step="2">
-          <h3>知識平台候選</h3><p>文件處理　／　知識組織　／　檢索與相關操作能力</p>
-        </div>
-        <ul class="annotation-list" data-step="3" style="margin-top:1.2rem">
-          <li><b>接入檢查</b><span>API 契約、ACL 語義、引用、同步與回滾、延遲與成本</span></li>
-        </ul>
-        <p class="small-note warning-note" data-step="3">目前為外部候選；本簡報沒有 WeKnora 整合或成效實測。</p>
-        <p class="source-line"><a href="#source-src-10">SRC-10 · Tencent/WeKnora 官方 repository</a> · 查閱 2026-09-27</p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>WeKnora 是一個外部參照，官方文件把 RAG、Agent 與 Wiki 放在同一知識平台裡。對企業來說，評估重點是它能否在既有介面下，滿足引用、權限、同步與維運需求。服務目錄和工單政策仍需要企業自己定義。這裡是在提出評估邊界，沒有把它描述成已接入的後端。</p>
-          <h4>轉場</h4><p>最後用已知、未知與下一次實驗收束這段架構演進。</p>
-          <h4>來源與主張類型</h4><p><a href="#source-src-10">SRC-10</a>。官方描述查閱日：2026-09-27。類型：EXTERNAL + PROPOSED。</p>
-          <h4>驗收</h4><p>不宣稱與 KnowledgeService 即插即用；不把平台功能清單當效能或權限驗證結果。</p>
-        </section>
-      </div>
-    </article>
-
-    <article id="s20" class="slide theme-dark" data-section="S20" data-title="已知結果與下一次驗證" data-timing="27:15–28:00" data-kind="SYNTHESIS" aria-roledescription="投影片" aria-label="S20，已知結果與下一次驗證">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">05 / 成果與下一步</p><p class="slide-kind">S20 · 27:15–28:00 · SYNTHESIS</p></div>
-        <div class="closing-layout">
-          <div>
-            <p class="eyebrow">來源 · 證據 · 維護責任</p><h1 class="closing-title">可靠的企業問答，需要一路追到答案背後的來源與維護責任。</h1>
-            <div class="closing-rail" aria-label="服務入口、業務流程、知識服務與知識維護"><span>服務入口</span><b aria-hidden="true">→</b><span>業務流程</span><b aria-hidden="true">→</b><span>知識服務</span><b aria-hidden="true">→</b><span>知識維護</span></div>
-            <p class="cover-subtitle">已知與待驗證的部分，分開陳述。</p>
-          </div>
-          <table class="known-next">
-            <thead><tr><th>已有依據</th><th>下一次要回答</th></tr></thead>
-            <tbody>
-              <tr><td>固定資料集上的檢索與答案量測</td><td>不同知識表示是否在同條件下改善回答？</td></tr>
-              <tr><td>Wiki 的來源、連結與治理規約</td><td>知識更新能否追到相關頁面與 serving release？</td></tr>
-              <tr><td>KnowledgeService 介面與後端 A/B</td><td>Wiki 接軌及群組權限是否符合真實服務情境？</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="source-line">已知依據：<a href="#source-src-01">SRC-01</a>–<a href="#source-src-10">SRC-10</a> · 下一次驗證設計：<a href="#a05">A05</a></p>
-        <p class="cover-meta">謝謝，歡迎交流 · 預留 2 分鐘緩衝</p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>這次分享有實測的問答結果，也有 Wiki 的維護設計與可接軌的服務邊界。接下來要驗證的是，不同知識表示在固定條件下是否改善回答，以及內容更新與權限是否能完整走進真實服務。當答案出錯時，沿著來源、證據與回答往回查，會讓下一個工程決策更有依據。謝謝。</p>
-          <h4>轉場</h4><p>主簡報結束。技術附錄 A01–A05 可從總覽開啟。</p>
-          <h4>來源與主張類型</h4><p>SRC-01–SRC-10；下一次實驗詳見 <a href="#a05">A05</a>。類型：SYNTHESIS。</p>
-          <h4>驗收</h4><p>不新增無來源 ROI、節省人力或上線保證；保留 2 分鐘給超時緩衝與現場提問。</p>
-        </section>
-      </div>
-    </article>
-
-    <article id="a01" class="slide appendix-slide" data-section="A01" data-title="評測指標、分母與版本" data-timing="附錄" data-kind="MEASURED" aria-roledescription="附錄投影片" aria-label="A01，評測指標、分母與版本">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">技術附錄</p><p class="slide-kind">A01 · MEASURED</p></div>
-        <p class="eyebrow">EVAL-L3-01 · 固定資料快照</p><h2 class="slide-title">評測指標、分母與版本</h2>
         <table class="data-table">
-          <thead><tr><th>Metric</th><th>Value</th><th>Interpretation</th></tr></thead>
-          <tbody>
-            <tr><td>Case count</td><td class="number">156</td><td>全部 test cases</td></tr>
-            <tr><td>Evidence-labeled cases</td><td class="number">116</td><td>證據標註子集</td></tr>
-            <tr><td>Document Hit@4</td><td class="number">99.14%</td><td>115/116，由報告比例與分母換算</td></tr>
-            <tr><td>Answer Accuracy</td><td class="number">96.79%</td><td>151/156，由報告比例與分母換算</td></tr>
-            <tr><td>Multi-turn Answer Accuracy</td><td class="number">90%</td><td>18/20</td></tr>
-            <tr><td>Citation Precision</td><td class="number">98.82%</td><td>報告彙總值，不能直接當引用筆數比例</td></tr>
-            <tr><td>ACL leakage count</td><td class="number">0</td><td>語料沒有 group-gated documents，涵蓋不足</td></tr>
-          </tbody>
+          <thead><tr><th>Evidence drop diagnostics</th><th>Count</th></tr></thead>
+          <tbody><tr><td>GENERATION_IGNORED</td><td class="number">12</td></tr><tr><td>CANDIDATE_MISS</td><td class="number">1</td></tr><tr><td>SELECTION_OR_PACKING_DROP</td><td class="number">1</td></tr></tbody>
         </table>
-        <p class="small-note">commit bdd3894 · release-4f49088db9ca · freezeVersion 5 · test split · 2026-09-22 UTC（臺灣時間 2026-09-23）</p>
-        <p class="source-line"><a href="#source-src-01">SRC-01 · 固定報告與 provenance</a></p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>不同指標回答不同問題。文件命中檢查能否取回目標，答案正確率檢查評測中的答案條件，引用精確率有自己的彙總定義。這些數字屬同一固定快照，不能自動推廣到其他模型、語料或使用者群組。</p>
-          <h4>補充來源與限制</h4><p>完整報告識別碼：rag-l3-v3-blind-full-live-20260923-bdd3894.json。完整 dataset hash 與模型 metadata 請見固定報告。原始 recallAt4 欄位不改標為 Document Hit@4；沒有推導未確認的 confidence interval。</p>
-          <h4>建議口述時間</h4><p>選用本頁時約 90–120 秒。</p>
-        </section>
       </div>
-    </article>
+      <table class="data-table">
+        <thead><tr><th>Case</th><th>Candidate recall</th><th>Retrieval evidence recall</th><th>Answer evidence recall</th><th>Citation precision</th></tr></thead>
+        <tbody>
+          <tr><td>v3-blind-ans-05</td><td>1.0</td><td>1.0</td><td>0.0</td><td>1.0</td></tr>
+          <tr><td>v3-blind-ans-23</td><td>1.0</td><td>1.0</td><td>1.0</td><td>0.0</td></tr>
+        </tbody>
+      </table>
+      <p class="small-note">8 筆 failure entries 不等於 8 題答案錯誤；12 個生成診斷也不等於 12 題 Answer Accuracy 失敗。</p>
+    </div><p class="source-line">來源與產物：<a href="#source-src-01">SRC-01</a> · 個案 ID 與數值來自固定報告 diagnostics。</p><section class="reader-notes"><h3>講者稿</h3><p>左表是失敗類型，右表是證據在哪一階段沒被使用，兩邊不是互斥的同一份分類。第一筆案例主要是答案遺漏，第二筆答案涵蓋目標但引用精確率為零。診斷欄位是定位線索，仍需回到 trace 確認根因。</p><h4>轉場</h4><p>不預設順序；由相關頁面的附錄連結返回。</p><h4>來源與證據</h4><p><a href="#source-src-01">SRC-01</a> · 個案 ID 與數值來自固定報告 diagnostics。</p><h4>驗收</h4><p>兩種分類不相加；不呈現內部問題或回答全文。</p></section></div></article>
 
-    <article id="a02" class="slide appendix-slide" data-section="A02" data-title="失敗分類與證據流失診斷" data-timing="附錄" data-kind="MEASURED" aria-roledescription="附錄投影片" aria-label="A02，失敗分類與證據流失診斷">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">技術附錄</p><p class="slide-kind">A02 · MEASURED</p></div>
-        <p class="eyebrow">兩個不同診斷維度</p><h2 class="slide-title">失敗分類與證據流失診斷</h2>
-        <div class="two-column">
-          <div>
-            <h3>Failure taxonomy</h3>
-            <table class="data-table"><thead><tr><th>Category</th><th>Count</th></tr></thead><tbody><tr><td>ANSWER_OMISSION</td><td class="number">5</td></tr><tr><td>BAD_CITATION</td><td class="number">3</td></tr></tbody></table>
-          </div>
-          <div>
-            <h3>Evidence drop diagnostics</h3>
-            <table class="data-table"><thead><tr><th>Stage</th><th>Count</th></tr></thead><tbody><tr><td>GENERATION_IGNORED</td><td class="number">12</td></tr><tr><td>CANDIDATE_MISS</td><td class="number">1</td></tr><tr><td>SELECTION_OR_PACKING_DROP</td><td class="number">1</td></tr></tbody></table>
-          </div>
-        </div>
-        <div class="flow-wrap" style="margin-top:1.3rem">
-          <table class="data-table">
-            <thead><tr><th>Case</th><th>Candidate recall</th><th>Retrieval evidence recall</th><th>Answer evidence recall</th><th>Citation precision</th></tr></thead>
-            <tbody>
-              <tr><td class="mono">v3-blind-ans-05</td><td>1.0</td><td>1.0</td><td>0.0</td><td>1.0</td></tr>
-              <tr><td class="mono">v3-blind-ans-23</td><td>1.0</td><td>1.0</td><td>1.0</td><td>0.0</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="conclusion">分類軸不同，計數不能合併；回到個案判斷下一步</p>
-        <p class="source-line"><a href="#source-src-01">SRC-01</a> · 不含內部問題及答案全文</p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>左邊描述失敗類型，右邊描述證據在哪個階段沒被使用，兩邊不是互斥的同一份分類。第一筆案例主要是答案遺漏，第二筆答案涵蓋了目標但引用精確率為零。因此兩種情況需要不同的調查與回歸測試。</p>
-          <h4>建議口述時間</h4><p>選用本頁時約 90 秒。不能推斷 12 個 GENERATION_IGNORED 等於 12 題 Answer Accuracy 失敗。</p>
-        </section>
-      </div>
-    </article>
-
-    <article id="a03" class="slide appendix-slide" data-section="A03" data-title="合成知識頁與欄位責任" data-timing="附錄" data-kind="DOCUMENTED + ILLUSTRATIVE" aria-roledescription="附錄投影片" aria-label="A03，合成知識頁與欄位責任">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">技術附錄 · DEMO-01</p><p class="slide-kind">A03 · DOCUMENTED + ILLUSTRATIVE</p></div>
-        <p class="eyebrow">合成教學案例 · 預定 bundle 結構</p>
-        <p class="eyebrow">摘錄 · 完整頁面見閱讀模式</p><h2 class="slide-title">合成知識頁與欄位責任</h2>
-        <div class="two-column">
-          <pre class="code-window"><code>type: concept
-title: ExampleVPN device enrollment
+    <article id="a03" class="slide" data-section="A03" data-title="知識頁欄位與來源責任" data-timing="附錄" data-kind="DEMO-AUTHORED + DOCUMENTED" aria-roledescription="附錄投影片" aria-label="A03，知識頁欄位與來源責任"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">技術附錄</p><p class="slide-kind">A03 · 附錄 · DEMO-AUTHORED + DOCUMENTED</p></div><p class="eyebrow">revised-v2 · query frontmatter</p><h2 class="slide-title">知識頁欄位與來源責任</h2><div class="slide-copy">
+      <div class="yaml-grid">
+        <pre class="code-window"><code>type: query
+title: Managed client 4.1 DEMO-101
 sources:
   - id: guide
-    resource: "#source-demo-01"
-generated:
-  by: process:presentation-demo
+    resource: ../sources/examplevpn-guide-v2.md
 status: draft
-owner: team:demo-it
-access_scope: public</code></pre>
-          <div>
-            <p><strong>OKF 欄位</strong></p><p class="muted">內容描述與來源關聯</p>
-            <p><strong>本倉治理擴充</strong></p><p class="muted">分類、owner、scope、PII、retention</p>
-            <p class="small-note warning-note">generated.at 是固定示範 metadata，不是真實執行紀錄。未填 verified，因為沒有人工查核證據。</p>
-          </div>
-        </div>
-        <p class="source-line">相對來源改連至離線示範內容：<a href="#source-demo-01">DEMO-SRC-01</a> · <a href="#source-src-06">SRC-06</a>、<a href="#source-src-11">SRC-11</a></p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>資料表示的重點是讓主張能回到來源，讓維護者知道狀態與責任。generated 記錄產生者，owner 記錄內容責任；兩者可能不同。verified 只有真的有人查核才填。本頁採用範本欄位，但內容完全是教學資料。</p>
-          <h4>完整合成知識頁</h4>
-          <pre class="code-window full-demo-page"><code>---
-type: concept
-title: ExampleVPN device enrollment
-description: Enrollment conditions for the fictional ExampleVPN demo
-tags: [demo, remote-access]
-sources:
-  - id: guide
-    resource: "#source-demo-01"
-    title: ExampleVPN demonstration guide v2.0
-generated:
-  by: process:presentation-demo
-  at: "2026-09-27T00:00:00Z"
-status: draft
-stale_after: "2026-12-01"
 classification: public
 owner: team:demo-it
 access_scope: public
 contains_pii: false
 retention: permanent
-redaction: none
----
-
-# ExampleVPN device enrollment
-
-## Summary
-
-This page describes a fictional teaching example, not an operational procedure.
-
-## Key Points
-
-- For a managed demo laptop running ExampleVPN 4.x, DEMO-101 indicates incomplete device enrollment. The demo service desk checks the enrollment record. The guide does not prescribe reinstalling the client.[^guide]
-- Without the error message and device context, this guide cannot establish the cause of the login failure.[^guide]
-
-## Evidence
-
-- [Demonstration source](#source-demo-01)
-
-## Relationships
-
-- related_to: [ExampleVPN 4.x](#demo-entity-examplevpn)
-
-## Open Questions
-
-- No real product behavior or integration result is represented by this demo.
-
-[^guide]: ExampleVPN demonstration guide v2.0, fictional scope and procedure.</code></pre>
-          <h4>來源與欄位邊界</h4><p><a href="#source-src-06">SRC-06</a>、<a href="#source-src-11">SRC-11</a>、<a href="#source-demo-01">DEMO-01</a>。generated.at 是固定示範 metadata，不作真實執行紀錄；未填 verified，不虛構人工確認。完整 teaching bundle 的連結在 HTML 內連至對應來源 anchor，不依賴本機絕對路徑。</p>
-          <h4>建議口述時間</h4><p>選用本頁時約 120 秒。source 頁須另依來源頁版型建立，不能以此 concept 模板冒充 source schema。</p>
-        </section>
+redaction: none</code></pre>
+        <ul class="field-legend">
+          <li><code>sources</code>：引用來源與 lineage</li>
+          <li><code>status</code>：實際頁面仍是 draft</li>
+          <li><code>owner</code>：內容責任，不是 generated.by</li>
+          <li><code>access_scope</code>：欄位存在不等於 ACL 執行</li>
+        </ul>
       </div>
-    </article>
+      <p><a href="evidence/wiki-update-demo/revised-v2/wiki/queries/demo-101.md">開啟完整 query 頁</a> · <a href="evidence/wiki-update-demo/revised-v2/wiki/sources/examplevpn-guide-v2.md">開啟 v2 source summary</a></p>
+      <p class="small-note">節錄的 12 行皆存在於 query；generated 欄位省略。source summary 另有 archive_slug 與 analysis_receipt。</p>
+    </div><p class="source-line">來源與產物：<a href="#source-src-06">SRC-06</a>、<a href="#source-src-18">SRC-18</a> · concept 或 query 模板不冒充 source schema。</p><section class="reader-notes"><h3>講者稿</h3><p>這些欄位支援追蹤，但不會自行執行權限或發布。generated 記錄產生者，owner 記錄內容責任；verified 只有真的有人查核才填。本頁採用範本欄位，但內容完全是教學資料。</p><h4>轉場</h4><p>不預設順序；由相關頁面的附錄連結返回。</p><h4>來源與證據</h4><p><a href="#source-src-06">SRC-06</a>、<a href="#source-src-18">SRC-18</a> · concept 或 query 模板不冒充 source schema。</p><h4>驗收</h4><p>欄位逐行對應實際 query；沒有補寫不存在的 verified；治理欄位不冒充 runtime ACL。</p></section></div></article>
 
-    <article id="a04" class="slide appendix-slide" data-section="A04" data-title="後端 A/B 的方法與限制" data-timing="附錄" data-kind="MEASURED" aria-roledescription="附錄投影片" aria-label="A04，後端 A/B 的方法與限制">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">技術附錄 · AB-01</p><p class="slide-kind">A04 · MEASURED</p></div>
-        <p class="eyebrow">不同資料集與評分定義 · 不與 L3 合併</p><h2 class="slide-title">後端 A/B 的方法與限制</h2>
-        <table class="data-table">
-          <thead><tr><th>Metric</th><th>Hybrid</th><th>Gemini File Search</th></tr></thead>
-          <tbody>
-            <tr><td>P50 latency</td><td class="number">3.00 s</td><td class="number">5.71 s</td></tr>
-            <tr><td>P95 latency</td><td class="number">4.07 s</td><td class="number">7.15 s</td></tr>
-            <tr><td>Average reported cost per query</td><td class="number">US$0.001059</td><td class="number">US$0.001804</td></tr>
-            <tr><td>Average LLM calls per query</td><td class="number">2.17</td><td class="number">1.00</td></tr>
-            <tr><td>Reported answer metric</td><td class="number">25/25</td><td class="number">25/25</td></tr>
-            <tr><td>No-answer cases</td><td class="number">5/5</td><td class="number">5/5</td></tr>
-          </tbody>
-        </table>
-        <div class="two-column" style="margin-top:1rem">
-          <p class="small-note">30 題：25 題預期找到資料、5 題預期查無資料。19 份文件、同模型、top_k=4。</p>
-        <p class="small-note warning-note">兩個 ACL 案例皆預期命中，不能驗證拒絕授權。另以 2 份合成文件做專用 ACL 探測，4 項檢查記錄通過；不代表真實群組語料已覆蓋。</p>
-        </div>
-        <p class="source-line"><a href="#source-src-02">SRC-02</a> · 2026-08-07 · 歷史實驗條件與報價</p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>小語料很容易碰到指標天花板，所以我們更關心可比較的延遲、成本與操作負擔。權限測試尤其要看題目是否真的包含拒絕案例。這個報告有補做合成 ACL 探測，但不能因此把主資料集的 ACL 欄位當作有效比較。</p>
-          <h4>閱讀模式補充</h4><p>共同使用模型 gemini-3.5-flash-lite（歷史實驗 metadata，不作現時模型推薦）；測量時間為 2026-08-07T03:20:43Z。報告的 Answer Accuracy 以目標來源命中判定。File Search 的圖片 registry 在此報告已接線，不能重複宣稱完全不支援圖片；報告描述的是文件層級對應，相較 Hybrid 的 chunk 層級定位仍有粒度差別。上傳重試可能產生重複文件是當時紀錄的維運注意項，現況需重新確認。另有兩份合成文件的專用 ACL 探測，報告記錄四項檢查通過；這不代表目前全部語料的群組治理已完成。</p>
-          <h4>驗收邊界</h4><p>不將錯誤碼、ACL 與圖片等交疊標籤相加為題數；歷史成本不當作目前供應商報價；不把效能差異歸因成已證實的服務內部原因。</p>
-          <h4>建議口述時間</h4><p>選用本頁時約 120 秒。</p>
-        </section>
-      </div>
-    </article>
+    <article id="a04" class="slide" data-section="A04" data-title="Hybrid 與 File Search 的歷史 A/B" data-timing="附錄" data-kind="MEASURED" aria-roledescription="附錄投影片" aria-label="A04，Hybrid 與 File Search 的歷史 A/B"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">技術附錄</p><p class="slide-kind">A04 · 附錄 · MEASURED</p></div><p class="eyebrow">AB-01 · 2026-08-07 · 歷史條件</p><h2 class="slide-title">Hybrid 與 File Search 的歷史 A/B</h2><div class="slide-copy">
+      <table class="data-table">
+        <thead><tr><th>Metric</th><th>Hybrid</th><th>Gemini File Search</th></tr></thead>
+        <tbody>
+          <tr><td>P50 latency</td><td>3.00 s</td><td>5.71 s</td></tr>
+          <tr><td>P95 latency</td><td>4.07 s</td><td>7.15 s</td></tr>
+          <tr><td>Average reported cost per query</td><td>US$0.001059</td><td>US$0.001804</td></tr>
+          <tr><td>Average LLM calls per query</td><td>2.17</td><td>1.00</td></tr>
+          <tr><td>Reported answer metric</td><td>25/25</td><td>25/25</td></tr>
+          <tr><td>No-answer cases</td><td>5/5</td><td>5/5</td></tr>
+        </tbody>
+      </table>
+      <p class="small-note">30 題、19 份文件、同模型、top_k=4。品質以來源命中等代理判準計分；報告稱當時延遲與成本支持保留 Hybrid。</p>
+      <p>兩筆 ACL 案例都預期命中；另有兩份合成文件專用探測，四項檢查通過，不能代替真實群組語料驗收。</p>
+    </div><p class="source-line">來源與產物：<a href="#source-src-02">SRC-02</a> · 不將交疊標籤相加為題數；報告中的 ACL probe 不代表真實群組涵蓋。</p><section class="reader-notes"><h3>講者稿</h3><p>這批次的延遲與成本支持當時保留 Hybrid。語料小、計分方式特定，所以重點是可重跑的決策方法，不能推導通用優劣。</p><h4>轉場</h4><p>不預設順序；由相關頁面的附錄連結返回。</p><h4>來源與證據</h4><p><a href="#source-src-02">SRC-02</a> · 不將交疊標籤相加為題數；報告中的 ACL probe 不代表真實群組涵蓋。</p><h4>驗收</h4><p>保留日期、題數、語料數、模型條件與單位；歷史成本不當作目前報價。</p></section></div></article>
 
-    <article id="a05" class="slide appendix-slide" data-section="A05" data-title="Wiki 接軌與效益驗證設計" data-timing="附錄" data-kind="PROPOSED" aria-roledescription="附錄投影片" aria-label="A05，Wiki 接軌與效益驗證設計">
-      <div class="slide-inner">
-        <div class="slide-meta"><p class="slide-id">技術附錄 · 待執行設計</p><p class="slide-kind">A05 · PROPOSED</p></div>
-        <p class="eyebrow">待執行的驗證設計</p><h2 class="slide-title">Wiki 接軌與效益驗證設計</h2>
-        <table class="data-table">
-          <thead><tr><th>驗證面向</th><th>做法</th><th>需要觀察的結果</th></tr></thead>
-          <tbody>
-            <tr><td>知識表示</td><td>相同來源內容分別使用 canonical 與 Wiki 表示；固定模型、題目與檢索設定</td><td>答案正確、引用、缺答與成本差異</td></tr>
-            <tr><td>條件與版本</td><td>加入相似問題、不同版本、資訊缺失與過期來源</td><td>適用性判斷與追問是否正確</td></tr>
-            <tr><td>授權</td><td>建立真實的允許與拒絕矩陣</td><td>檢索、回答、引用和附件皆符合權限</td></tr>
-            <tr><td>更新與回滾</td><td>新來源 → 相關頁更新 → 發布 → serving → 回滾</td><td>來源、版本與 release 可一致追查</td></tr>
-          </tbody>
-        </table>
-        <p class="small-note warning-note">實驗約束：baseline 與 candidate 保留相同可用事實；新增內容另標為內容補強實驗。固定測試集後不以測試答案修改候選知識，並保留獨立 holdout。</p>
-        <p class="small-note">預先定義重要改善與可接受退步；使用配對案例、重複執行與區間估計，不預填提升目標。</p>
-        <p class="source-line">本 spec 的提議設計；介面與 release 責任參照 <a href="#source-src-07">SRC-07</a>、<a href="#source-src-09">SRC-09</a></p>
-        <section class="reader-notes">
-          <h3>講者稿</h3><p>要知道 Wiki 是否有效，先把內容量與模型設定控制住。若 Wiki 版本額外補了原本不存在的事實，就無法把改善全歸因於表示方式。除了答對多少，我們還要看過期內容、權限拒絕與更新回滾。這些共同決定知識能不能穩定進入服務。</p>
-          <h4>來源與主張類型</h4><p>本 spec 提議的實驗設計；介面與 release 責任參照 <a href="#source-src-07">SRC-07</a>、<a href="#source-src-09">SRC-09</a>。類型：PROPOSED。</p>
-          <h4>驗收</h4><p>清楚標示待執行；不把未執行的測試寫成通過；不需要真實秘密或使用者資料。</p>
-          <h4>建議口述時間</h4><p>選用本頁時約 120 秒。</p>
-        </section>
-      </div>
-    </article>
+    <article id="a05" class="slide" data-section="A05" data-title="重跑案例與證據包" data-timing="附錄" data-kind="DEMO-EXECUTED" aria-roledescription="附錄投影片" aria-label="A05，重跑案例與證據包"><div class="slide-inner"><div class="slide-meta"><p class="slide-id">技術附錄</p><p class="slide-kind">A05 · 附錄 · DEMO-EXECUTED</p></div><p class="eyebrow">DEMO-02 · 靜態快照檢查</p><h2 class="slide-title">重跑案例與證據包</h2><div class="slide-copy">
+      <table class="data-table">
+        <thead><tr><th>Snapshot</th><th>Lint exit</th><th>Graph report</th><th>證據導覽</th></tr></thead>
+        <tbody>
+          <tr><td><a href="evidence/wiki-update-demo/baseline-v1/wiki/index.md">baseline-v1</a></td><td class="number">0</td><td><a href="evidence/wiki-update-demo/records/baseline-v1-wiki-graph-insights.txt">輸出</a></td><td>v1 初始草稿</td></tr>
+          <tr><td><a href="evidence/wiki-update-demo/stale-v2/wiki/index.md">stale-v2</a></td><td class="number">0</td><td><a href="evidence/wiki-update-demo/records/stale-v2-wiki-graph-insights.txt">輸出</a></td><td>故意保留舊頁</td></tr>
+          <tr><td><a href="evidence/wiki-update-demo/missing-summary-v2/wiki/index.md">missing-summary-v2</a></td><td class="number">1</td><td><a href="evidence/wiki-update-demo/records/missing-summary-v2-wiki-graph-insights.txt">輸出</a></td><td>故意移除摘要</td></tr>
+          <tr><td><a href="evidence/wiki-update-demo/revised-v2/wiki/index.md">revised-v2</a></td><td class="number">0</td><td><a href="evidence/wiki-update-demo/records/revised-v2-wiki-graph-insights.txt">輸出</a></td><td>修訂後，待人工 review</td></tr>
+        </tbody>
+      </table>
+      <p><a href="evidence/wiki-update-demo/README.md">重跑說明</a> · <a href="evidence/wiki-update-demo/records/runs.json">命令、工具 hashes 與原始輸出</a> · <a href="evidence/wiki-update-demo/records/content-revision.diff">三頁 diff</a> · <a href="evidence/wiki-update-demo/decisions/v2-change-plan.md">變更提案</a></p>
+      <p class="small-note">重跑保存快照的結構檢查，不會重新產生 LLM 內容；第三份預期 exit 1。</p>
+    </div><p class="source-line">來源與產物：<a href="#source-src-14">SRC-14</a>、<a href="#source-src-15">SRC-15</a>、<a href="#source-src-16">SRC-16</a>、<a href="#source-src-17">SRC-17</a>、<a href="#source-src-18">SRC-18</a> · 完整命令、時間、exit code 與工具 provenance 收在 runs.json。</p><section class="reader-notes"><h3>講者稿</h3><p>資料都是虛構的，檢查輸出是真正執行過的。這裡能重跑已保存產物的結構檢查，也能直接閱讀 diff。若要重做模型生成或測量更新成功率，則需要 S19 的獨立實驗設計。</p><h4>轉場</h4><p>不預設順序；由相關頁面的附錄連結返回。</p><h4>來源與證據</h4><p><a href="#source-src-14">SRC-14</a>、<a href="#source-src-15">SRC-15</a>、<a href="#source-src-16">SRC-16</a>、<a href="#source-src-17">SRC-17</a>、<a href="#source-src-18">SRC-18</a> · 完整命令、時間、exit code 與工具 provenance 收在 runs.json。</p><h4>驗收</h4><p>刻意失敗沒有隱藏；保留原始輸出；fixture 重跑不等於端到端重現。</p></section></div></article>
 
-    <section id="source-index" class="source-index" aria-label="來源索引與教學案例">
+        <section id="source-index" class="source-index" aria-label="來源索引與教學案例">
       <h2>來源索引與教學案例</h2>
-      <p>報告、repository 與文件引用皆連至公開版本或官方來源；本頁離線開啟時，內文與來源識別仍可閱讀。固定快照不代表演講當日部署狀態。</p>
+      <p>閱讀模式收錄來源識別、固定版本和離線摘要；案例產物使用同資料夾中的相對連結。固定快照不代表目前部署狀態。</p>
       <ol>
         <li id="source-src-01" class="source-section"><h3>SRC-01 · Frozen L3 report</h3><p>EVAL-L3-01 的固定量測、分母與個案診斷。報告文件查閱快照為 2601aac3b22c6a4001b6bb682ecef6fb4bc5d652；評測所用程式 commit 為 bdd3894f7a99c07230ebd8069b1179e0be77f601。這不是 Wiki 導入前後實驗。</p><p><a href="https://github.com/poirotw66/teams-agent/blob/2601aac3b22c6a4001b6bb682ecef6fb4bc5d652/data/eval/reports/rag-l3-v3-blind-full-live-20260923-bdd3894.json" target="_blank" rel="noopener">開啟固定評測報告</a></p></li>
         <li id="source-src-02" class="source-section"><h3>SRC-02 · Retrieval A/B report</h3><p>2026-08-07 的 30 題、19 份文件 Hybrid 與 Gemini File Search 報告；2026-09-27 查閱快照 2601aac3b22c6a4001b6bb682ecef6fb4bc5d652。指標是歷史代理品質測量。</p><p><a href="https://github.com/poirotw66/teams-agent/blob/2601aac3b22c6a4001b6bb682ecef6fb4bc5d652/docs/retrieval-ab-test-report.md" target="_blank" rel="noopener">開啟 A/B 報告</a></p></li>
@@ -1160,18 +861,25 @@ This page describes a fictional teaching example, not an operational procedure.
         <li id="source-src-11" class="source-section"><h3>SRC-11 · OKF v0.2 與本地 mapping</h3><p>分開呈現上游 OKF 規格與 llm-wiki-example 的本地 mapping；不稱為全球最新版本。</p><p><a href="https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md" target="_blank" rel="noopener">上游 OKF specification</a> · <a href="https://github.com/poirotw66/llm-wiki-example/blob/0c02fd346e9711d8b556cc2b94c841a2185ac77e/docs/okf.md" target="_blank" rel="noopener">本地 OKF mapping</a></p></li>
         <li id="source-src-12" class="source-section"><h3>SRC-12 · 舊版簡報</h3><p>僅作內容遷移參考，不作技術主張的獨立來源。</p><p><a href="#s01">返回簡報封面</a></p></li>
         <li id="source-src-13" class="source-section"><h3>SRC-13 · Hybrid service 與 retrieval stages</h3><p>受限查詢管線與角色分層；投影使用概念圖，不冒充完整呼叫圖。</p><p><a href="https://github.com/poirotw66/teams-agent/blob/2601aac3b22c6a4001b6bb682ecef6fb4bc5d652/agent_service/src/agent_service/knowledge_hybrid.py" target="_blank" rel="noopener">Hybrid service</a> · <a href="https://github.com/poirotw66/teams-agent/blob/2601aac3b22c6a4001b6bb682ecef6fb4bc5d652/agent_service/src/agent_service/knowledge_pipeline/retrieval_stage.py" target="_blank" rel="noopener">retrieval stage</a> · <a href="https://github.com/poirotw66/teams-agent/blob/2601aac3b22c6a4001b6bb682ecef6fb4bc5d652/agent_service/src/agent_service/knowledge_pipeline/search_stage.py" target="_blank" rel="noopener">search stage</a></p></li>
+        <li id="source-src-14" class="source-section"><h3>SRC-14 · Demo README and creation record</h3><p>案例限制與生成紀錄：互動式 Assistant 撰寫頁面；Python 只保存快照、metadata、diff 與工具輸出；沒有呼叫另一個模型 API。</p><p><a href="evidence/wiki-update-demo/README.md">案例 README</a> · <a href="evidence/wiki-update-demo/records/creation.json">creation.json</a></p></li>
+        <li id="source-src-15" class="source-section"><h3>SRC-15 · Executed commands and results</h3><p>四份 snapshot 的 lint／graph 執行紀錄與工具 hashes。這不含 governance、Git history 或 runtime 檢查。</p><p><a href="evidence/wiki-update-demo/records/runs.json">runs.json</a> · <a href="evidence/wiki-update-demo/records/stale-v2-wiki-lint.txt">stale-v2 lint</a> · <a href="evidence/wiki-update-demo/records/missing-summary-v2-wiki-lint.txt">missing-summary lint</a> · <a href="evidence/wiki-update-demo/records/revised-v2-wiki-lint.txt">revised-v2 lint</a></p></li>
+        <li id="source-src-16" class="source-section"><h3>SRC-16 · v2 change proposal and review queue</h3><p>可讀變更結論與人工待辦；不是私有推理或人工核可。</p><p><a href="evidence/wiki-update-demo/decisions/v2-change-plan.md">v2 change plan</a> · <a href="evidence/wiki-update-demo/revised-v2/ops/review-queue.md">pending review queue</a></p></li>
+        <li id="source-src-17" class="source-section"><h3>SRC-17 · Actual three-page diff</h3><p>合成 concept、entity、query 的實際 68 行檔案差異；畫面只節錄必要內容。</p><p><a href="evidence/wiki-update-demo/records/content-revision.diff">開啟 content-revision.diff</a></p></li>
+        <li id="source-src-18" class="source-section"><h3>SRC-18 · DEMO-02 saved sources and snapshots</h3><p>兩版合成來源、四份 snapshot、graph 報告與修訂後問答。工具輸出是結構證據，不是語義自動判斷。</p><p><a href="evidence/wiki-update-demo/baseline-v1/raw/originals/examplevpn-guide-v1.md">來源 v1</a> · <a href="evidence/wiki-update-demo/revised-v2/raw/originals/examplevpn-guide-v2.md">來源 v2</a> · <a href="evidence/wiki-update-demo/stale-v2/ops/graph-insights.md">stale graph</a> · <a href="evidence/wiki-update-demo/revised-v2/ops/graph-insights.md">revised graph</a> · <a href="evidence/wiki-update-demo/revised-v2/wiki/queries/demo-101.md">修訂 query</a></p></li>
       </ol>
-
-      <section id="source-demo-01" class="source-section">
-        <h3>DEMO-SRC-01 · ExampleVPN 裝置登錄與登入指南 v2.0</h3>
-        <p><strong>合成教學案例。</strong>虛構來源，無真實產品、公司、使用者或操作指引。</p>
-        <p>Effective date 2026-09-01 · Review date 2026-12-01 · Scope：示範組織管理的筆電、ExampleVPN 4.x · Owner team:demo-it · Classification public · Access scope public · PII false · Redaction none · Retention permanent（只適用這份虛構素材）。</p>
-        <ul>
-          <li>在上述範圍內，DEMO-101 表示裝置登錄尚未完成。</li>
-          <li>服務台須確認裝置登錄紀錄；來源未要求使用者重新安裝。</li>
-          <li>沒有錯誤碼、不是受管理裝置或版本不符時，來源不足以判定此根因。</li>
-        </ul>
-        <p id="demo-entity-examplevpn">本來源完整支持的示範主張：[受管理筆電 + ExampleVPN 4.x + DEMO-101] → 裝置登錄未完成；由示範服務台確認登錄紀錄。</p>
+      <section id="source-demo-02" class="source-section">
+        <h3>DEMO-02 · ExampleVPN 來源改版與 Wiki 更新</h3>
+        <p><strong>完全虛構的公開教學案例。</strong>ExampleVPN、DEMO-101、裝置與操作均非真實產品或指引。頁面由互動式 Assistant 撰寫；沒有自動 Ingest、RAG runtime、人工核可或發布。</p>
+        <table class="data-table">
+          <thead><tr><th>版本</th><th>共同範圍</th><th>來源規則</th></tr></thead>
+          <tbody>
+            <tr><td>v1</td><td>受管理筆電、ExampleVPN 4.x、DEMO-101</td><td>由示範服務台確認登錄紀錄</td></tr>
+            <tr><td>v2</td><td>相同裝置範圍與錯誤碼</td><td>4.1+ 先同步一次；仍失敗再交服務台。4.0 保留 v1。版本不明先追問。</td></tr>
+          </tbody>
+        </table>
+        <p>四份快照：baseline-v1、stale-v2、missing-summary-v2、revised-v2。stale 與 missing-summary 是刻意注入的教學故障，不是 production incident。語義過時由本輪比對來源判斷，不是 lint 或 graph script 自動判定。</p>
+        <p><a href="evidence/wiki-update-demo/README.md">案例說明與重跑指引</a> · <a href="evidence/wiki-update-demo/records/creation.json">產物生成範圍</a> · <a href="evidence/wiki-update-demo/records/runs.json">執行與 hashes</a> · <a href="evidence/wiki-update-demo/records/content-revision.diff">三頁實際 diff</a></p>
+        <p><a href="evidence/wiki-update-demo/baseline-v1/raw/originals/examplevpn-guide-v1.md">v1 原件</a> · <a href="evidence/wiki-update-demo/revised-v2/raw/originals/examplevpn-guide-v2.md">v2 原件</a> · <a href="evidence/wiki-update-demo/revised-v2/wiki/queries/demo-101.md">修訂 query</a> · <a href="evidence/wiki-update-demo/revised-v2/ops/review-queue.md">待人工確認清單</a></p>
       </section>
     </section>
   </main>
@@ -1229,10 +937,10 @@ This page describes a fictional teaching example, not an operational procedure.
       var reading = false;
       var returnFocus = null;
       var oldHashMap = {
-        "1": "s01", "2": "s02", "3": "s05", "4": "s04", "5": "s07",
-        "6": "s08", "7": "s10", "8": "s12", "9": "s13", "10": "s11",
-        "11": "s16", "12": "s17", "13": "s18", "14": "s19", "15": "s17",
-        "16": "s09", "17": "s20"
+        "1": "s01", "2": "s02", "3": "s05", "4": "s04", "5": "s04",
+        "6": "a02", "7": "s03", "8": "s08", "9": "a03", "10": "s09",
+        "11": "s13", "12": "s16", "13": "a04", "14": "s18", "15": "s16",
+        "16": "s19", "17": "s20"
       };
       var notesPanel = document.getElementById("notesPanel");
       var modalSurfaces = [document.getElementById("deck"), document.querySelector(".toolbar"), document.getElementById("presentationControls"), notesPanel];
@@ -1243,7 +951,6 @@ This page describes a fictional teaching example, not an operational procedure.
       var nextButton = document.getElementById("nextButton");
       var overviewDialog = document.getElementById("overviewDialog");
       var helpDialog = document.getElementById("helpDialog");
-      var stepTimer = 0;
 
       function allSteps(slide) {
         return Array.prototype.slice.call(slide.querySelectorAll("[data-step]"));
@@ -1327,7 +1034,7 @@ This page describes a fictional teaching example, not an operational procedure.
       }
 
       function sourceAnchor(hash) {
-        return /^source-(?:src-(?:0[1-9]|1[0-3])|demo-01)$/.test(hash || "");
+        return /^source-(?:src-(?:0[1-9]|1[0-8])|demo-02)$/.test(hash || "");
       }
 
       function setHash(value) {
@@ -1336,7 +1043,6 @@ This page describes a fictional teaching example, not an operational procedure.
 
       function showSlide(slide, updateHash) {
         if (!slide) return;
-        window.clearTimeout(stepTimer);
         current = slide;
         currentStep = 1;
         slides.forEach(function (item) {
@@ -1349,14 +1055,6 @@ This page describes a fictional teaching example, not an operational procedure.
         updateControls();
         if (!reading) window.scrollTo(0, 0);
         if (updateHash) setHash(slide.id);
-        if (slide.id === "s02" && !reading) {
-          stepTimer = window.setTimeout(function () {
-            if (current && current.id === "s02" && currentStep === 1) {
-              currentStep = 2;
-              updateSteps();
-            }
-          }, 3000);
-        }
       }
 
       function applyHash() {
@@ -1385,8 +1083,7 @@ This page describes a fictional teaching example, not an operational procedure.
         if (!reading && currentStep < maxStep(current)) {
           currentStep += 1;
           updateSteps();
-          window.clearTimeout(stepTimer);
-          return;
+            return;
         }
         var section = current.dataset.section;
         var list = section.charAt(0) === "A" ? appendixSlides : mainSlides;

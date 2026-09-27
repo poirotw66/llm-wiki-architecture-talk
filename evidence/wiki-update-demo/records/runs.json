@@ -1,0 +1,151 @@
+{
+  "runs": [
+    {
+      "snapshot": "baseline-v1",
+      "tool": "wiki-lint.py",
+      "command": [
+        "/Users/cfh00896102/Github/llm-wiki-example/.venv/bin/python",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-lint.py",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/wiki-update-demo/baseline-v1"
+      ],
+      "completedAt": "2026-09-27T06:38:53.762440+00:00",
+      "exitCode": 0,
+      "stdout": "wiki-lint: ok\n",
+      "stderr": ""
+    },
+    {
+      "snapshot": "baseline-v1",
+      "tool": "wiki-graph-insights.py",
+      "command": [
+        "/Users/cfh00896102/Github/llm-wiki-example/.venv/bin/python",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-graph-insights.py",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/wiki-update-demo/baseline-v1"
+      ],
+      "completedAt": "2026-09-27T06:38:53.821272+00:00",
+      "exitCode": 0,
+      "stdout": "wrote ops/graph-insights.md\n",
+      "stderr": ""
+    },
+    {
+      "snapshot": "stale-v2",
+      "tool": "wiki-lint.py",
+      "command": [
+        "/Users/cfh00896102/Github/llm-wiki-example/.venv/bin/python",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-lint.py",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/wiki-update-demo/stale-v2"
+      ],
+      "completedAt": "2026-09-27T06:38:53.895084+00:00",
+      "exitCode": 0,
+      "stdout": "wiki-lint: ok\n",
+      "stderr": ""
+    },
+    {
+      "snapshot": "stale-v2",
+      "tool": "wiki-graph-insights.py",
+      "command": [
+        "/Users/cfh00896102/Github/llm-wiki-example/.venv/bin/python",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-graph-insights.py",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/wiki-update-demo/stale-v2"
+      ],
+      "completedAt": "2026-09-27T06:38:53.953565+00:00",
+      "exitCode": 0,
+      "stdout": "wrote ops/graph-insights.md\n",
+      "stderr": ""
+    },
+    {
+      "snapshot": "missing-summary-v2",
+      "tool": "wiki-lint.py",
+      "command": [
+        "/Users/cfh00896102/Github/llm-wiki-example/.venv/bin/python",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-lint.py",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/wiki-update-demo/missing-summary-v2"
+      ],
+      "completedAt": "2026-09-27T06:38:54.025070+00:00",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "wiki-lint: 4 issue(s)\nbroken link: wiki/concepts/device-enrollment.md -> ../sources/examplevpn-guide-v2.md\nbroken link: wiki/entities/examplevpn-client.md -> ../sources/examplevpn-guide-v2.md\nbroken link: wiki/queries/demo-101.md -> ../sources/examplevpn-guide-v2.md\nraw archive missing wiki/sources summary page: raw/sources/examplevpn-guide-v2.md (expected wiki/sources/examplevpn-guide-v2.md)\n"
+    },
+    {
+      "snapshot": "missing-summary-v2",
+      "tool": "wiki-graph-insights.py",
+      "command": [
+        "/Users/cfh00896102/Github/llm-wiki-example/.venv/bin/python",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-graph-insights.py",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/wiki-update-demo/missing-summary-v2"
+      ],
+      "completedAt": "2026-09-27T06:38:54.087599+00:00",
+      "exitCode": 0,
+      "stdout": "wrote ops/graph-insights.md\n",
+      "stderr": ""
+    },
+    {
+      "snapshot": "revised-v2",
+      "tool": "wiki-lint.py",
+      "command": [
+        "/Users/cfh00896102/Github/llm-wiki-example/.venv/bin/python",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-lint.py",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/wiki-update-demo/revised-v2"
+      ],
+      "completedAt": "2026-09-27T06:38:54.164383+00:00",
+      "exitCode": 0,
+      "stdout": "wiki-lint: ok\n",
+      "stderr": ""
+    },
+    {
+      "snapshot": "revised-v2",
+      "tool": "wiki-graph-insights.py",
+      "command": [
+        "/Users/cfh00896102/Github/llm-wiki-example/.venv/bin/python",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-graph-insights.py",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/wiki-update-demo/revised-v2"
+      ],
+      "completedAt": "2026-09-27T06:38:54.220008+00:00",
+      "exitCode": 0,
+      "stdout": "wrote ops/graph-insights.md\n",
+      "stderr": ""
+    }
+  ],
+  "archiveHashes": {
+    "baseline-v1": {
+      "raw/originals/examplevpn-guide-v1.md": "4c8cae54258f127ec911fe359da2efa09c3d1289ecb6aadf0006f5dbb6b3ffee",
+      "raw/sources/examplevpn-guide-v1.md": "4c8cae54258f127ec911fe359da2efa09c3d1289ecb6aadf0006f5dbb6b3ffee"
+    },
+    "stale-v2": {
+      "raw/originals/examplevpn-guide-v1.md": "4c8cae54258f127ec911fe359da2efa09c3d1289ecb6aadf0006f5dbb6b3ffee",
+      "raw/originals/examplevpn-guide-v2.md": "a6a1bf60a3f9f9dc16ce34a299cb3c3a6984683edb28f9bd9064acd83c2bef8f",
+      "raw/sources/examplevpn-guide-v1.md": "4c8cae54258f127ec911fe359da2efa09c3d1289ecb6aadf0006f5dbb6b3ffee",
+      "raw/sources/examplevpn-guide-v2.md": "a6a1bf60a3f9f9dc16ce34a299cb3c3a6984683edb28f9bd9064acd83c2bef8f"
+    },
+    "missing-summary-v2": {
+      "raw/originals/examplevpn-guide-v1.md": "4c8cae54258f127ec911fe359da2efa09c3d1289ecb6aadf0006f5dbb6b3ffee",
+      "raw/originals/examplevpn-guide-v2.md": "a6a1bf60a3f9f9dc16ce34a299cb3c3a6984683edb28f9bd9064acd83c2bef8f",
+      "raw/sources/examplevpn-guide-v1.md": "4c8cae54258f127ec911fe359da2efa09c3d1289ecb6aadf0006f5dbb6b3ffee",
+      "raw/sources/examplevpn-guide-v2.md": "a6a1bf60a3f9f9dc16ce34a299cb3c3a6984683edb28f9bd9064acd83c2bef8f"
+    },
+    "revised-v2": {
+      "raw/originals/examplevpn-guide-v1.md": "4c8cae54258f127ec911fe359da2efa09c3d1289ecb6aadf0006f5dbb6b3ffee",
+      "raw/originals/examplevpn-guide-v2.md": "a6a1bf60a3f9f9dc16ce34a299cb3c3a6984683edb28f9bd9064acd83c2bef8f",
+      "raw/sources/examplevpn-guide-v1.md": "4c8cae54258f127ec911fe359da2efa09c3d1289ecb6aadf0006f5dbb6b3ffee",
+      "raw/sources/examplevpn-guide-v2.md": "a6a1bf60a3f9f9dc16ce34a299cb3c3a6984683edb28f9bd9064acd83c2bef8f"
+    }
+  },
+  "baselineArchivesUnchanged": true,
+  "toolProvenance": {
+    "repository": "/Users/cfh00896102/Github/llm-wiki-example",
+    "head": "0c02fd346e9711d8b556cc2b94c841a2185ac77e",
+    "files": {
+      "scripts/wiki-lint.py": "b33d9eae89c4ca21da0add4b8c52e4d31a4ee05c8f30f08f257dbb0b0f820a40",
+      "scripts/wiki-graph-insights.py": "e32b7dc51279da862ace23578177ac9790f71c0e10ca1fd8798071f43cca2247",
+      "scripts/_common.py": "119970430caf1c58291b72247b89dc847ad5d6195323ad3f4db129827b34f7e1",
+      "scripts/question_bank_policy.py": "4ec2f389d117354b0c992361337383b1d5daf2eb5ece12dc5acbf91274977814"
+    }
+  }
+}

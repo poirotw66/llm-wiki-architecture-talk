@@ -1,0 +1,1 @@
+Add a v2 source summary. Revise the existing concept, client entity, and reusable question because v2 changes the 4.1+ procedure. Preserve the 4.0 branch and both archives. Do not infer that a newer document replaces every old claim. Queue the three content changes for human review; do not claim review completion.

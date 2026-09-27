@@ -1,0 +1,1 @@
+Create a source summary, one enrollment concept, a client entity, and one reusable question. Preserve the managed-device scope. All output stays draft. This is an agent-authored fixture decision record, not human approval.

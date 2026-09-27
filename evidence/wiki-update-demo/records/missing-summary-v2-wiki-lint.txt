@@ -1,0 +1,5 @@
+wiki-lint: 4 issue(s)
+broken link: wiki/concepts/device-enrollment.md -> ../sources/examplevpn-guide-v2.md
+broken link: wiki/entities/examplevpn-client.md -> ../sources/examplevpn-guide-v2.md
+broken link: wiki/queries/demo-101.md -> ../sources/examplevpn-guide-v2.md
+raw archive missing wiki/sources summary page: raw/sources/examplevpn-guide-v2.md (expected wiki/sources/examplevpn-guide-v2.md)

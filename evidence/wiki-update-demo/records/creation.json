@@ -1,0 +1,16 @@
+{
+  "createdAt": "2026-09-27T06:38:31.610990+00:00",
+  "actor": "process:presentation-demo",
+  "inputs": "synthetic, authored in this task",
+  "generation": "Interactive assistant authored pages and explicit change proposals. Python only materialized snapshots and metadata. No automated ingest/model API was executed.",
+  "faults": {
+    "stale-v2": "Intentionally retained all three v1 downstream pages after adding source v2.",
+    "missing-summary-v2": "Intentionally removed source summary v2 from a separate fixture."
+  },
+  "snapshots": [
+    "baseline-v1",
+    "stale-v2",
+    "revised-v2",
+    "missing-summary-v2"
+  ]
+}
