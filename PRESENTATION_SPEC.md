@@ -6,7 +6,7 @@
 |---|---|
 | Document ID | `llm-wiki-architecture-talk` |
 | Version | `3.2` |
-| Status | `Added Teams Agent VPN Knowledge Compilation candidate and 4-case regression evidence package` |
+| Status | `HTML aligned with v3.2; local compilation and regression run pending` |
 | Prepared on | `2026-09-27` |
 | Event | Hello World 2026 |
 | Duration | 28 minutes planned narration + 2 minutes buffer |
@@ -298,7 +298,7 @@ Teams Agent existing eval slice
 - [ ] 本機匯出 sanitized `teams-agent/data/sources/*.md` 到 `input-sources/`。
 - [ ] 執行 Knowledge Compilation，產生 `output/` artifacts。
 - [ ] 實際跑四題 regression，產生 `output/regression-results.json`。
-- [ ] `index.html` 主線同步 v3.2。
+- [x] `index.html` 的 15 頁主線、5 個附錄段落與講者稿同步 v3.2。
 
 ## 8. Next evidence needed for 95-point target
 
