@@ -1,0 +1,1543 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Hello World 2026 技術分享：Agentic RAG、LLM Wiki 與企業知識系統的架構演進。">
+  <meta name="theme-color" content="#f5f7f8">
+  <title>LLM Wiki：企業內部知識問答系統的架構演進</title>
+  <style>
+    :root {
+      --canvas: #f5f7f8;
+      --surface: #ffffff;
+      --ink: #17242b;
+      --muted: #4e6069;
+      --subtle: #65757c;
+      --rule: #cbd5d9;
+      --accent: #126b62;
+      --accent-soft: #dcefeb;
+      --dark: #132326;
+      --dark-ink: #f5f7f8;
+      --dark-muted: #c2d0d0;
+      --dark-accent: #8ed5c6;
+      --warning: #9a5a12;
+      --warning-soft: #f8edda;
+      --code: #edf2f3;
+      --sans: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+      --safe-x: clamp(1.25rem, 5vw, 5rem);
+      --safe-y: clamp(1.2rem, 4vw, 4rem);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--canvas); }
+    body { margin: 0; color: var(--ink); background: var(--canvas); font-family: var(--sans); }
+    button, input { font: inherit; }
+    button, a, input { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visible {
+      outline: 3px solid var(--accent); outline-offset: 3px;
+    }
+    a { color: var(--accent); text-underline-offset: .18em; }
+    code, pre { font-family: var(--mono); }
+    .skip-link {
+      position: fixed; z-index: 100; top: .5rem; left: .5rem; padding: .65rem .9rem;
+      color: white; background: var(--dark); transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .toolbar {
+      position: fixed; inset: 0 0 auto; z-index: 20; min-height: 3.25rem; display: flex;
+      align-items: center; justify-content: space-between; gap: .75rem; padding: .45rem var(--safe-x);
+      color: var(--ink); background: rgba(245,247,248,.96); border-bottom: 1px solid var(--rule);
+      backdrop-filter: blur(12px);
+    }
+    .brand { color: var(--ink); text-decoration: none; font: 700 .78rem/1.2 var(--mono); letter-spacing: .07em; white-space: nowrap; }
+    .toolbar-actions { display: flex; align-items: center; justify-content: flex-end; gap: .45rem; }
+    .toolbar button, .toolbar input {
+      min-height: 2.25rem; border: 1px solid var(--rule); border-radius: .2rem; padding: .35rem .7rem;
+      color: var(--ink); background: var(--surface); font-size: .82rem;
+    }
+    .toolbar button { cursor: pointer; }
+    .toolbar button[aria-pressed="true"] { color: white; border-color: var(--accent); background: var(--accent); }
+    .search-control { display: none; align-items: center; gap: .5rem; color: var(--muted); font-size: .78rem; }
+    .search-status { display: none; color: var(--muted); font-size: .75rem; }
+    .reading-mode .search-control { display: flex; }
+    .reading-mode .search-status { display: inline; }
+    .search-control input { width: min(20vw, 17rem); }
+    .presentation-mode .reading-only { display: none; }
+    .slide {
+      position: relative; display: none; width: 100%; min-height: 100svh; padding:
+        clamp(5.5rem, 8vh, 6.5rem) var(--safe-x) clamp(5.75rem, 8vh, 7rem);
+      overflow: auto; background: var(--canvas);
+    }
+    .slide.active { display: block; }
+    @media (prefers-reduced-motion: no-preference) {
+      .slide.active .slide-inner { animation: slide-in .2s ease both; }
+      @keyframes slide-in { from { opacity: .82; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    }
+    .slide-inner { width: min(100%, 1500px); min-height: calc(100svh - 12rem); margin-inline: auto; display: flex; flex-direction: column; }
+    .slide-meta { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: clamp(1.2rem, 3vh, 2.2rem); color: var(--subtle); }
+    .slide-meta p { margin: 0; }
+    .slide-id { font: 700 .82rem/1.2 var(--mono); letter-spacing: .08em; }
+    .slide-kind { font: 600 .72rem/1.3 var(--mono); letter-spacing: .07em; }
+    .slide-title { max-width: 23ch; margin: 0 0 clamp(1.35rem, 3vh, 2.2rem); font-size: clamp(2.2rem, 4.2vw, 4rem); line-height: 1.13; letter-spacing: -.045em; font-weight: 760; }
+    .eyebrow { margin: 0 0 .7rem; color: var(--accent); font: 700 .78rem/1.35 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+    .lede { max-width: 58ch; margin: -.4rem 0 1.5rem; color: var(--muted); font-size: clamp(1.08rem, 1.55vw, 1.5rem); line-height: 1.55; }
+    .conclusion {
+      margin-top: auto; padding: 1.1rem 0 0; border-top: 2px solid var(--accent);
+      font-size: clamp(1.15rem, 1.9vw, 1.8rem); line-height: 1.4; font-weight: 680;
+    }
+    .source-line { margin: 1rem 0 0; color: var(--subtle); font-size: clamp(.9rem, 1.125vw, 1.125rem); line-height: 1.4; }
+    .source-line a { margin-left: .45rem; }
+    .muted { color: var(--muted); }
+    .accent { color: var(--accent); }
+    .mono { font-family: var(--mono); }
+    .small-note {
+      margin: .9rem 0 0; padding-left: .8rem; border-left: 3px solid var(--accent);
+      color: var(--muted); font-size: clamp(.95rem, 1.25vw, 1.15rem); line-height: 1.45;
+    }
+    .warning-note { border-color: var(--warning); color: #624313; background: var(--warning-soft); padding: .8rem 1rem; }
+    .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }
+    .three-column { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.2rem, 2.5vw, 2.7rem); align-items: stretch; }
+    .editorial-rule { border-top: 1px solid var(--rule); }
+    .question {
+      max-width: 22ch; font-size: clamp(2.3rem, 5.2vw, 5rem); line-height: 1.2;
+      letter-spacing: -.04em; font-weight: 740;
+    }
+    .question-mark { color: var(--accent); }
+    .answer-layout { grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); }
+    .unknown-list { list-style: none; padding: 0; margin: 2rem 0 0; }
+    .unknown-list li { display: flex; gap: 1rem; align-items: baseline; padding: .82rem 0; border-top: 1px solid var(--rule); font-size: clamp(1.05rem, 1.55vw, 1.5rem); }
+    .unknown-list li:last-child { border-bottom: 1px solid var(--rule); }
+    .unknown-list b { min-width: 7.5rem; font-weight: 650; }
+    .unknown-list span { color: var(--muted); }
+    .unknown-mark { color: var(--warning) !important; font-family: var(--mono); font-weight: 700; }
+    .lanes { display: grid; gap: 0; border-top: 1px solid var(--rule); margin: 1rem 0 0; }
+    .lane { display: grid; grid-template-columns: minmax(11rem, 20%) 1fr; gap: 1rem; align-items: center; min-height: 5.2rem; padding: .8rem .25rem; border-bottom: 1px solid var(--rule); }
+    .lane h3 { margin: 0; color: var(--accent); font-size: clamp(1rem, 1.35vw, 1.32rem); }
+    .lane p { margin: 0; color: var(--ink); font-size: clamp(.95rem, 1.25vw, 1.2rem); line-height: 1.45; }
+    .lane .boundary { display: inline-block; margin-left: .6rem; color: var(--muted); font-size: .78em; }
+    .proposed-link { margin: 1rem 0 0 20%; padding: .65rem 1rem; border: 2px dashed var(--accent); color: var(--accent); font-size: .96rem; }
+    .flow-wrap { overflow-x: auto; padding-bottom: .4rem; }
+    .flow {
+      min-width: 820px; display: grid; grid-template-columns: repeat(var(--flow-count, 5), minmax(8rem, 1fr));
+      gap: 0; margin: 1.5rem 0 0; border-top: 2px solid var(--accent); border-bottom: 1px solid var(--rule);
+    }
+    .flow-step { position: relative; min-height: 9.5rem; padding: 1.15rem 1.15rem 1rem; border-right: 1px solid var(--rule); }
+    .flow-step:not(:last-child)::after { content: "→"; position: absolute; z-index: 2; top: 50%; right: -.48rem; color: var(--accent); background: var(--canvas); font: 700 1rem/1 var(--mono); transform: translateY(-50%); }
+    .flow-step:first-child { padding-left: .25rem; }
+    .flow-step:last-child { border-right: 0; }
+    .flow-step::before { content: ""; position: absolute; left: 0; top: -.36rem; width: .65rem; height: .65rem; background: var(--accent); }
+    .flow-step h3 { margin: 0 0 .55rem; font-size: clamp(1rem, 1.25vw, 1.25rem); }
+    .flow-step p { margin: 0; color: var(--muted); font-size: clamp(.86rem, 1vw, 1rem); line-height: 1.42; }
+    .flow-arrow { color: var(--accent); font: 700 1.5rem/1 var(--mono); }
+    .branch-note { display: flex; gap: .8rem; align-items: center; width: min(34rem, 82%); margin: .8rem 0 0 34%; padding: .6rem .8rem; border-left: 3px dashed var(--accent); color: var(--muted); font-size: .95rem; }
+    .budget-band { padding: .65rem .9rem; background: var(--accent-soft); color: var(--accent); font-size: .9rem; font-weight: 650; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: clamp(.92rem, 1.2vw, 1.14rem); line-height: 1.4; }
+    .data-table th, .data-table td { text-align: left; vertical-align: top; padding: .72rem .7rem; border-bottom: 1px solid var(--rule); }
+    .data-table thead th { color: var(--accent); font-size: .85em; letter-spacing: .025em; border-top: 2px solid var(--accent); }
+    .data-table td:first-child, .data-table th:first-child { padding-left: .1rem; }
+    .data-table .strong { font-weight: 720; }
+    .data-table .number { white-space: nowrap; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+    .demo-source { max-width: 28rem; padding: 1.1rem 1.2rem; border-left: 4px solid var(--accent); background: var(--surface); }
+    .demo-source h3 { margin: .3rem 0 .8rem; font-size: 1.15rem; }
+    .demo-source p { margin: .4rem 0; color: var(--muted); font-size: .94rem; line-height: 1.45; }
+    .bar-group { display: grid; gap: 1rem; margin-top: 1.1rem; }
+    .bar-row { display: grid; grid-template-columns: minmax(9rem, 24%) 1fr minmax(8rem, 19%); gap: .8rem; align-items: center; }
+    .bar-row > b { font-size: clamp(.92rem, 1.1vw, 1.08rem); }
+    .bar-track { height: 1rem; position: relative; background: #e1e7e9; border-left: 2px solid var(--ink); }
+    .bar-fill { display: block; height: 100%; background: var(--accent); }
+    .bar-value { font: 700 .9rem/1.2 var(--mono); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .axis { display: flex; justify-content: space-between; margin: .25rem 20% 0 25%; color: var(--subtle); font: .7rem/1.2 var(--mono); }
+    .case-stations { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin: 1.5rem 0 0; border-block: 2px solid var(--accent); }
+    .case-station { position: relative; padding: 1.2rem 1.4rem; border-right: 1px solid var(--rule); }
+    .case-station:last-child { border-right: 0; }
+    .case-station p { margin: 0 0 .45rem; color: var(--muted); font-size: .9rem; }
+    .case-station strong { display: block; font: 720 clamp(1.8rem, 3vw, 2.8rem)/1.1 var(--mono); }
+    .case-station strong.good { color: var(--accent); }
+    .case-station strong.empty { color: var(--warning); }
+    .evidence-token { display: inline-grid; width: 2rem; height: 2rem; place-items: center; margin-top: .35rem; border-radius: 50%; color: white; background: var(--accent); font: 700 .8rem/1 var(--mono); }
+    .evidence-token.missing { color: var(--warning); border: 2px solid var(--warning); background: transparent; }
+    .investigation { margin: 1rem 0 0; padding: .75rem 1rem; border-left: 3px dashed var(--accent); color: var(--muted); }
+    .knowledge-excerpt { padding: 1.15rem 1.3rem; background: var(--surface); border-left: 4px solid var(--accent); font-size: clamp(1.1rem, 1.65vw, 1.5rem); line-height: 1.55; }
+    .annotation-list { list-style: none; margin: 1.2rem 0 0; padding: 0; border-top: 1px solid var(--rule); }
+    .annotation-list li { display: grid; grid-template-columns: minmax(8rem, 25%) 1fr; gap: .8rem; padding: .6rem 0; border-bottom: 1px solid var(--rule); font-size: .98rem; line-height: 1.4; }
+    .annotation-list b { color: var(--accent); }
+    .doc-column { padding-top: .7rem; border-top: 3px solid var(--rule); }
+    .doc-column.canonical { border-color: #7d9997; }
+    .doc-column.summary { border-color: var(--accent); }
+    .doc-column h3 { margin: .65rem 0 1rem; font: 700 .83rem/1.3 var(--mono); color: var(--muted); }
+    .doc-column p { margin: .65rem 0; font-size: clamp(.92rem, 1.12vw, 1.07rem); line-height: 1.48; }
+    .doc-column .highlight { color: var(--accent); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .2em; font-weight: 690; }
+    .doc-fragment { min-height: 8.5rem; }
+    .yaml-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(15rem, .9fr); gap: 2rem; align-items: start; }
+    .code-window { margin: 0; padding: 1.2rem 1.35rem; overflow: auto; color: var(--ink); background: var(--code); border-left: 4px solid var(--accent); font: .94rem/1.55 var(--mono); tab-size: 2; }
+    .field-legend { list-style: none; margin: 0; padding: 0; }
+    .field-legend li { padding: .65rem 0; border-bottom: 1px solid var(--rule); font-size: .98rem; line-height: 1.4; }
+    .field-legend code { color: var(--accent); font-size: .9em; }
+    .relationship-map { display: grid; grid-template-columns: minmax(11rem, 1fr) auto minmax(12rem, 1.2fr) auto minmax(10rem, .9fr); gap: .8rem; align-items: center; margin: 2rem 0; }
+    .rel-node { min-height: 7rem; display: flex; flex-direction: column; justify-content: center; padding: .9rem 1rem; border: 1px solid var(--rule); background: var(--surface); }
+    .rel-node strong { color: var(--accent); font-size: 1rem; }
+    .rel-node span { margin-top: .45rem; font-size: .9rem; line-height: 1.35; }
+    .rel-arrow { text-align: center; color: var(--accent); font: 600 .82rem/1.25 var(--mono); }
+    .rel-query { grid-column: 2 / 5; justify-self: center; width: min(100%, 28rem); margin-top: .35rem; padding: .85rem 1rem; border: 1px dashed var(--accent); text-align: center; }
+    .review-rails { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.4rem; }
+    .review-rail { padding-top: .75rem; border-top: 3px solid var(--accent); }
+    .review-rail.later { border-top-style: dashed; }
+    .review-rail h3 { margin: .45rem 0; font-size: 1.15rem; }
+    .review-rail p { margin: .35rem 0; color: var(--muted); font-size: .95rem; line-height: 1.45; }
+    .dialogue { display: grid; gap: .75rem; }
+    .dialogue-line { max-width: 43rem; padding: .7rem 1rem; border-left: 3px solid var(--rule); background: rgba(255,255,255,.64); }
+    .dialogue-line.assistant { margin-left: 1.6rem; border-color: var(--accent); }
+    .dialogue-line small { display: block; margin-bottom: .25rem; color: var(--muted); font: 700 .72rem/1.2 var(--mono); }
+    .dialogue-line p { margin: 0; font-size: clamp(.92rem, 1.12vw, 1.08rem); line-height: 1.43; }
+    .evidence-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .evidence-table th, .evidence-table td { padding: .55rem .45rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--rule); }
+    .evidence-table th { width: 43%; color: var(--accent); }
+    .evidence-table th:first-child, .evidence-table td:first-child { border-top: 2px solid var(--accent); }
+    .workflow-strip { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem; margin: 1rem 0; font-size: .88rem; line-height: 1.4; }
+    .workflow-strip span { padding: .28rem .45rem; border-bottom: 1px solid var(--rule); }
+    .workflow-strip b { color: var(--accent); font: 700 1rem/1 var(--mono); }
+    .interface-band { padding: .9rem 1rem; background: var(--accent-soft); }
+    .proposed-bridge { margin: .8rem 0; padding: .7rem .9rem; border: 1px dashed var(--accent); color: var(--accent); font-size: .95rem; }
+    .interface-band h3 { margin: 0 0 .35rem; font-size: 1.05rem; }
+    .interface-band p { margin: .2rem 0; font: .9rem/1.4 var(--mono); overflow-wrap: anywhere; }
+    .release-split { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-top: .75rem; color: var(--muted); font-size: .82rem; }
+    .release-split span { padding-top: .45rem; border-top: 1px solid var(--rule); }
+    .chart-pair { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.3rem, 4vw, 4rem); margin: 1.3rem 0; }
+    .chart { padding-top: .75rem; border-top: 2px solid var(--ink); }
+    .chart h3 { margin: .4rem 0 1rem; font-size: 1rem; }
+    .chart-row { display: grid; grid-template-columns: 8.5rem 1fr 6rem; gap: .6rem; align-items: center; margin: .8rem 0; font-size: .83rem; }
+    .chart-track { height: .85rem; border-left: 2px solid var(--ink); background: #e1e7e9; }
+    .chart-track span { display: block; height: 100%; background: var(--accent); }
+    .chart-row.secondary .chart-track span { background: #9eaaae; }
+    .chart-row strong { text-align: right; font: 650 .82rem/1.2 var(--mono); }
+    .responsibility-band { margin: 1.2rem 0 0; padding: 1rem 1.2rem; border-top: 2px solid var(--accent); background: var(--surface); }
+    .responsibility-band h3 { margin: 0 0 .45rem; font-size: 1.15rem; }
+    .responsibility-band p { margin: 0; color: var(--muted); font-size: .98rem; line-height: 1.45; }
+    .interface-separator { margin: .55rem 0; padding: .45rem; border-block: 1px dashed var(--accent); color: var(--accent); text-align: center; font: 700 .78rem/1.2 var(--mono); }
+    .closing-layout { display: grid; grid-template-columns: 1.1fr .9fr; gap: 4rem; align-items: center; }
+    .closing-rail { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; margin: 0 0 1.1rem; color: var(--dark-muted); font-size: .82rem; }
+    .closing-rail b { color: var(--dark-accent); font: 700 .9rem/1 var(--mono); }
+    .closing-title { max-width: 15ch; margin: .5rem 0 1.2rem; font-size: clamp(2.5rem, 5vw, 5.2rem); line-height: 1.12; letter-spacing: -.05em; }
+    .known-next { width: 100%; border-collapse: collapse; font-size: .96rem; }
+    .known-next th, .known-next td { padding: .7rem .65rem; border-bottom: 1px solid rgba(245,247,248,.25); text-align: left; vertical-align: top; line-height: 1.38; }
+    .known-next th { width: 34%; color: var(--dark-accent); }
+    .cover-layout { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(19rem, .88fr); align-items: center; gap: clamp(2rem, 7vw, 7rem); }
+    .cover-title { max-width: 13.2ch; margin: .3rem 0 1.4rem; font-size: clamp(2.6rem, 3.5vw, 4.3rem); line-height: 1.12; letter-spacing: -.055em; font-weight: 780; }
+    .cover-title span { display: block; }
+    .cover-subtitle { max-width: 30ch; color: var(--dark-muted); font-size: clamp(1.1rem, 1.7vw, 1.65rem); line-height: 1.45; }
+    .cover-evidence { padding: 1.5rem 1.6rem; border-left: 2px solid var(--dark-accent); background: rgba(255,255,255,.045); }
+    .cover-evidence .eyebrow { color: var(--dark-accent); }
+    .cover-evidence h3 { margin: .2rem 0 1rem; font-size: clamp(1.15rem, 1.5vw, 1.5rem); }
+    .cover-evidence p { margin: .5rem 0; color: var(--dark-muted); font-size: .92rem; line-height: 1.4; }
+    .cover-evidence a, .theme-dark a { color: var(--dark-accent); }
+    .cover-meta { margin-top: 2rem; color: var(--dark-muted); font: .78rem/1.4 var(--mono); }
+    .theme-dark { color: var(--dark-ink); background: var(--dark); }
+    .theme-dark .slide-meta { color: var(--dark-muted); }
+    .theme-dark .slide-kind { color: var(--dark-accent); }
+    .theme-dark .eyebrow { color: var(--dark-accent); }
+    .theme-dark .conclusion { border-color: var(--dark-accent); }
+    .theme-dark .source-line { color: var(--dark-muted); }
+    .theme-dark .source-line a { color: var(--dark-accent); }
+    .type-note { font: 700 .78rem/1.2 var(--mono); letter-spacing: .08em; }
+    [data-step] { transition: opacity .2s ease, transform .2s ease; }
+    .presentation-mode [data-step][data-visible="false"] { visibility: hidden; opacity: 0; transform: translateY(.35rem); }
+    .presentation-mode [data-step][data-visible="true"] { visibility: visible; opacity: 1; transform: none; }
+    .step-indicator { min-height: 1.2rem; margin: .75rem 0 0; color: var(--subtle); font: .72rem/1.2 var(--mono); }
+    .reader-notes { display: none; }
+    .reader-notes h3 { margin: 0 0 .55rem; font-size: 1.05rem; }
+    .reader-notes h4 { margin: 1rem 0 .35rem; color: var(--accent); font-size: .83rem; }
+    .reader-notes p, .reader-notes li { color: var(--muted); font-size: .94rem; line-height: 1.55; }
+    .reader-notes ul { margin: .2rem 0 0; padding-left: 1.2rem; }
+    .reading-mode { padding-top: 3.25rem; }
+    .reading-mode .slide { display: block; width: min(100%, 1500px); min-height: 0; margin: 2rem auto; padding: clamp(2rem, 5vw, 5rem); border: 1px solid var(--rule); overflow: visible; }
+    .reading-mode .slide[hidden], .reading-mode .source-index[hidden] { display: none !important; }
+    .reading-mode .slide-inner { min-height: 0; }
+    .reading-mode .reader-notes { display: block; margin-top: 2.1rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); }
+    .reading-mode .theme-dark .reader-notes { border-color: rgba(245,247,248,.28); }
+    .reading-mode .step-indicator { display: none; }
+    .reading-mode [data-step] { visibility: visible !important; opacity: 1 !important; transform: none !important; }
+    .reading-mode .conclusion { margin-top: 1.6rem; }
+    .reading-mode .source-index { display: block; }
+    .reading-mode .reader-notes a, .source-index a { overflow-wrap: anywhere; }
+    .source-index { display: none; width: min(100% - 2rem, 1500px); margin: 3rem auto 5rem; padding: clamp(1.5rem, 4vw, 3rem); border-top: 3px solid var(--accent); background: var(--surface); }
+    .source-index h2 { margin: 0 0 1.2rem; font-size: clamp(1.6rem, 3vw, 2.4rem); }
+    .source-index h3 { margin: 0 0 .35rem; font-size: 1rem; }
+    .source-index p { margin: .25rem 0; color: var(--muted); font-size: .88rem; line-height: 1.45; }
+    .source-index ol { margin: 0; padding-left: 1.6rem; }
+    .source-index li { padding: .7rem 0; border-bottom: 1px solid var(--rule); }
+    .speaker-notes {
+      width: 100%; padding-top: .3rem;
+    }
+    .speaker-notes h3 { margin: 0 0 .55rem; }
+    .presentation-mode .slide:not(.active) .speaker-notes,
+    .presentation-mode .slide.active .speaker-notes:not(.notes-open-content) { display: none; }
+    .notes-panel {
+      position: fixed; z-index: 35; right: 1rem; bottom: 5.4rem; width: min(40rem, calc(100vw - 2rem));
+      max-height: min(65vh, 42rem); overflow: auto; padding: 1.2rem 1.4rem; color: var(--ink);
+      background: var(--surface); border: 1px solid var(--accent); box-shadow: 0 1rem 3rem rgba(19,35,38,.18);
+    }
+    .notes-panel[hidden] { display: none; }
+    .notes-panel h2 { margin: 0 0 .6rem; font-size: 1rem; }
+    .notes-panel p, .notes-panel li { font-size: .91rem; line-height: 1.5; }
+    .notes-panel .reader-notes { display: block; }
+    .controls {
+      position: fixed; z-index: 21; inset: auto 0 0; min-height: 3.5rem; display: flex;
+      align-items: center; justify-content: space-between; gap: .6rem; padding: .4rem var(--safe-x);
+      background: rgba(245,247,248,.97); border-top: 1px solid var(--rule);
+    }
+    .controls-group { display: flex; align-items: center; gap: .45rem; }
+    .controls button, .dialog button, .dialog a {
+      min-height: 2.35rem; padding: .4rem .72rem; border: 1px solid var(--rule); border-radius: .2rem;
+      color: var(--ink); background: var(--surface); cursor: pointer; font-size: .82rem; text-decoration: none;
+    }
+    .controls button:hover, .dialog button:hover, .dialog a:hover { border-color: var(--accent); color: var(--accent); }
+    .controls button:disabled { opacity: .42; cursor: default; }
+    .page-count { min-width: 5.5rem; color: var(--muted); text-align: center; font: 700 .77rem/1 var(--mono); }
+    .reading-mode .controls { display: none; }
+    .dialog-backdrop {
+      position: fixed; z-index: 40; inset: 0; display: none; align-items: center; justify-content: center;
+      padding: 1rem; background: rgba(19,35,38,.72);
+    }
+    .dialog-backdrop.open { display: flex; }
+    .dialog {
+      width: min(62rem, 100%); max-height: min(84vh, 58rem); overflow: auto; padding: 1.4rem;
+      color: var(--ink); background: var(--canvas); box-shadow: 0 1rem 4rem rgba(0,0,0,.24);
+    }
+    .dialog-header { display: flex; justify-content: space-between; align-items: start; gap: 1rem; margin-bottom: 1rem; }
+    .dialog-header h2 { margin: 0; font-size: 1.5rem; }
+    .overview-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.2rem; }
+    .overview-list button { display: grid; grid-template-columns: 3.4rem 1fr; align-items: baseline; gap: .5rem; width: 100%; min-height: 3rem; padding: .5rem 0; border: 0; border-bottom: 1px solid var(--rule); background: transparent; text-align: left; cursor: pointer; }
+    .overview-list .overview-id { color: var(--accent); font: 700 .76rem/1.25 var(--mono); }
+    .overview-list .overview-title { font-size: .9rem; line-height: 1.35; }
+    .shortcut-list { display: grid; grid-template-columns: 1fr auto; gap: .4rem 1rem; margin: 0; }
+    .shortcut-list dt { color: var(--muted); }
+    .shortcut-list dd { margin: 0; font: 700 .78rem/1.35 var(--mono); }
+    .source-section { scroll-margin-top: 5rem; padding: 1rem 0; }
+    .source-index .source-section:target { outline: 2px solid var(--accent); outline-offset: .45rem; }
+    .print-only { display: none; }
+    @media (max-width: 760px) {
+      :root { --safe-x: 1.1rem; --safe-y: 1.1rem; }
+      .toolbar { flex-wrap: wrap; min-height: 3.5rem; padding: .4rem 1rem; }
+      .toolbar-actions { gap: .3rem; }
+      .toolbar button { padding-inline: .52rem; font-size: .74rem; }
+      .brand { font-size: .68rem; }
+      .search-control { width: 100%; }
+      .search-control input { flex: 1; width: auto; }
+      .slide { min-height: 100svh; padding: 6.3rem 1.1rem 5.5rem; }
+      .slide-inner { min-height: calc(100svh - 12rem); }
+      .slide-meta { margin-bottom: 1.15rem; }
+      .slide-title { font-size: clamp(2rem, 9vw, 3rem); }
+      .cover-layout, .closing-layout, .two-column, .three-column, .yaml-grid, .chart-pair { grid-template-columns: 1fr; gap: 1.6rem; }
+      .cover-title { max-width: 12ch; font-size: clamp(2.6rem, 11vw, 4.3rem); }
+      .flow { min-width: 700px; }
+      .flow-step { min-height: 8rem; padding-inline: .75rem; }
+      .lane { grid-template-columns: 1fr; gap: .35rem; min-height: 0; }
+      .proposed-link { margin-left: 0; width: 100%; }
+      .branch-note { width: 100%; margin-left: 0; }
+      .bar-row { grid-template-columns: 1fr auto; gap: .4rem .8rem; }
+      .bar-track { grid-column: 1 / 3; grid-row: 2; }
+      .bar-value { grid-column: 2; grid-row: 1; }
+      .axis { margin-left: 0; margin-right: 0; }
+      .case-stations { grid-template-columns: 1fr; }
+      .case-station { border-right: 0; border-bottom: 1px solid var(--rule); }
+      .case-station:last-child { border-bottom: 0; }
+      .relationship-map { grid-template-columns: 1fr; }
+      .rel-arrow { padding: .2rem 0; }
+      .rel-arrow span[aria-hidden="true"] { display: block; transform: rotate(90deg); }
+      .rel-query { grid-column: auto; width: 100%; }
+      .review-rails { grid-template-columns: 1fr; gap: 1rem; }
+      .dialog-line { max-width: none; }
+      .evidence-table { font-size: .84rem; }
+      .reading-mode { padding-top: 6.4rem; }
+      .reading-mode .slide { margin: 1rem auto; padding: 1.35rem 1.1rem; }
+      .source-index { width: calc(100% - 2rem); }
+      .controls { min-height: 3.35rem; padding: .35rem .6rem; }
+      .controls button { min-height: 2.25rem; padding: .35rem .5rem; font-size: .72rem; }
+      .controls-group { gap: .22rem; }
+      .page-count { min-width: 4.3rem; font-size: .7rem; }
+      .notes-panel { bottom: 4.5rem; }
+      .overview-list { grid-template-columns: 1fr; }
+      .dialog { padding: 1rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+    @media print {
+      @page { size: 16in 9in landscape; margin: 0; }
+      html, body { background: white !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .toolbar, .controls, .notes-panel, .dialog-backdrop, .skip-link { display: none !important; }
+      .slide, .reading-mode .slide, .slide.active {
+        display: block !important; width: 16in; min-height: 9in; height: auto; margin: 0; padding: .55in .72in;
+        overflow: visible; border: 0; break-after: page; page-break-after: always;
+      }
+      .slide-inner { min-height: 7.9in; }
+      .reading-mode .reader-notes { display: none; }
+      .reader-notes { display: none !important; }
+      [data-step], .presentation-mode [data-step][data-visible="false"] { visibility: visible !important; opacity: 1 !important; transform: none !important; }
+      .source-index { display: block !important; width: 16in; margin: 0; padding: .6in .72in; break-before: page; }
+      .source-line, .small-note { font-size: 12pt; }
+      .slide-title { font-size: 38pt; }
+      .flow-step p, .lane p, .data-table, .doc-column p, .dialogue-line p, .evidence-table, .reader-notes p { font-size: 14pt; }
+      .source-index p, .source-index h3 { font-size: 12pt; }
+      .source-index a { color: inherit; }
+      .print-only { display: block; }
+    }
+  </style>
+</head>
+<body class="presentation-mode">
+  <a class="skip-link" href="#s01">跳到簡報內容</a>
+  <header class="toolbar" aria-label="簡報工具列">
+    <a class="brand" href="#s01">HELLO WORLD 2026 · JUSTIN</a>
+    <div class="toolbar-actions">
+      <button id="presentationMode" type="button" aria-pressed="true">簡報</button>
+      <button id="readingMode" type="button" aria-pressed="false">閱讀</button>
+      <label class="search-control reading-only" for="searchInput">
+        <span>搜尋</span>
+        <input id="searchInput" type="search" placeholder="搜尋正文、筆記與來源" autocomplete="off">
+      </label>
+      <span class="search-status" id="searchStatus" aria-live="polite"></span>
+    </div>
+  </header>
+
+  <main id="deck" aria-label="LLM Wiki 分享簡報">
+    <article id="s01" class="slide theme-dark active" data-section="S01" data-title="LLM Wiki：企業內部知識問答系統的架構演進" data-timing="00:00–00:45" data-kind="FRAMING" aria-roledescription="投影片" aria-label="S01，封面">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">HELLO WORLD 2026</p><p class="slide-kind">S01 · 00:00–00:45 · FRAMING</p></div>
+        <div class="cover-layout">
+          <div>
+            <p class="eyebrow">企業知識工程</p>
+            <h1 class="cover-title"><span>LLM Wiki：</span><span>企業內部知識問答系統</span><span>的架構演進</span></h1>
+            <p class="cover-subtitle">一次回答背後，知識如何被取得、整理與維護</p>
+            <p class="cover-meta">Hello World 2026 · Justin</p>
+          </div>
+          <div class="cover-evidence" aria-label="合成案例的來源、主張與引用">
+            <p class="eyebrow">合成教學案例 · 來源 D1</p>
+            <h3>ExampleVPN 裝置登錄與登入指南</h3>
+            <p><strong>適用範圍</strong>　受管理筆電 · ExampleVPN 4.x</p>
+            <p><strong>來源主張</strong>　DEMO-101 表示裝置登錄尚未完成</p>
+            <p><strong>引用</strong>　服務台確認登錄紀錄 <a href="#source-demo-01">[D1]</a></p>
+          </div>
+        </div>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>今天分享的是企業內部問答的架構思考。我會先說 Agentic RAG 怎麼找資料，再看評測告訴我們哪些問題還存在，接著用一個完整例子說明 LLM Wiki 如何整理來源與維護。最後回到 Teams IT Agent，討論這些知識怎麼進入服務流程，以及哪些部分適合交給共用知識平台。</p>
+          <h4>轉場</h4><p>先從一個每個服務台都可能遇到的提問開始。</p>
+          <h4>來源與主張類型</h4><p>講題來自本任務；案例局部使用 DEMO-01。類型：FRAMING。</p>
+          <h4>驗收</h4><p>正式題目不被改寫；沒有模型能力、上線狀態或效益數字的無來源宣稱。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="s02" class="slide" data-section="S02" data-title="一句提問，還缺哪些條件？" data-timing="00:45–02:00" data-kind="ILLUSTRATIVE" data-max-step="2" aria-roledescription="投影片" aria-label="S02，一句提問，還缺哪些條件？">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">01 / 問題與系統邊界</p><p class="slide-kind">S02 · 00:45–02:00 · ILLUSTRATIVE</p></div>
+        <p class="eyebrow">合成教學案例</p>
+        <blockquote class="question">「我在筆電上登入 ExampleVPN，一直進不去<span class="question-mark">。</span>」</blockquote>
+        <div data-step="2">
+          <ul class="unknown-list" aria-label="目前未知的條件">
+            <li><b>錯誤訊息</b><span class="unknown-mark">未知</span></li>
+            <li><b>裝置狀態</b><span class="unknown-mark">未知</span></li>
+            <li><b>用戶端版本</b><span class="unknown-mark">未知</span></li>
+          </ul>
+          <p class="conclusion">目前資訊不足以選定處理方式</p>
+          <p class="source-line">ExampleVPN 為合成教學案例 · <a href="#source-demo-01">DEMO-01</a></p>
+        </div>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>如果系統立刻回答重新安裝，聽起來很有行動感，但這句提問其實沒有給我們錯誤訊息、裝置狀態或版本。問題可能需要追問，也可能已有適用的指南。我們先保留這個案例，後面會用它追蹤來源如何被整理，以及回答怎麼取得足夠依據。</p>
+          <h4>轉場</h4><p>要處理這個缺口，需要先看一次回答穿過哪些系統。</p>
+          <h4>來源與主張類型</h4><p><a href="#source-demo-01">DEMO-01 合成教學案例</a>。類型：ILLUSTRATIVE。</p>
+          <h4>驗收</h4><p>不提前出現 DEMO-101；不把未知條件當成已知；不展示真實使用者對話。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="s03" class="slide" data-section="S03" data-title="企業問答的責任分工" data-timing="02:00–03:15" data-kind="IMPLEMENTED + PROPOSED" data-max-step="4" aria-roledescription="投影片" aria-label="S03，企業問答的責任分工">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">01 / 問題與系統邊界</p><p class="slide-kind">S03 · 02:00–03:15 · IMPLEMENTED + PROPOSED</p></div>
+        <p class="eyebrow">系統地圖</p><h2 class="slide-title">企業問答的責任分工</h2>
+        <div class="lanes" aria-label="四條責任泳道">
+          <div class="lane" data-step="1"><h3>服務入口</h3><p>Teams　／　使用者身分　／　對話</p></div>
+          <div class="lane" data-step="2"><h3>業務流程</h3><p>辨識問題　／　追問　／　工單　／　人工接手</p></div>
+          <div class="lane" data-step="3"><h3>知識服務</h3><p>取得證據　／　產生回答　／　提供來源 <span class="boundary">實線：可定位的服務邊界</span></p></div>
+          <div class="lane" data-step="4"><h3>知識維護</h3><p>來源整理　／　責任人　／　版本　／　更新</p></div>
+        </div>
+        <p class="proposed-link" data-step="4">LLM Wiki 範本 <span aria-hidden="true">⇢</span> 知識服務　·　虛線：接軌設計，尚未宣稱已整合</p>
+        <p class="conclusion" data-step="4">一次可靠的回答，需要這些責任彼此對齊</p>
+        <p class="source-line">來源：<a href="#source-src-07">SRC-07</a>、<a href="#source-src-08">SRC-08</a>、<a href="#source-src-03">SRC-03</a></p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>Teams 接收訊息，業務流程負責追問、工單與人員接手，知識服務處理證據與回答。這次另外要放大的，是來源怎麼變成可維護的知識。圖上的虛線代表接軌方向；Wiki 範本與 Teams Agent 是不同的實作脈絡，不能因為畫在一起就當成整合已完成。</p>
+          <h4>轉場</h4><p>先放大知識服務裡的一次查詢。</p>
+          <h4>來源與主張類型</h4><p><a href="#source-src-07">SRC-07</a>、<a href="#source-src-08">SRC-08</a>、<a href="#source-src-03">SRC-03</a>。類型：IMPLEMENTED + PROPOSED。</p>
+          <h4>驗收</h4><p>業務流程與檢索內部流程分層；原始碼存在與部署驗收分開。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="s04" class="slide" data-section="S04" data-title="Agentic RAG 的查詢流程" data-timing="03:15–04:45" data-kind="DOCUMENTED + IMPLEMENTED" data-max-step="5" aria-roledescription="投影片" aria-label="S04，Agentic RAG 的查詢流程">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">02 / Agentic RAG 與診斷</p><p class="slide-kind">S04 · 03:15–04:45 · DOCUMENTED + IMPLEMENTED</p></div>
+        <p class="eyebrow">概念化流程 · 非逐函式呼叫圖</p><h2 class="slide-title">Agentic RAG 的查詢流程</h2>
+        <div class="budget-band">全流程受時間、呼叫次數與證據 token 預算限制</div>
+        <div class="flow-wrap" tabindex="0" aria-label="可水平捲動的查詢流程">
+          <div class="flow" style="--flow-count:5">
+            <div class="flow-step" data-step="1"><h3>Query + user context</h3><p>問題與使用者脈絡</p></div>
+            <div class="flow-step" data-step="2"><h3>Retrieval</h3><p>詞彙與向量訊號</p></div>
+            <div class="flow-step" data-step="3"><h3>Relevance check</h3><p>判斷候選是否足夠</p></div>
+            <div class="flow-step" data-step="4"><h3>Evidence selection</h3><p>選擇可交給回答的證據</p></div>
+            <div class="flow-step" data-step="5"><h3>Answer + citations</h3><p>回答並提供來源</p></div>
+          </div>
+        </div>
+        <p class="branch-note" data-step="5"><strong>條件分支</strong>　相關性不足時，必要才改寫查詢並重查；不是無限循環。</p>
+        <p class="source-line">依專案結構整理 · <a href="#source-src-13">SRC-13</a></p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>Agentic RAG 讓查詢過程能根據結果調整。先找到候選，再判斷相關性，必要時改寫問題或補查，最後選擇證據交給回答階段。這裡的自主性仍需要預算。每次多查一次，都會增加延遲或成本；每個候選也不一定能放進最後的 context。</p>
+          <h4>轉場</h4><p>所以除了能不能查到資料，我們也要決定何時繼續、何時追問、何時停止。</p>
+          <h4>來源與主張類型</h4><p><a href="#source-src-13">SRC-13</a>。類型：DOCUMENTED + IMPLEMENTED。</p>
+          <h4>驗收</h4><p>不虛構每題都有 planner；不標示未測量的逐階段毫秒數；不以無限回圈表示自主搜尋。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="s05" class="slide" data-section="S05" data-title="查詢控制與停止條件" data-timing="04:45–06:00" data-kind="ILLUSTRATIVE + PROPOSED" data-max-step="4" aria-roledescription="投影片" aria-label="S05，查詢控制與停止條件">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">02 / Agentic RAG 與診斷</p><p class="slide-kind">S05 · 04:45–06:00 · ILLUSTRATIVE + PROPOSED</p></div>
+        <p class="eyebrow">設計判準</p><h2 class="slide-title">查詢控制與停止條件</h2>
+        <div class="two-column">
+          <div>
+            <p class="eyebrow">合成教學案例 · DEMO-01</p>
+            <blockquote class="knowledge-excerpt">我在筆電上登入 ExampleVPN，一直進不去。</blockquote>
+            <ul class="unknown-list"><li><b>錯誤訊息</b><span>未知</span></li><li><b>裝置狀態</b><span>未知</span></li><li><b>用戶端版本</b><span>未知</span></li></ul>
+            <p class="source-line">ExampleVPN 為合成教學案例</p>
+          </div>
+          <div>
+            <table class="data-table">
+              <thead><tr><th>目前資訊</th><th>合理的下一步</th></tr></thead>
+              <tbody>
+                <tr data-step="1"><td>關鍵條件未知</td><td>追問錯誤訊息、裝置與版本</td></tr>
+                <tr data-step="2"><td>已找到適用證據</td><td>回答並附來源</td></tr>
+                <tr data-step="3"><td>資料互相衝突或不適用</td><td>說明缺口，轉人工確認</td></tr>
+                <tr data-step="4"><td>執行預算用完</td><td>回報未完成原因，保留後續路徑</td></tr>
+              </tbody>
+            </table>
+            <p class="small-note">設計判準；不等同每一條已部署</p>
+          </div>
+        </div>
+        <p class="conclusion">查詢策略能改善證據取得；文件本身的缺口仍需處理</p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>同樣是沒有回答，缺少使用者條件、來源不足和執行逾時是不同原因，後續處理也不同。這張表是我們用來檢查設計的判準。Agent 可以透過追問補足資訊，透過重查取得證據，但文件若沒有適用範圍，還是需要從來源整理這一端處理。</p>
+          <h4>轉場</h4><p>接著用評測把「看起來能回答」拆成可檢查的結果。</p>
+          <h4>來源與主張類型</h4><p><a href="#source-demo-01">DEMO-01</a>。本頁為設計判準。類型：ILLUSTRATIVE + PROPOSED。</p>
+          <h4>驗收</h4><p>逾時與查無資料分開；不把 Wiki 當成所有執行失敗的解法。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="s06" class="slide" data-section="S06" data-title="評測資料與判定範圍" data-timing="06:00–07:30" data-kind="MEASURED" data-max-step="3" aria-roledescription="投影片" aria-label="S06，評測資料與判定範圍">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">02 / Agentic RAG 與診斷</p><p class="slide-kind">S06 · 06:00–07:30 · MEASURED</p></div>
+        <p class="eyebrow">固定資料集與指定版本</p><h2 class="slide-title">評測資料與判定範圍</h2>
+        <div class="two-column">
+          <div>
+            <p class="question">156 題</p><p class="lede">frozen blind test · L3 live-model run</p>
+            <div class="flow-wrap" aria-label="題目組成比例">
+              <div class="bar-track" style="height:1.5rem"><span class="bar-fill" style="width:87.18%"></span><span class="bar-fill" style="position:absolute;left:87.18%;width:12.82%;background:#9eaaae"></span></div>
+              <p class="source-line"><strong>136 題單輪</strong> + <strong>20 題多輪</strong></p>
+            </div>
+            <div data-step="2" style="margin-top:1.2rem;padding-top:.8rem;border-top:2px solid var(--accent)">
+              <p class="eyebrow">另一種分類維度</p><p><strong>116 題</strong>有目標證據標註</p>
+            </div>
+          </div>
+          <div>
+            <p class="eyebrow">三個檢查點</p>
+            <div class="lanes">
+              <div class="lane" data-step="1"><h3>目標文件</h3><p>有沒有進來？</p></div>
+              <div class="lane" data-step="1"><h3>答案</h3><p>是否符合評測？</p></div>
+              <div class="lane" data-step="1"><h3>引用</h3><p>是否對齊？</p></div>
+            </div>
+            <p class="small-note warning-note" data-step="3">指定模型與 knowledge release 的單次結果；未涵蓋真實群組受限語料。</p>
+          </div>
+        </div>
+        <p class="source-line">資料集 retrieval_eval_v3_blind.json · test split · 報告於 2026-09-23 完成 · <a href="#source-src-01">SRC-01</a></p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>這次量測共有 156 題，包含 20 題多輪；其中 116 題有目標證據標註。因此不同指標的分母可能不同。這是固定資料集、模型與知識 release 上的一次執行，適合用來定位這個版本的問題。它沒有涵蓋真正的群組受限文件，所以不能只靠零洩漏次數就宣稱 ACL 已完成驗證。</p>
+          <h4>轉場</h4><p>在這個範圍內，檢索命中與最後答案分別得到什麼結果？</p>
+          <h4>來源與主張類型</h4><p><a href="#source-src-01">SRC-01</a>。類型：MEASURED。</p>
+          <h4>驗收</h4><p>156、136、20、116 均正確；圖中不暗示分類互斥；不稱生產流量測試。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="s07" class="slide" data-section="S07" data-title="文件命中與答案正確率" data-timing="07:30–09:00" data-kind="MEASURED" data-max-step="3" aria-roledescription="投影片" aria-label="S07，文件命中與答案正確率">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">02 / Agentic RAG 與診斷</p><p class="slide-kind">S07 · 07:30–09:00 · MEASURED</p></div>
+        <p class="eyebrow">EVAL-L3-01 · 單次固定快照</p><h2 class="slide-title">文件命中與答案正確率</h2>
+        <div class="bar-group">
+          <div class="bar-row" data-step="1"><b>Document Hit@4</b><div class="bar-track" role="img" aria-label="Document Hit at 4，99.14 percent"><span class="bar-fill" style="width:99.14%"></span></div><span class="bar-value">99.14%</span></div>
+          <div class="axis"><span>0%</span><span>50%</span><span>100%</span></div>
+          <p class="source-line" data-step="1"><strong>115 / 116 題</strong>　有目標證據標註的案例</p>
+          <div class="bar-row" data-step="2"><b>Answer Accuracy</b><div class="bar-track" role="img" aria-label="Answer Accuracy，96.79 percent"><span class="bar-fill" style="width:96.79%"></span></div><span class="bar-value">96.79%</span></div>
+          <div class="axis" data-step="2"><span>0%</span><span>50%</span><span>100%</span></div>
+          <p class="source-line" data-step="2"><strong>151 / 156 題</strong>　全部 test cases · 多輪為 18/20（90%）</p>
+        </div>
+        <p class="small-note warning-note" data-step="3">兩項指標分母不同，不以百分點相減解讀流失。</p>
+        <p class="conclusion">找到目標文件後，答案與引用仍需要各自檢查</p>
+        <p class="source-line">SRC-01 · 2026-09-23 frozen blind L3 live report · <a href="#source-src-01">查看來源與版本</a></p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>有證據標註的題目中，115 題能在前四份文件命中目標。全體 156 題的答案正確率則是 151 題。這兩個分母不同，我們不直接相減。它們提醒我們，文件命中只是其中一個檢查點；還要看證據是否被使用、回答是否遺漏，以及引用是否真的對到主張。</p>
+          <h4>轉場</h4><p>下一頁把平均數拆成一筆可以追蹤的失敗。</p>
+          <h4>來源與主張類型</h4><p><a href="#source-src-01">SRC-01</a>、EVAL-L3-01。類型：MEASURED。</p>
+          <h4>驗收</h4><p>百分比四捨五入至小數第二位；分母與單次測量範圍可在投影上讀到。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="s08" class="slide" data-section="S08" data-title="一筆答案遺漏案例的證據路徑" data-timing="09:00–10:45" data-kind="MEASURED" data-max-step="4" aria-roledescription="投影片" aria-label="S08，一筆答案遺漏案例的證據路徑">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">02 / Agentic RAG 與診斷</p><p class="slide-kind">S08 · 09:00–10:45 · MEASURED</p></div>
+        <p class="eyebrow">Case ID · v3-blind-ans-05</p><h2 class="slide-title">一筆答案遺漏案例的證據路徑</h2>
+        <div class="case-stations">
+          <div class="case-station" data-step="1"><p>候選文件</p><strong class="good">1.0</strong><p>candidateRecallAt24</p><span class="evidence-token" aria-label="目標證據存在">E</span></div>
+          <div class="case-station" data-step="2"><p>檢索證據</p><strong class="good">1.0</strong><p>retrievalEvidenceRecall</p><span class="evidence-token" aria-label="目標證據存在">E</span></div>
+          <div class="case-station" data-step="3"><p>答案證據</p><strong class="empty">0.0</strong><p>answerEvidenceRecall</p><span class="evidence-token missing" aria-label="答案未涵蓋目標證據">E</span></div>
+        </div>
+        <p class="source-line">同一個目標 evidence token 沿候選、檢索與答案追蹤</p>
+        <div class="two-column" style="margin-top:1rem">
+          <p class="small-note" data-step="3">Failure category: <code>ANSWER_OMISSION</code></p>
+          <p class="conclusion" data-step="3" style="margin-top:0">候選與檢索證據已涵蓋目標；答案未涵蓋該證據</p>
+          <p class="small-note warning-note" data-step="3" style="margin-top:0">單一案例的報告診斷值；不能單憑此定位具體程式根因。</p>
+        </div>
+        <p class="investigation" data-step="4">調查支線：證據傳遞　→　prompt　→　生成　→　評分 trace</p>
+        <p class="source-line">僅展示案例 ID 與診斷值，不呈現原始問題或回答 · <a href="#source-src-01">SRC-01</a></p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>這是報告中的實際案例 ID。候選與檢索證據召回值都是 1，答案證據召回是 0，分類為答案遺漏。它支持我們把調查重點往後段移動，但還不足以只憑三個數字判定是哪個函式或模型決策造成的。這也是為什麼先分類很重要：若一開始就換 embedding，未必處理到這個案例的問題。</p>
+          <h4>轉場</h4><p>把這種診斷方法套到整體，就能清楚區分各層責任。</p>
+          <h4>來源與主張類型</h4><p><a href="#source-src-01">SRC-01</a> 的 failures 中指定 case。類型：MEASURED。</p>
+          <h4>驗收</h4><p>三項數值逐欄對應；不將 retrieval recall 1.0 描述成已驗證 prompt 內必然完整保留所有證據。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="s09" class="slide" data-section="S09" data-title="問題所在層與工程處置" data-timing="10:45–12:15" data-kind="MEASURED + FRAMING" aria-roledescription="投影片" aria-label="S09，問題所在層與工程處置">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">02 / Agentic RAG 與診斷</p><p class="slide-kind">S09 · 10:45–12:15 · MEASURED + FRAMING</p></div>
+        <p class="eyebrow">從診斷連到工程責任</p><h2 class="slide-title">問題所在層與工程處置</h2>
+        <table class="data-table">
+          <thead><tr><th>問題所在層</th><th>檢查內容</th><th>對應工作</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">來源</td><td>範圍、版本、矛盾、責任人是否清楚</td><td>知識整理與維護 <span class="type-note">設計關注</span></td></tr>
+            <tr><td class="strong">取得與傳遞</td><td>授權、召回、選擇、context 是否正確</td><td>檢索與證據管線</td></tr>
+            <tr><td class="strong">回答與引用</td><td>主張是否完整、引用是否支持主張</td><td>生成與引用修正 <span class="type-note accent">答案遺漏 5 · 引用錯誤 3</span></td></tr>
+          </tbody>
+        </table>
+        <p class="conclusion">LLM Wiki 處理的是來源整理與維護這一層</p>
+        <p class="small-note warning-note">報告中的 8 筆 failure entries 不等同 8 題答案錯誤；沒有 Wiki 前後效益實驗。</p>
+        <p class="source-line"><a href="#source-src-01">SRC-01</a>、<a href="#source-src-03">SRC-03</a>–<a href="#source-src-06">SRC-06</a></p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>這份報告實際量到的是答案遺漏與引用錯誤。我們應該修這些問題。同時，來源是否說清楚版本、適用範圍與責任人，是另一項需要獨立管理的工程工作。接下來介紹的 LLM Wiki，是處理這層責任的做法；目前沒有同條件前後實驗，不能說這些錯誤已被 Wiki 解決。</p>
+          <h4>轉場</h4><p>先定義一份可維護的知識，至少要帶著哪些資訊。</p>
+          <h4>來源與主張類型</h4><p><a href="#source-src-01">SRC-01</a>、<a href="#source-src-03">SRC-03</a>–<a href="#source-src-06">SRC-06</a>。類型：MEASURED + FRAMING。</p>
+          <h4>驗收</h4><p>8 筆 failure entries 不等同 8 題答案錯誤；來源問題不冒充本報告的實測分類。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="s10" class="slide" data-section="S10" data-title="LLM Wiki 的知識單位" data-timing="12:15–13:30" data-kind="DOCUMENTED + ILLUSTRATIVE" aria-roledescription="投影片" aria-label="S10，LLM Wiki 的知識單位">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">03 / LLM Wiki 的具體做法</p><p class="slide-kind">S10 · 12:15–13:30 · DOCUMENTED + ILLUSTRATIVE</p></div>
+        <p class="eyebrow">DEMO-01 · 合成教學案例</p><h2 class="slide-title">LLM Wiki 的知識單位</h2>
+        <div class="two-column">
+          <div>
+            <blockquote class="knowledge-excerpt">本例的 LLM Wiki：由來源支持、以 Markdown 頁面與連結組織，並由 Agent 和人共同維護的知識集合。</blockquote>
+            <p class="source-line">ExampleVPN 4.x · 受管理筆電 · DEMO-101 · <a href="#source-demo-01">[D1]</a></p>
+          </div>
+          <ul class="annotation-list" aria-label="知識維護資訊">
+            <li><b>說什麼</b><span>主張與操作內容</span></li>
+            <li><b>何時適用</b><span>版本、日期、條件</span></li>
+            <li><b>根據什麼</b><span>來源與逐項引用</span></li>
+            <li><b>由誰負責</b><span>owner、審查紀錄</span></li>
+            <li><b>如何維護</b><span>狀態、更新與關聯頁</span></li>
+          </ul>
+        </div>
+        <p class="conclusion">內容可重用，條件與來源也必須一起保留</p>
+        <p class="source-line"><a href="#source-src-03">SRC-03</a>、<a href="#source-src-06">SRC-06</a>、<a href="#source-src-11">SRC-11</a></p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>這裡用 LLM Wiki 指的是一種來源支持的知識集合，頁面會被整理、互相連結，也要有人負責。整理後的文字仍需要保存適用條件。我們採用的範本以 Markdown 和 OKF v0.2 表達內容，再加上本專案的歸檔與治理規約。這是這個範本的設計，不代表所有叫 LLM Wiki 的工具都採用相同格式。</p>
+          <h4>轉場</h4><p>先沿著一份輸入文件，看它如何變成這種知識頁。</p>
+          <h4>來源與主張類型</h4><p><a href="#source-src-03">SRC-03</a>、<a href="#source-src-06">SRC-06</a>、<a href="#source-src-11">SRC-11</a>；<a href="#source-demo-01">DEMO-01</a>。類型：DOCUMENTED + ILLUSTRATIVE。</p>
+          <h4>驗收</h4><p>LLM Wiki 不被誤定義成單一產品或通用標準；OKF 與本倉擴充分開。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="s11" class="slide" data-section="S11" data-title="一份來源的 Ingest 流程" data-timing="13:30–15:00" data-kind="DOCUMENTED" data-max-step="3" aria-roledescription="投影片" aria-label="S11，一份來源的 Ingest 流程">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">03 / LLM Wiki 的具體做法</p><p class="slide-kind">S11 · 13:30–15:00 · DOCUMENTED</p></div>
+        <p class="eyebrow">簡化投影 · 完整規約另有 0–16 步</p><h2 class="slide-title">一份來源的 Ingest 流程</h2>
+        <div class="flow-wrap" tabindex="0" aria-label="可水平捲動的六階段來源流程">
+          <div class="flow" style="--flow-count:6;min-width:940px">
+            <div class="flow-step" data-step="1"><h3>輸入</h3><p>文件、責任與來源資訊</p></div>
+            <div class="flow-step" data-step="1"><h3>准入檢查</h3><p>分類、PII、來源核可</p></div>
+            <div class="flow-step" data-step="2"><h3>轉換與歸檔</h3><p>原件、canonical、必要視覺證據</p></div>
+            <div class="flow-step" data-step="2"><h3>分析</h3><p>概念、實體、既有連結、矛盾與缺口</p></div>
+            <div class="flow-step" data-step="3"><h3>知識頁與連結</h3><p>來源摘要、概念、實體、index</p></div>
+            <div class="flow-step" data-step="3"><h3>Review 與留痕</h3><p>待查核項目、log、快取</p></div>
+          </div>
+        </div>
+        <p class="branch-note" data-step="2"><strong>分析支線</strong>　先整理關聯與缺口，再撰寫知識頁。</p>
+        <p class="small-note" data-step="3">來源核可是寫入前門檻；內容 review 位於後段，兩者責任不同。</p>
+        <p class="source-line"><a href="#source-src-04">SRC-04</a>、<a href="#source-src-05">SRC-05</a></p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>Ingest 的第一件事是確認資料能不能被處理與保存。接著才轉換、歸檔，並先分析概念、實體及既有知識關聯，再寫 Wiki 頁。範本要求保留來源摘要，最後更新索引、review queue 與日誌。來源准入會阻擋不合適的輸入；後段的內容 review 可以非同步進行，兩者目的不同。</p>
+          <h4>轉場</h4><p>其中最容易混淆的，是原件、canonical 與 Wiki 摘要為什麼需要分開。</p>
+          <h4>來源與主張類型</h4><p><a href="#source-src-04">SRC-04</a>、<a href="#source-src-05">SRC-05</a>。類型：DOCUMENTED。</p>
+          <h4>驗收</h4><p>來源核可在歸檔前；內容 review 不被畫成所有 Wiki 寫入前的必經核准；SHA 快取只在筆記提及，不搶主線。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="s12" class="slide" data-section="S12" data-title="原件、Canonical 與 Wiki 摘要" data-timing="15:00–16:45" data-kind="DOCUMENTED + ILLUSTRATIVE" data-max-step="3" aria-roledescription="投影片" aria-label="S12，原件、Canonical 與 Wiki 摘要">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">03 / LLM Wiki 的具體做法</p><p class="slide-kind">S12 · 15:00–16:45 · DOCUMENTED + ILLUSTRATIVE</p></div>
+        <p class="eyebrow">合成教學案例 · 同一組適用條件，三種資料產物</p><h2 class="slide-title">原件、Canonical 與 Wiki 摘要</h2>
+        <table class="data-table">
+          <thead><tr><th>層</th><th>保存內容</th><th>更新方式</th></tr></thead>
+          <tbody>
+            <tr data-step="1"><td><code>raw/originals</code></td><td>原始輸入的位元副本</td><td>保留原件，新版本另存</td></tr>
+            <tr data-step="2"><td><code>raw/sources</code></td><td>盡量完整還原的 canonical Markdown</td><td>新修訂另建歸檔</td></tr>
+            <tr data-step="3"><td><code>wiki/sources</code></td><td>可閱讀的來源摘要與主張連結</td><td>依來源更新知識頁</td></tr>
+          </tbody>
+        </table>
+        <div class="three-column" style="margin-top:1.2rem">
+          <div class="doc-column" data-step="1"><h3>原件 · GUIDE v2.0</h3><div class="doc-fragment"><p>ExampleVPN 裝置登錄與登入指南</p><p><span class="highlight">受管理筆電</span> · ExampleVPN 4.x</p><p>範圍表與處理說明</p></div></div>
+          <div class="doc-column canonical" data-step="2"><h3>CANONICAL · 完整還原</h3><div class="doc-fragment"><p><span class="highlight">受管理筆電</span>、版本 4.x</p><p>DEMO-101 表示裝置登錄尚未完成。</p><p>服務台查紀錄；未涵蓋條件保留。</p></div></div>
+          <div class="doc-column summary" data-step="3"><h3>WIKI · 可重用摘要</h3><div class="doc-fragment"><p><span class="highlight">受管理筆電、4.x、DEMO-101</span></p><p>服務台確認裝置登錄。<a href="#source-demo-01">[D1]</a></p></div></div>
+        </div>
+        <p class="conclusion" data-step="3">摘要可以變短，適用條件不能消失</p>
+        <p class="source-line"><a href="#source-src-03">SRC-03</a>、<a href="#source-src-04">SRC-04</a> · 合成內容：<a href="#source-demo-01">DEMO-01</a></p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>原件讓我們回到當時收到的資料，canonical 讓不同格式的內容能以一致文字形式被檢查，Wiki 摘要則支援閱讀與重用。摘要可以變短，適用條件不能消失。若來源更新，我們留下新的歸檔，讓讀者仍能追查先前版本的依據。</p>
+          <h4>轉場</h4><p>要讓這些頁面能被管理，光有正文還不夠。</p>
+          <h4>來源與主張類型</h4><p><a href="#source-src-03">SRC-03</a>、<a href="#source-src-04">SRC-04</a>、<a href="#source-demo-01">DEMO-01</a>。類型：DOCUMENTED + ILLUSTRATIVE。</p>
+          <h4>驗收</h4><p>canonical 不稱摘要；資料減量不表示無損壓縮；原件不可變不等於自動獲准公開。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="s13" class="slide" data-section="S13" data-title="知識頁的來源與生命週期" data-timing="16:45–18:15" data-kind="DOCUMENTED + ILLUSTRATIVE" aria-roledescription="投影片" aria-label="S13，知識頁的來源與生命週期">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">03 / LLM Wiki 的具體做法</p><p class="slide-kind">S13 · 16:45–18:15 · DOCUMENTED + ILLUSTRATIVE</p></div>
+        <p class="eyebrow">合成教學案例 · metadata 摘錄，非完整 schema</p><h2 class="slide-title">知識頁的來源與生命週期</h2>
+        <div class="yaml-grid">
+          <pre class="code-window" aria-label="YAML 欄位摘錄"><code>type: concept
+title: ExampleVPN device enrollment
+sources:
+  - id: guide
+    resource: "#source-demo-01"
+status: draft
+stale_after: "2026-12-01"
+owner: team:demo-it
+classification: public
+access_scope: public</code></pre>
+          <ul class="field-legend">
+            <li><code>sources</code>　主張回到哪份來源。</li>
+            <li><code>status</code> / <code>stale_after</code>　內容狀態與重看日期。</li>
+            <li><code>owner</code>　負責維護與判斷的人或團隊。</li>
+            <li><code>classification</code> / <code>access_scope</code>　治理資訊；實際授權仍由服務執行。</li>
+          </ul>
+        </div>
+        <p class="small-note warning-note">節錄；完整合成頁面見附錄 A03。欄位存在本身不會自動完成授權控制。</p>
+        <p class="source-line"><a href="#source-src-05">SRC-05</a>、<a href="#source-src-06">SRC-06</a>、<a href="#source-src-11">SRC-11</a></p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>這些欄位讓知識除了文字之外，還有可追蹤的維護資訊。sources 指向依據，status 和 stale_after 提醒我們內容狀態，owner 承擔內容責任。分類欄位只記錄治理決策；真正的讀取權限仍需要 repository 與應用服務執行。欄位存在本身不會自動完成授權控制。</p>
+          <h4>轉場</h4><p>除了頁面自己的資訊，頁面之間的連結也要有用途。</p>
+          <h4>來源與主張類型</h4><p><a href="#source-src-05">SRC-05</a>、<a href="#source-src-06">SRC-06</a>、<a href="#source-src-11">SRC-11</a>。類型：DOCUMENTED + ILLUSTRATIVE。</p>
+          <h4>驗收</h4><p>owner 不誤等同 generated.by；不造假 verified: human；draft 不宣稱已人審通過。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="s14" class="slide" data-section="S14" data-title="來源、概念與實體的關係" data-timing="18:15–19:30" data-kind="DOCUMENTED + ILLUSTRATIVE" data-max-step="3" aria-roledescription="投影片" aria-label="S14，來源、概念與實體的關係">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">03 / LLM Wiki 的具體做法</p><p class="slide-kind">S14 · 18:15–19:30 · DOCUMENTED + ILLUSTRATIVE</p></div>
+        <p class="eyebrow">合成教學案例 · 文件關係示意，不代表 GraphRAG</p><h2 class="slide-title">來源、概念與實體的關係</h2>
+        <div class="relationship-map" aria-label="來源支持概念，概念適用於實體，問答引用概念與來源">
+          <div class="rel-node" data-step="1"><strong>Source</strong><span>ExampleVPN 登入指南 v2.0</span></div>
+          <div class="rel-arrow" data-step="1">來源支持主張 <span aria-hidden="true">→</span></div>
+          <div class="rel-node" data-step="1"><strong>Concept</strong><span>裝置登錄與登入適用條件</span></div>
+          <div class="rel-arrow" data-step="2">概念適用於實體 <span aria-hidden="true">→</span></div>
+          <div class="rel-node" data-step="2"><strong>Entity</strong><span>ExampleVPN 4.x</span></div>
+          <div class="rel-query" data-step="3"><strong>Query</strong>　出現 DEMO-101 時應確認什麼？<br><span class="muted">問答引用概念與來源</span></div>
+        </div>
+        <p class="conclusion">來源更新時，可以沿連結檢查相關知識頁</p>
+        <p class="source-line">連結表示文件關係，不代表 runtime 圖遍歷 · <a href="#source-src-03">SRC-03</a>、<a href="#source-src-04">SRC-04</a>、<a href="#source-src-06">SRC-06</a></p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>來源頁回答資料從哪裡來，概念頁整理可重用的知識，實體頁描述具體系統，問答頁保存可重用問題。連結讓維護者知道一份指南更新後，還有哪些頁面可能需要重看。這張圖描述文件關係，不代表 runtime 一定會做圖遍歷，也不代表我們已量到 GraphRAG 的效益。</p>
+          <h4>轉場</h4><p>連結能指出影響範圍，但內容如何被確認與更新，仍需要操作規則。</p>
+          <h4>來源與主張類型</h4><p><a href="#source-src-03">SRC-03</a>、<a href="#source-src-04">SRC-04</a>、<a href="#source-src-06">SRC-06</a>。類型：DOCUMENTED + ILLUSTRATIVE。</p>
+          <h4>驗收</h4><p>箭頭方向與圖例一致；雙向連結不表示雙向因果；不宣稱自動語義矛盾判定已實現。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="s15" class="slide" data-section="S15" data-title="來源准入與內容審查" data-timing="19:30–21:00" data-kind="DOCUMENTED" data-max-step="3" aria-roledescription="投影片" aria-label="S15，來源准入與內容審查">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">03 / LLM Wiki 的具體做法</p><p class="slide-kind">S15 · 19:30–21:00 · DOCUMENTED</p></div>
+        <p class="eyebrow">治理責任沿生命週期分開</p><h2 class="slide-title">來源准入與內容審查</h2>
+        <div class="flow-wrap" aria-label="來源經過准入、產物驗證、內容 review，再進入發布流程">
+          <div class="flow" style="--flow-count:4;min-width:760px">
+            <div class="flow-step"><h3>來源</h3><p>分類、scope、PII</p></div>
+            <div class="flow-step"><h3>來源准入</h3><p>人工核可綁定來源 digest</p></div>
+            <div class="flow-step"><h3>產物驗證</h3><p>各自記錄 lineage 與 digest</p></div>
+            <div class="flow-step"><h3>知識頁</h3><p>主張與來源連結</p></div>
+          </div>
+        </div>
+        <div class="review-rails">
+          <div class="review-rail" data-step="1"><p class="eyebrow">寫入前門檻</p><h3>來源准入</h3><p>這份資料能否進入指定環境？由人工確認分類、適用範圍與 PII。</p></div>
+          <div class="review-rail later" data-step="2"><p class="eyebrow">寫入後回饋</p><h3>內容 review</h3><p>主張是否正確、完整、仍適用？Review queue 與責任人處理內容缺口。</p></div>
+        </div>
+        <p class="conclusion">來源核可與內容正確性是不同問題</p>
+        <p class="source-line" data-step="3"><a href="#source-src-04">SRC-04</a>、<a href="#source-src-05">SRC-05</a> · stable 是內容狀態，不代表正式發布</p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>來源可以保存，不表示內容每一項都已被確認；內容看起來合理，也不表示它能進公開環境。範本把兩件事分開：來源准入在寫入前完成，產物逐檔保留 lineage，內容疑問則進入 review queue。模型可以協助提出待查核項目，但不能把自己的判斷記成人工審核。</p>
+          <h4>轉場</h4><p>接著把整理好的知識帶回開場問題，看回答策略應該如何改變。</p>
+          <h4>來源與主張類型</h4><p><a href="#source-src-04">SRC-04</a>、<a href="#source-src-05">SRC-05</a>。類型：DOCUMENTED。</p>
+          <h4>驗收</h4><p>准入 approval、editorial review、runtime publication 三者不混用；不把 CI 描述為完整 DLP 或人工判讀替代品。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="s16" class="slide" data-section="S16" data-title="同一問題的回答證據鏈" data-timing="21:00–23:00" data-kind="ILLUSTRATIVE + PROPOSED" data-max-step="3" aria-roledescription="投影片" aria-label="S16，同一問題的回答證據鏈">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">03 / LLM Wiki 的具體做法</p><p class="slide-kind">S16 · 21:00–23:00 · ILLUSTRATIVE + PROPOSED</p></div>
+        <p class="eyebrow">合成教學案例 · DEMO-01</p><h2 class="slide-title">同一問題的回答證據鏈</h2>
+        <div class="two-column answer-layout">
+          <div class="dialogue" aria-label="合成教學對話">
+            <div class="dialogue-line" data-step="1"><small>使用者</small><p>我在筆電上登入 ExampleVPN，一直進不去。</p></div>
+            <div class="dialogue-line assistant" data-step="1"><small>助理</small><p>畫面顯示什麼錯誤訊息？這是受管理的筆電嗎？使用哪個用戶端版本？</p></div>
+            <div class="dialogue-line" data-step="2"><small>使用者</small><p>受管理筆電、4.x，畫面是 DEMO-101。</p></div>
+            <div class="dialogue-line assistant" data-step="3"><small>助理</small><p>依示範指南 v2.0，這組條件下的 DEMO-101 對應裝置登錄未完成。請由示範服務台確認登錄紀錄。<a href="#source-demo-01">[D1]</a> 這份指南沒有提供重新安裝作為處理步驟。</p></div>
+          </div>
+        <table class="evidence-table">
+            <tbody>
+              <tr data-step="3"><th>身分與可見範圍</th><td>合成公開知識</td></tr>
+              <tr data-step="3"><th>適用條件</th><td>受管理筆電、4.x、DEMO-101</td></tr>
+              <tr data-step="3"><th>使用來源</th><td>示範指南 v2.0 <a href="#source-demo-01">[D1]</a></td></tr>
+              <tr data-step="3"><th>支持的動作</th><td>由示範服務台確認登錄紀錄</td></tr>
+              <tr data-step="3"><th>未支持的動作</th><td>直接要求重新安裝</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="step-indicator" id="stepIndicator">1 / 3</p>
+        <p class="small-note warning-note">設計行為示範，未作為導入成效量測。</p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>現在回到同一個問題。第一次提問缺少條件，所以先追問；當使用者補上裝置、版本與錯誤碼，才選用對應指南。回答中的動作由來源支持，沒有把指南沒說的重新安裝補進去。這個示範的價值在於把條件、來源與答案連起來。這是我們希望系統遵循的行為；若要宣稱改善了準確率，還需要固定題目與設定做前後比較。</p>
+          <h4>轉場</h4><p>當這個能力進入 Teams，回答之外還有完整的服務流程。</p>
+          <h4>來源與主張類型</h4><p><a href="#source-demo-01">DEMO-01</a>；設計依據為 S10–S15。類型：ILLUSTRATIVE + PROPOSED。</p>
+          <h4>驗收</h4><p>D1 指向完整示範來源；回答沒有新增來源外的操作；沒有寫成實際成功工單或已跑通整合。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="s17" class="slide" data-section="S17" data-title="Teams IT Agent 與 KnowledgeService" data-timing="23:00–24:45" data-kind="IMPLEMENTED + DOCUMENTED + PROPOSED" data-max-step="3" aria-roledescription="投影片" aria-label="S17，Teams IT Agent 與 KnowledgeService">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">04 / 服務整合與選型</p><p class="slide-kind">S17 · 23:00–24:45 · IMPLEMENTED + DOCUMENTED + PROPOSED</p></div>
+        <p class="eyebrow">業務流程、介面與接軌設計</p><h2 class="slide-title">Teams IT Agent 與 KnowledgeService</h2>
+        <div class="workflow-strip" data-step="1" aria-label="Teams workflow">
+          <span>載入對話</span><b aria-hidden="true">→</b><span>接手分流</span><b aria-hidden="true">→</b><span>擷取問題</span><b aria-hidden="true">→</b><span>IT 分流</span><b aria-hidden="true">→</b><span>處理問題</span><b aria-hidden="true">→</b><span>接手判斷</span><b aria-hidden="true">→</b><span>回覆與保存</span>
+        </div>
+        <p class="small-note">人工已接手時，另有旁路</p>
+        <div class="two-column" style="margin-top:1rem">
+          <div class="interface-band" data-step="2">
+            <h3>KnowledgeService 介面摘錄</h3>
+            <p>search(query, user_context, ...) → KnowledgeResult</p>
+            <p>found · answer · sources · images · backend</p>
+          </div>
+          <div data-step="3">
+            <p class="eyebrow">Wiki bundle 接軌仍需驗證</p>
+            <p class="proposed-bridge">Wiki bundle　- - - →　欄位、權限、來源 URI 與 release 映射</p>
+          </div>
+        </div>
+        <div class="release-split" data-step="3"><span>應用程式 image</span><span>Knowledge release</span></div>
+        <p class="conclusion" data-step="3">介面存在；Wiki bundle 接軌仍需逐項驗證</p>
+        <p class="source-line"><a href="#source-src-07">SRC-07</a>、<a href="#source-src-08">SRC-08</a>、<a href="#source-src-09">SRC-09</a></p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>Teams 的工作還包括對話狀態、問題拆解、工單以及人員接手。KnowledgeService 提供明確的查詢介面與結果格式，所以知識後端可以在這個邊界被評估。Wiki bundle 要接入仍有實際工作：scope 與權限怎麼映射、來源連結怎麼解析、內容怎麼進入可回滾的 release。這些不能靠一個相同的函式名稱就假設已經相容。</p>
+          <h4>轉場</h4><p>有了介面邊界之後，選後端就能回到可比較的實驗。</p>
+          <h4>來源與主張類型</h4><p><a href="#source-src-07">SRC-07</a>、<a href="#source-src-08">SRC-08</a>、<a href="#source-src-09">SRC-09</a>。介面省略參數已明確標示。類型：IMPLEMENTED + DOCUMENTED + PROPOSED。</p>
+          <h4>驗收</h4><p>不把 frontmatter 自動當作 ACL；不把 KnowledgeResult 中內部 excluded 欄位說成完整公開 API；不宣稱目前雲端部署已驗收。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="s18" class="slide" data-section="S18" data-title="同一組題目的後端取捨" data-timing="24:45–26:15" data-kind="MEASURED" data-max-step="4" aria-roledescription="投影片" aria-label="S18，同一組題目的後端取捨">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">04 / 服務整合與選型</p><p class="slide-kind">S18 · 24:45–26:15 · MEASURED</p></div>
+        <p class="eyebrow" data-step="1">AB-01 · 2026-08-07 · 30 題 · 19 份文件 · 同模型 · top_k=4</p><h2 class="slide-title">同一組題目的後端取捨</h2>
+        <div class="chart-pair">
+          <div class="chart" data-step="2">
+            <h3>P50 latency · 秒 · 零起點</h3>
+            <div class="chart-row"><span>Hybrid</span><div class="chart-track" role="img" aria-label="Hybrid P50 latency 3.00 seconds"><span style="width:52.54%"></span></div><strong>3.00 s</strong></div>
+            <div class="chart-row secondary"><span>Gemini File Search</span><div class="chart-track" role="img" aria-label="Gemini File Search P50 latency 5.71 seconds"><span style="width:100%"></span></div><strong>5.71 s</strong></div>
+            <p class="source-line">尺度上限 5.71 s</p>
+          </div>
+          <div class="chart" data-step="3">
+            <h3>平均每題成本 · 美元 · 零起點</h3>
+            <div class="chart-row"><span>Hybrid</span><div class="chart-track" role="img" aria-label="Hybrid average cost per query US$0.001059"><span style="width:58.7%"></span></div><strong>US$0.001059</strong></div>
+            <div class="chart-row secondary"><span>Gemini File Search</span><div class="chart-track" role="img" aria-label="Gemini File Search average cost per query US$0.001804"><span style="width:100%"></span></div><strong>US$0.001804</strong></div>
+            <p class="source-line">尺度上限 US$0.001804</p>
+          </div>
+        </div>
+        <p class="conclusion" data-step="4">此批次的品質代理指標未拉開差距；延遲、成本與維運因素支持當時保留 Hybrid</p>
+        <p class="small-note warning-note" data-step="4">品質代理指標不等同 156 題 L3 答案正確率；30 題中的 ACL 欄位無鑑別力。</p>
+        <p class="source-line"><a href="#source-src-02">SRC-02</a> · 完整條件與限制見附錄 A04</p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>這是另一個較早的後端 A/B：同一模型、同一組 30 題、19 份文件。P50 與平均每題成本在這批次都偏向 Hybrid，因此報告維持當時選擇。這裡的品質指標主要反映來源命中等代理判準，不能和前面的 L3 答案評分拼成改善曲線。選型結論也只適用於這次條件，語料或需求改變後要重跑。</p>
+          <h4>轉場</h4><p>外部知識平台則讓我們進一步思考，哪些能力值得自己維護。</p>
+          <h4>來源與主張類型</h4><p><a href="#source-src-02">SRC-02</a>。類型：MEASURED。</p>
+          <h4>驗收</h4><p>精確數值與單位不變；不宣稱後端普遍優劣；附錄另說明報告的合成 ACL 探測。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="s19" class="slide" data-section="S19" data-title="WeKnora 與企業流程的分工" data-timing="26:15–27:15" data-kind="EXTERNAL + PROPOSED" data-max-step="3" aria-roledescription="投影片" aria-label="S19，WeKnora 與企業流程的分工">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">04 / 服務整合與選型</p><p class="slide-kind">S19 · 26:15–27:15 · EXTERNAL + PROPOSED</p></div>
+        <p class="eyebrow" data-step="1">外部參照 · 官方定位涵蓋 RAG、Agent 與 Wiki</p><h2 class="slide-title">WeKnora 與企業流程的分工</h2>
+        <div class="responsibility-band" data-step="2">
+          <h3>企業流程</h3><p>身分對接　／　服務目錄　／　工單規則　／　人工接手</p>
+        </div>
+        <div class="interface-separator" data-step="2">API 與責任介面 · 接入前逐項比較</div>
+        <div class="responsibility-band" data-step="2">
+          <h3>知識平台候選</h3><p>文件處理　／　知識組織　／　檢索與相關操作能力</p>
+        </div>
+        <ul class="annotation-list" data-step="3" style="margin-top:1.2rem">
+          <li><b>接入檢查</b><span>API 契約、ACL 語義、引用、同步與回滾、延遲與成本</span></li>
+        </ul>
+        <p class="small-note warning-note" data-step="3">目前為外部候選；本簡報沒有 WeKnora 整合或成效實測。</p>
+        <p class="source-line"><a href="#source-src-10">SRC-10 · Tencent/WeKnora 官方 repository</a> · 查閱 2026-09-27</p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>WeKnora 是一個外部參照，官方文件把 RAG、Agent 與 Wiki 放在同一知識平台裡。對企業來說，評估重點是它能否在既有介面下，滿足引用、權限、同步與維運需求。服務目錄和工單政策仍需要企業自己定義。這裡是在提出評估邊界，沒有把它描述成已接入的後端。</p>
+          <h4>轉場</h4><p>最後用已知、未知與下一次實驗收束這段架構演進。</p>
+          <h4>來源與主張類型</h4><p><a href="#source-src-10">SRC-10</a>。官方描述查閱日：2026-09-27。類型：EXTERNAL + PROPOSED。</p>
+          <h4>驗收</h4><p>不宣稱與 KnowledgeService 即插即用；不把平台功能清單當效能或權限驗證結果。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="s20" class="slide theme-dark" data-section="S20" data-title="已知結果與下一次驗證" data-timing="27:15–28:00" data-kind="SYNTHESIS" aria-roledescription="投影片" aria-label="S20，已知結果與下一次驗證">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">05 / 成果與下一步</p><p class="slide-kind">S20 · 27:15–28:00 · SYNTHESIS</p></div>
+        <div class="closing-layout">
+          <div>
+            <p class="eyebrow">來源 · 證據 · 維護責任</p><h1 class="closing-title">可靠的企業問答，需要一路追到答案背後的來源與維護責任。</h1>
+            <div class="closing-rail" aria-label="服務入口、業務流程、知識服務與知識維護"><span>服務入口</span><b aria-hidden="true">→</b><span>業務流程</span><b aria-hidden="true">→</b><span>知識服務</span><b aria-hidden="true">→</b><span>知識維護</span></div>
+            <p class="cover-subtitle">已知與待驗證的部分，分開陳述。</p>
+          </div>
+          <table class="known-next">
+            <thead><tr><th>已有依據</th><th>下一次要回答</th></tr></thead>
+            <tbody>
+              <tr><td>固定資料集上的檢索與答案量測</td><td>不同知識表示是否在同條件下改善回答？</td></tr>
+              <tr><td>Wiki 的來源、連結與治理規約</td><td>知識更新能否追到相關頁面與 serving release？</td></tr>
+              <tr><td>KnowledgeService 介面與後端 A/B</td><td>Wiki 接軌及群組權限是否符合真實服務情境？</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="source-line">已知依據：<a href="#source-src-01">SRC-01</a>–<a href="#source-src-10">SRC-10</a> · 下一次驗證設計：<a href="#a05">A05</a></p>
+        <p class="cover-meta">謝謝，歡迎交流 · 預留 2 分鐘緩衝</p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>這次分享有實測的問答結果，也有 Wiki 的維護設計與可接軌的服務邊界。接下來要驗證的是，不同知識表示在固定條件下是否改善回答，以及內容更新與權限是否能完整走進真實服務。當答案出錯時，沿著來源、證據與回答往回查，會讓下一個工程決策更有依據。謝謝。</p>
+          <h4>轉場</h4><p>主簡報結束。技術附錄 A01–A05 可從總覽開啟。</p>
+          <h4>來源與主張類型</h4><p>SRC-01–SRC-10；下一次實驗詳見 <a href="#a05">A05</a>。類型：SYNTHESIS。</p>
+          <h4>驗收</h4><p>不新增無來源 ROI、節省人力或上線保證；保留 2 分鐘給超時緩衝與現場提問。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="a01" class="slide appendix-slide" data-section="A01" data-title="評測指標、分母與版本" data-timing="附錄" data-kind="MEASURED" aria-roledescription="附錄投影片" aria-label="A01，評測指標、分母與版本">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">技術附錄</p><p class="slide-kind">A01 · MEASURED</p></div>
+        <p class="eyebrow">EVAL-L3-01 · 固定資料快照</p><h2 class="slide-title">評測指標、分母與版本</h2>
+        <table class="data-table">
+          <thead><tr><th>Metric</th><th>Value</th><th>Interpretation</th></tr></thead>
+          <tbody>
+            <tr><td>Case count</td><td class="number">156</td><td>全部 test cases</td></tr>
+            <tr><td>Evidence-labeled cases</td><td class="number">116</td><td>證據標註子集</td></tr>
+            <tr><td>Document Hit@4</td><td class="number">99.14%</td><td>115/116，由報告比例與分母換算</td></tr>
+            <tr><td>Answer Accuracy</td><td class="number">96.79%</td><td>151/156，由報告比例與分母換算</td></tr>
+            <tr><td>Multi-turn Answer Accuracy</td><td class="number">90%</td><td>18/20</td></tr>
+            <tr><td>Citation Precision</td><td class="number">98.82%</td><td>報告彙總值，不能直接當引用筆數比例</td></tr>
+            <tr><td>ACL leakage count</td><td class="number">0</td><td>語料沒有 group-gated documents，涵蓋不足</td></tr>
+          </tbody>
+        </table>
+        <p class="small-note">commit bdd3894 · release-4f49088db9ca · freezeVersion 5 · test split · 2026-09-22 UTC（臺灣時間 2026-09-23）</p>
+        <p class="source-line"><a href="#source-src-01">SRC-01 · 固定報告與 provenance</a></p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>不同指標回答不同問題。文件命中檢查能否取回目標，答案正確率檢查評測中的答案條件，引用精確率有自己的彙總定義。這些數字屬同一固定快照，不能自動推廣到其他模型、語料或使用者群組。</p>
+          <h4>補充來源與限制</h4><p>完整報告識別碼：rag-l3-v3-blind-full-live-20260923-bdd3894.json。完整 dataset hash 與模型 metadata 請見固定報告。原始 recallAt4 欄位不改標為 Document Hit@4；沒有推導未確認的 confidence interval。</p>
+          <h4>建議口述時間</h4><p>選用本頁時約 90–120 秒。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="a02" class="slide appendix-slide" data-section="A02" data-title="失敗分類與證據流失診斷" data-timing="附錄" data-kind="MEASURED" aria-roledescription="附錄投影片" aria-label="A02，失敗分類與證據流失診斷">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">技術附錄</p><p class="slide-kind">A02 · MEASURED</p></div>
+        <p class="eyebrow">兩個不同診斷維度</p><h2 class="slide-title">失敗分類與證據流失診斷</h2>
+        <div class="two-column">
+          <div>
+            <h3>Failure taxonomy</h3>
+            <table class="data-table"><thead><tr><th>Category</th><th>Count</th></tr></thead><tbody><tr><td>ANSWER_OMISSION</td><td class="number">5</td></tr><tr><td>BAD_CITATION</td><td class="number">3</td></tr></tbody></table>
+          </div>
+          <div>
+            <h3>Evidence drop diagnostics</h3>
+            <table class="data-table"><thead><tr><th>Stage</th><th>Count</th></tr></thead><tbody><tr><td>GENERATION_IGNORED</td><td class="number">12</td></tr><tr><td>CANDIDATE_MISS</td><td class="number">1</td></tr><tr><td>SELECTION_OR_PACKING_DROP</td><td class="number">1</td></tr></tbody></table>
+          </div>
+        </div>
+        <div class="flow-wrap" style="margin-top:1.3rem">
+          <table class="data-table">
+            <thead><tr><th>Case</th><th>Candidate recall</th><th>Retrieval evidence recall</th><th>Answer evidence recall</th><th>Citation precision</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">v3-blind-ans-05</td><td>1.0</td><td>1.0</td><td>0.0</td><td>1.0</td></tr>
+              <tr><td class="mono">v3-blind-ans-23</td><td>1.0</td><td>1.0</td><td>1.0</td><td>0.0</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="conclusion">分類軸不同，計數不能合併；回到個案判斷下一步</p>
+        <p class="source-line"><a href="#source-src-01">SRC-01</a> · 不含內部問題及答案全文</p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>左邊描述失敗類型，右邊描述證據在哪個階段沒被使用，兩邊不是互斥的同一份分類。第一筆案例主要是答案遺漏，第二筆答案涵蓋了目標但引用精確率為零。因此兩種情況需要不同的調查與回歸測試。</p>
+          <h4>建議口述時間</h4><p>選用本頁時約 90 秒。不能推斷 12 個 GENERATION_IGNORED 等於 12 題 Answer Accuracy 失敗。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="a03" class="slide appendix-slide" data-section="A03" data-title="合成知識頁與欄位責任" data-timing="附錄" data-kind="DOCUMENTED + ILLUSTRATIVE" aria-roledescription="附錄投影片" aria-label="A03，合成知識頁與欄位責任">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">技術附錄 · DEMO-01</p><p class="slide-kind">A03 · DOCUMENTED + ILLUSTRATIVE</p></div>
+        <p class="eyebrow">合成教學案例 · 預定 bundle 結構</p>
+        <p class="eyebrow">摘錄 · 完整頁面見閱讀模式</p><h2 class="slide-title">合成知識頁與欄位責任</h2>
+        <div class="two-column">
+          <pre class="code-window"><code>type: concept
+title: ExampleVPN device enrollment
+sources:
+  - id: guide
+    resource: "#source-demo-01"
+generated:
+  by: process:presentation-demo
+status: draft
+owner: team:demo-it
+access_scope: public</code></pre>
+          <div>
+            <p><strong>OKF 欄位</strong></p><p class="muted">內容描述與來源關聯</p>
+            <p><strong>本倉治理擴充</strong></p><p class="muted">分類、owner、scope、PII、retention</p>
+            <p class="small-note warning-note">generated.at 是固定示範 metadata，不是真實執行紀錄。未填 verified，因為沒有人工查核證據。</p>
+          </div>
+        </div>
+        <p class="source-line">相對來源改連至離線示範內容：<a href="#source-demo-01">DEMO-SRC-01</a> · <a href="#source-src-06">SRC-06</a>、<a href="#source-src-11">SRC-11</a></p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>資料表示的重點是讓主張能回到來源，讓維護者知道狀態與責任。generated 記錄產生者，owner 記錄內容責任；兩者可能不同。verified 只有真的有人查核才填。本頁採用範本欄位，但內容完全是教學資料。</p>
+          <h4>完整合成知識頁</h4>
+          <pre class="code-window full-demo-page"><code>---
+type: concept
+title: ExampleVPN device enrollment
+description: Enrollment conditions for the fictional ExampleVPN demo
+tags: [demo, remote-access]
+sources:
+  - id: guide
+    resource: "#source-demo-01"
+    title: ExampleVPN demonstration guide v2.0
+generated:
+  by: process:presentation-demo
+  at: "2026-09-27T00:00:00Z"
+status: draft
+stale_after: "2026-12-01"
+classification: public
+owner: team:demo-it
+access_scope: public
+contains_pii: false
+retention: permanent
+redaction: none
+---
+
+# ExampleVPN device enrollment
+
+## Summary
+
+This page describes a fictional teaching example, not an operational procedure.
+
+## Key Points
+
+- For a managed demo laptop running ExampleVPN 4.x, DEMO-101 indicates incomplete device enrollment. The demo service desk checks the enrollment record. The guide does not prescribe reinstalling the client.[^guide]
+- Without the error message and device context, this guide cannot establish the cause of the login failure.[^guide]
+
+## Evidence
+
+- [Demonstration source](#source-demo-01)
+
+## Relationships
+
+- related_to: [ExampleVPN 4.x](#demo-entity-examplevpn)
+
+## Open Questions
+
+- No real product behavior or integration result is represented by this demo.
+
+[^guide]: ExampleVPN demonstration guide v2.0, fictional scope and procedure.</code></pre>
+          <h4>來源與欄位邊界</h4><p><a href="#source-src-06">SRC-06</a>、<a href="#source-src-11">SRC-11</a>、<a href="#source-demo-01">DEMO-01</a>。generated.at 是固定示範 metadata，不作真實執行紀錄；未填 verified，不虛構人工確認。完整 teaching bundle 的連結在 HTML 內連至對應來源 anchor，不依賴本機絕對路徑。</p>
+          <h4>建議口述時間</h4><p>選用本頁時約 120 秒。source 頁須另依來源頁版型建立，不能以此 concept 模板冒充 source schema。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="a04" class="slide appendix-slide" data-section="A04" data-title="後端 A/B 的方法與限制" data-timing="附錄" data-kind="MEASURED" aria-roledescription="附錄投影片" aria-label="A04，後端 A/B 的方法與限制">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">技術附錄 · AB-01</p><p class="slide-kind">A04 · MEASURED</p></div>
+        <p class="eyebrow">不同資料集與評分定義 · 不與 L3 合併</p><h2 class="slide-title">後端 A/B 的方法與限制</h2>
+        <table class="data-table">
+          <thead><tr><th>Metric</th><th>Hybrid</th><th>Gemini File Search</th></tr></thead>
+          <tbody>
+            <tr><td>P50 latency</td><td class="number">3.00 s</td><td class="number">5.71 s</td></tr>
+            <tr><td>P95 latency</td><td class="number">4.07 s</td><td class="number">7.15 s</td></tr>
+            <tr><td>Average reported cost per query</td><td class="number">US$0.001059</td><td class="number">US$0.001804</td></tr>
+            <tr><td>Average LLM calls per query</td><td class="number">2.17</td><td class="number">1.00</td></tr>
+            <tr><td>Reported answer metric</td><td class="number">25/25</td><td class="number">25/25</td></tr>
+            <tr><td>No-answer cases</td><td class="number">5/5</td><td class="number">5/5</td></tr>
+          </tbody>
+        </table>
+        <div class="two-column" style="margin-top:1rem">
+          <p class="small-note">30 題：25 題預期找到資料、5 題預期查無資料。19 份文件、同模型、top_k=4。</p>
+        <p class="small-note warning-note">兩個 ACL 案例皆預期命中，不能驗證拒絕授權。另以 2 份合成文件做專用 ACL 探測，4 項檢查記錄通過；不代表真實群組語料已覆蓋。</p>
+        </div>
+        <p class="source-line"><a href="#source-src-02">SRC-02</a> · 2026-08-07 · 歷史實驗條件與報價</p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>小語料很容易碰到指標天花板，所以我們更關心可比較的延遲、成本與操作負擔。權限測試尤其要看題目是否真的包含拒絕案例。這個報告有補做合成 ACL 探測，但不能因此把主資料集的 ACL 欄位當作有效比較。</p>
+          <h4>閱讀模式補充</h4><p>共同使用模型 gemini-3.5-flash-lite（歷史實驗 metadata，不作現時模型推薦）；測量時間為 2026-08-07T03:20:43Z。報告的 Answer Accuracy 以目標來源命中判定。File Search 的圖片 registry 在此報告已接線，不能重複宣稱完全不支援圖片；報告描述的是文件層級對應，相較 Hybrid 的 chunk 層級定位仍有粒度差別。上傳重試可能產生重複文件是當時紀錄的維運注意項，現況需重新確認。另有兩份合成文件的專用 ACL 探測，報告記錄四項檢查通過；這不代表目前全部語料的群組治理已完成。</p>
+          <h4>驗收邊界</h4><p>不將錯誤碼、ACL 與圖片等交疊標籤相加為題數；歷史成本不當作目前供應商報價；不把效能差異歸因成已證實的服務內部原因。</p>
+          <h4>建議口述時間</h4><p>選用本頁時約 120 秒。</p>
+        </section>
+      </div>
+    </article>
+
+    <article id="a05" class="slide appendix-slide" data-section="A05" data-title="Wiki 接軌與效益驗證設計" data-timing="附錄" data-kind="PROPOSED" aria-roledescription="附錄投影片" aria-label="A05，Wiki 接軌與效益驗證設計">
+      <div class="slide-inner">
+        <div class="slide-meta"><p class="slide-id">技術附錄 · 待執行設計</p><p class="slide-kind">A05 · PROPOSED</p></div>
+        <p class="eyebrow">待執行的驗證設計</p><h2 class="slide-title">Wiki 接軌與效益驗證設計</h2>
+        <table class="data-table">
+          <thead><tr><th>驗證面向</th><th>做法</th><th>需要觀察的結果</th></tr></thead>
+          <tbody>
+            <tr><td>知識表示</td><td>相同來源內容分別使用 canonical 與 Wiki 表示；固定模型、題目與檢索設定</td><td>答案正確、引用、缺答與成本差異</td></tr>
+            <tr><td>條件與版本</td><td>加入相似問題、不同版本、資訊缺失與過期來源</td><td>適用性判斷與追問是否正確</td></tr>
+            <tr><td>授權</td><td>建立真實的允許與拒絕矩陣</td><td>檢索、回答、引用和附件皆符合權限</td></tr>
+            <tr><td>更新與回滾</td><td>新來源 → 相關頁更新 → 發布 → serving → 回滾</td><td>來源、版本與 release 可一致追查</td></tr>
+          </tbody>
+        </table>
+        <p class="small-note warning-note">實驗約束：baseline 與 candidate 保留相同可用事實；新增內容另標為內容補強實驗。固定測試集後不以測試答案修改候選知識，並保留獨立 holdout。</p>
+        <p class="small-note">預先定義重要改善與可接受退步；使用配對案例、重複執行與區間估計，不預填提升目標。</p>
+        <p class="source-line">本 spec 的提議設計；介面與 release 責任參照 <a href="#source-src-07">SRC-07</a>、<a href="#source-src-09">SRC-09</a></p>
+        <section class="reader-notes">
+          <h3>講者稿</h3><p>要知道 Wiki 是否有效，先把內容量與模型設定控制住。若 Wiki 版本額外補了原本不存在的事實，就無法把改善全歸因於表示方式。除了答對多少，我們還要看過期內容、權限拒絕與更新回滾。這些共同決定知識能不能穩定進入服務。</p>
+          <h4>來源與主張類型</h4><p>本 spec 提議的實驗設計；介面與 release 責任參照 <a href="#source-src-07">SRC-07</a>、<a href="#source-src-09">SRC-09</a>。類型：PROPOSED。</p>
+          <h4>驗收</h4><p>清楚標示待執行；不把未執行的測試寫成通過；不需要真實秘密或使用者資料。</p>
+          <h4>建議口述時間</h4><p>選用本頁時約 120 秒。</p>
+        </section>
+      </div>
+    </article>
+
+    <section id="source-index" class="source-index" aria-label="來源索引與教學案例">
+      <h2>來源索引與教學案例</h2>
+      <p>報告、repository 與文件引用皆連至公開版本或官方來源；本頁離線開啟時，內文與來源識別仍可閱讀。固定快照不代表演講當日部署狀態。</p>
+      <ol>
+        <li id="source-src-01" class="source-section"><h3>SRC-01 · Frozen L3 report</h3><p>EVAL-L3-01 的固定量測、分母與個案診斷。報告文件查閱快照為 2601aac3b22c6a4001b6bb682ecef6fb4bc5d652；評測所用程式 commit 為 bdd3894f7a99c07230ebd8069b1179e0be77f601。這不是 Wiki 導入前後實驗。</p><p><a href="https://github.com/poirotw66/teams-agent/blob/2601aac3b22c6a4001b6bb682ecef6fb4bc5d652/data/eval/reports/rag-l3-v3-blind-full-live-20260923-bdd3894.json" target="_blank" rel="noopener">開啟固定評測報告</a></p></li>
+        <li id="source-src-02" class="source-section"><h3>SRC-02 · Retrieval A/B report</h3><p>2026-08-07 的 30 題、19 份文件 Hybrid 與 Gemini File Search 報告；2026-09-27 查閱快照 2601aac3b22c6a4001b6bb682ecef6fb4bc5d652。指標是歷史代理品質測量。</p><p><a href="https://github.com/poirotw66/teams-agent/blob/2601aac3b22c6a4001b6bb682ecef6fb4bc5d652/docs/retrieval-ab-test-report.md" target="_blank" rel="noopener">開啟 A/B 報告</a></p></li>
+        <li id="source-src-03" class="source-section"><h3>SRC-03 · LLM Wiki README</h3><p>範本定位、三層產物、目錄與整體管線；查閱快照 0c02fd346e9711d8b556cc2b94c841a2185ac77e。範本文件不證明所有採用者的 runtime 行為。</p><p><a href="https://github.com/poirotw66/llm-wiki-example/blob/0c02fd346e9711d8b556cc2b94c841a2185ac77e/README.md" target="_blank" rel="noopener">開啟 README</a></p></li>
+        <li id="source-src-04" class="source-section"><h3>SRC-04 · Ingest pipeline</h3><p>來源准入、轉換、兩段分析、來源頁、review 與 log；適用於指定範本快照，不代表本次重新執行了 ingest。</p><p><a href="https://github.com/poirotw66/llm-wiki-example/blob/0c02fd346e9711d8b556cc2b94c841a2185ac77e/docs/ingest-pipeline.md" target="_blank" rel="noopener">開啟 Ingest pipeline 文件</a></p></li>
+        <li id="source-src-05" class="source-section"><h3>SRC-05 · Data governance</h3><p>治理欄位、來源 approval、產物 lineage 與權限邊界；與 serving ACL 是不同責任。</p><p><a href="https://github.com/poirotw66/llm-wiki-example/blob/0c02fd346e9711d8b556cc2b94c841a2185ac77e/docs/data-governance.md" target="_blank" rel="noopener">開啟 Data governance 文件</a></p></li>
+        <li id="source-src-06" class="source-section"><h3>SRC-06 · Wiki rules 與 templates</h3><p>頁面 schema、引用與連結規約。治理擴充不可全稱為 OKF 必填欄位。</p><p><a href="https://github.com/poirotw66/llm-wiki-example/blob/0c02fd346e9711d8b556cc2b94c841a2185ac77e/AGENTS.md" target="_blank" rel="noopener">Wiki rules</a> · <a href="https://github.com/poirotw66/llm-wiki-example/blob/0c02fd346e9711d8b556cc2b94c841a2185ac77e/docs/templates/page-template-source.md" target="_blank" rel="noopener">source template</a> · <a href="https://github.com/poirotw66/llm-wiki-example/blob/0c02fd346e9711d8b556cc2b94c841a2185ac77e/docs/templates/page-template-concept.md" target="_blank" rel="noopener">concept template</a></p></li>
+        <li id="source-src-07" class="source-section"><h3>SRC-07 · KnowledgeService 與 contracts</h3><p>teams-agent 的知識介面與結果欄位；來源為查閱快照 2601aac3b22c6a4001b6bb682ecef6fb4bc5d652。這不證明 Wiki adapter 已完成。</p><p><a href="https://github.com/poirotw66/teams-agent/blob/2601aac3b22c6a4001b6bb682ecef6fb4bc5d652/agent_service/src/agent_service/knowledge.py" target="_blank" rel="noopener">KnowledgeService</a> · <a href="https://github.com/poirotw66/teams-agent/blob/2601aac3b22c6a4001b6bb682ecef6fb4bc5d652/agent_service/src/agent_service/contracts.py" target="_blank" rel="noopener">contracts</a></p></li>
+        <li id="source-src-08" class="source-section"><h3>SRC-08 · Workflow graph</h3><p>Teams 業務流程節點及旁路；不代表所有分支都經過同一條 path。</p><p><a href="https://github.com/poirotw66/teams-agent/blob/2601aac3b22c6a4001b6bb682ecef6fb4bc5d652/agent_service/src/agent_service/workflow_subgraphs.py" target="_blank" rel="noopener">開啟 workflow graph 原始碼</a></p></li>
+        <li id="source-src-09" class="source-section"><h3>SRC-09 · Knowledge release operations</h3><p>應用與知識 release 分離、manifest、active pointer 與回滾契約；文件可證明契約，雲端狀態另行驗證。</p><p><a href="https://github.com/poirotw66/teams-agent/blob/2601aac3b22c6a4001b6bb682ecef6fb4bc5d652/docs/knowledge-release-operations.md" target="_blank" rel="noopener">開啟 release operations 文件</a></p></li>
+        <li id="source-src-10" class="source-section"><h3>SRC-10 · Tencent/WeKnora official repository</h3><p>外部官方定位，查閱日期 2026-09-27；不形成效能比較或本專案整合主張。</p><p><a href="https://github.com/Tencent/WeKnora" target="_blank" rel="noopener">開啟官方 repository</a></p></li>
+        <li id="source-src-11" class="source-section"><h3>SRC-11 · OKF v0.2 與本地 mapping</h3><p>分開呈現上游 OKF 規格與 llm-wiki-example 的本地 mapping；不稱為全球最新版本。</p><p><a href="https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md" target="_blank" rel="noopener">上游 OKF specification</a> · <a href="https://github.com/poirotw66/llm-wiki-example/blob/0c02fd346e9711d8b556cc2b94c841a2185ac77e/docs/okf.md" target="_blank" rel="noopener">本地 OKF mapping</a></p></li>
+        <li id="source-src-12" class="source-section"><h3>SRC-12 · 舊版簡報</h3><p>僅作內容遷移參考，不作技術主張的獨立來源。</p><p><a href="#s01">返回簡報封面</a></p></li>
+        <li id="source-src-13" class="source-section"><h3>SRC-13 · Hybrid service 與 retrieval stages</h3><p>受限查詢管線與角色分層；投影使用概念圖，不冒充完整呼叫圖。</p><p><a href="https://github.com/poirotw66/teams-agent/blob/2601aac3b22c6a4001b6bb682ecef6fb4bc5d652/agent_service/src/agent_service/knowledge_hybrid.py" target="_blank" rel="noopener">Hybrid service</a> · <a href="https://github.com/poirotw66/teams-agent/blob/2601aac3b22c6a4001b6bb682ecef6fb4bc5d652/agent_service/src/agent_service/knowledge_pipeline/retrieval_stage.py" target="_blank" rel="noopener">retrieval stage</a> · <a href="https://github.com/poirotw66/teams-agent/blob/2601aac3b22c6a4001b6bb682ecef6fb4bc5d652/agent_service/src/agent_service/knowledge_pipeline/search_stage.py" target="_blank" rel="noopener">search stage</a></p></li>
+      </ol>
+
+      <section id="source-demo-01" class="source-section">
+        <h3>DEMO-SRC-01 · ExampleVPN 裝置登錄與登入指南 v2.0</h3>
+        <p><strong>合成教學案例。</strong>虛構來源，無真實產品、公司、使用者或操作指引。</p>
+        <p>Effective date 2026-09-01 · Review date 2026-12-01 · Scope：示範組織管理的筆電、ExampleVPN 4.x · Owner team:demo-it · Classification public · Access scope public · PII false · Redaction none · Retention permanent（只適用這份虛構素材）。</p>
+        <ul>
+          <li>在上述範圍內，DEMO-101 表示裝置登錄尚未完成。</li>
+          <li>服務台須確認裝置登錄紀錄；來源未要求使用者重新安裝。</li>
+          <li>沒有錯誤碼、不是受管理裝置或版本不符時，來源不足以判定此根因。</li>
+        </ul>
+        <p id="demo-entity-examplevpn">本來源完整支持的示範主張：[受管理筆電 + ExampleVPN 4.x + DEMO-101] → 裝置登錄未完成；由示範服務台確認登錄紀錄。</p>
+      </section>
+    </section>
+  </main>
+
+  <nav class="controls" id="presentationControls" aria-label="簡報控制">
+    <div class="controls-group">
+      <button id="previousButton" type="button" aria-label="上一頁">← 上一頁</button>
+      <span class="page-count" id="pageCount" aria-live="polite">01 / 20</span>
+      <button id="nextButton" type="button" aria-label="下一頁">下一頁 →</button>
+    </div>
+    <div class="controls-group">
+      <button id="notesButton" type="button" aria-controls="notesPanel" aria-expanded="false">講者稿 N</button>
+      <button id="overviewButton" type="button" aria-controls="overviewDialog">總覽 O</button>
+      <button id="fullscreenButton" type="button" aria-label="切換全螢幕">全螢幕 F</button>
+    </div>
+  </nav>
+
+  <aside id="notesPanel" class="notes-panel" aria-label="目前頁面的講者稿" hidden>
+    <h2 id="notesTitle">講者稿</h2><div id="notesContent"></div>
+  </aside>
+
+  <div class="dialog-backdrop" id="overviewDialog" role="dialog" aria-modal="true" aria-labelledby="overviewTitle">
+    <div class="dialog">
+      <div class="dialog-header"><h2 id="overviewTitle">頁面總覽</h2><button type="button" id="closeOverview">關閉</button></div>
+      <div class="overview-list" id="overviewList"></div>
+    </div>
+  </div>
+
+  <div class="dialog-backdrop" id="helpDialog" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+    <div class="dialog">
+      <div class="dialog-header"><h2 id="helpTitle">鍵盤操作</h2><button type="button" id="closeHelp">關閉</button></div>
+      <dl class="shortcut-list">
+        <dt>下一頁／上一頁</dt><dd>→ / ← · PageDown / PageUp · 空白鍵</dd>
+        <dt>主簡報首尾</dt><dd>Home / End</dd>
+        <dt>講者稿</dt><dd>N</dd>
+        <dt>頁面總覽</dt><dd>O</dd>
+        <dt>全螢幕</dt><dd>F</dd>
+        <dt>關閉面板</dt><dd>Esc</dd>
+        <dt>閱讀模式搜尋</dt><dd>輸入文字</dd>
+      </dl>
+      <p class="small-note">主簡報共 20 頁。附錄 A01–A05 可由總覽或深連結開啟，不計入主頁頁碼。</p>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      var body = document.body;
+      var slides = Array.prototype.slice.call(document.querySelectorAll(".slide[data-section]"));
+      var mainSlides = slides.filter(function (slide) { return slide.dataset.section.charAt(0) === "S"; });
+      var appendixSlides = slides.filter(function (slide) { return slide.dataset.section.charAt(0) === "A"; });
+      var current = null;
+      var currentStep = 1;
+      var reading = false;
+      var returnFocus = null;
+      var oldHashMap = {
+        "1": "s01", "2": "s02", "3": "s05", "4": "s04", "5": "s07",
+        "6": "s08", "7": "s10", "8": "s12", "9": "s13", "10": "s11",
+        "11": "s16", "12": "s17", "13": "s18", "14": "s19", "15": "s17",
+        "16": "s09", "17": "s20"
+      };
+      var notesPanel = document.getElementById("notesPanel");
+      var modalSurfaces = [document.getElementById("deck"), document.querySelector(".toolbar"), document.getElementById("presentationControls"), notesPanel];
+      var notesContent = document.getElementById("notesContent");
+      var notesTitle = document.getElementById("notesTitle");
+      var pageCount = document.getElementById("pageCount");
+      var previousButton = document.getElementById("previousButton");
+      var nextButton = document.getElementById("nextButton");
+      var overviewDialog = document.getElementById("overviewDialog");
+      var helpDialog = document.getElementById("helpDialog");
+      var stepTimer = 0;
+
+      function allSteps(slide) {
+        return Array.prototype.slice.call(slide.querySelectorAll("[data-step]"));
+      }
+
+      function maxStep(slide) {
+        return Number(slide.dataset.maxStep || 1);
+      }
+
+      function updateSteps() {
+        if (!current) return;
+        allSteps(current).forEach(function (item) {
+          item.dataset.visible = String(Number(item.dataset.step) <= currentStep);
+        });
+        var indicator = current.querySelector(".step-indicator");
+        if (indicator) indicator.textContent = currentStep + " / " + maxStep(current);
+      }
+
+      function updateCount() {
+        if (!current) return;
+        var section = current.dataset.section;
+        if (section.charAt(0) === "A") {
+          var appendixIndex = appendixSlides.indexOf(current) + 1;
+          pageCount.textContent = "A" + String(appendixIndex).padStart(2, "0") + " / 05";
+        } else {
+          var mainIndex = mainSlides.indexOf(current) + 1;
+          pageCount.textContent = String(mainIndex).padStart(2, "0") + " / 20";
+        }
+      }
+
+      function updateNotes() {
+        if (!current) return;
+        var notes = current.querySelector(".reader-notes");
+        notesTitle.textContent = current.dataset.section + " · " + current.dataset.title;
+        notesContent.replaceChildren();
+        if (notes) notesContent.appendChild(notes.cloneNode(true));
+      }
+
+      function updateControls() {
+        if (!current) return;
+        var section = current.dataset.section;
+        var list = section.charAt(0) === "A" ? appendixSlides : mainSlides;
+        var index = list.indexOf(current);
+        previousButton.disabled = index === 0 && section.charAt(0) === "S";
+        nextButton.disabled = index === list.length - 1;
+        updateCount();
+        updateNotes();
+      }
+
+      function setReadingMode(value) {
+        reading = Boolean(value);
+        body.classList.toggle("reading-mode", reading);
+        body.classList.toggle("presentation-mode", !reading);
+        document.getElementById("readingMode").setAttribute("aria-pressed", String(reading));
+        document.getElementById("presentationMode").setAttribute("aria-pressed", String(!reading));
+        slides.forEach(function (slide) {
+          slide.inert = !reading && slide !== current;
+          slide.setAttribute("aria-hidden", String(!reading && slide !== current));
+        });
+        document.getElementById("searchInput").value = "";
+        slides.forEach(function (slide) { slide.hidden = false; });
+        if (reading) {
+          closeDialog(overviewDialog);
+          closeDialog(helpDialog);
+          notesPanel.hidden = true;
+          document.getElementById("notesButton").setAttribute("aria-expanded", "false");
+        } else if (current) {
+          updateSteps();
+          setHash(current.id);
+          window.scrollTo(0, 0);
+          current.focus({ preventScroll: true });
+        }
+      }
+
+      function canonicalSlideHash(hash) {
+        var value = (hash || "").replace(/^#/, "").toLowerCase();
+        if (oldHashMap[value]) return oldHashMap[value];
+        if (/^s(?:0[1-9]|1[0-9]|20)$/.test(value)) return value;
+        if (/^a0[1-5]$/.test(value)) return value;
+        return null;
+      }
+
+      function sourceAnchor(hash) {
+        return /^source-(?:src-(?:0[1-9]|1[0-3])|demo-01)$/.test(hash || "");
+      }
+
+      function setHash(value) {
+        if (window.location.hash !== "#" + value) window.location.hash = value;
+      }
+
+      function showSlide(slide, updateHash) {
+        if (!slide) return;
+        window.clearTimeout(stepTimer);
+        current = slide;
+        currentStep = 1;
+        slides.forEach(function (item) {
+          var active = item === slide;
+          item.classList.toggle("active", active);
+          item.inert = !reading && !active;
+          item.setAttribute("aria-hidden", String(!reading && !active));
+        });
+        updateSteps();
+        updateControls();
+        if (!reading) window.scrollTo(0, 0);
+        if (updateHash) setHash(slide.id);
+        if (slide.id === "s02" && !reading) {
+          stepTimer = window.setTimeout(function () {
+            if (current && current.id === "s02" && currentStep === 1) {
+              currentStep = 2;
+              updateSteps();
+            }
+          }, 3000);
+        }
+      }
+
+      function applyHash() {
+        var raw = window.location.hash.replace(/^#/, "").toLowerCase();
+        if (sourceAnchor(raw)) {
+          setReadingMode(true);
+          var target = document.getElementById(raw);
+          if (target) window.setTimeout(function () { target.scrollIntoView({ block: "start" }); }, 0);
+          return;
+        }
+        var canonical = canonicalSlideHash(raw);
+        if (!canonical) {
+          if (raw) window.history.replaceState(null, "", window.location.pathname + window.location.search + "#s01");
+          showSlide(document.getElementById("s01"), false);
+          return;
+        }
+        if (canonical !== raw) {
+          window.history.replaceState(null, "", window.location.pathname + window.location.search + "#" + canonical);
+        }
+        var slide = document.getElementById(canonical);
+        if (slide) showSlide(slide, false);
+      }
+
+      function next() {
+        if (!current) return;
+        if (!reading && currentStep < maxStep(current)) {
+          currentStep += 1;
+          updateSteps();
+          window.clearTimeout(stepTimer);
+          return;
+        }
+        var section = current.dataset.section;
+        var list = section.charAt(0) === "A" ? appendixSlides : mainSlides;
+        var index = list.indexOf(current);
+        if (index < list.length - 1) showSlide(list[index + 1], true);
+      }
+
+      function previous() {
+        if (!current) return;
+        if (!reading && currentStep > 1) {
+          currentStep -= 1;
+          updateSteps();
+          return;
+        }
+        var section = current.dataset.section;
+        var list = section.charAt(0) === "A" ? appendixSlides : mainSlides;
+        var index = list.indexOf(current);
+        if (index > 0) showSlide(list[index - 1], true);
+        else if (section.charAt(0) === "A") showSlide(mainSlides[mainSlides.length - 1], true);
+      }
+
+      function openDialog(dialog) {
+        returnFocus = document.activeElement;
+        modalSurfaces.forEach(function (surface) { surface.inert = true; });
+        dialog.inert = false;
+        dialog.classList.add("open");
+        var focusable = dialog.querySelector("button, a, input");
+        if (focusable) focusable.focus();
+      }
+
+      function closeDialog(dialog) {
+        if (!dialog || !dialog.classList.contains("open")) return;
+        dialog.classList.remove("open");
+        dialog.inert = false;
+        modalSurfaces.forEach(function (surface) { surface.inert = false; });
+        var focusTarget = returnFocus;
+        returnFocus = null;
+        if (focusTarget && typeof focusTarget.focus === "function") focusTarget.focus();
+      }
+
+      function toggleNotes() {
+        var open = notesPanel.hidden;
+        if (open) updateNotes();
+        notesPanel.hidden = !open;
+        document.getElementById("notesButton").setAttribute("aria-expanded", String(open));
+      }
+
+      function toggleFullscreen() {
+        if (document.fullscreenElement) {
+          if (document.exitFullscreen) document.exitFullscreen().catch(function () {});
+          return;
+        }
+        if (document.documentElement.requestFullscreen) {
+          try {
+            var request = document.documentElement.requestFullscreen();
+            if (request && typeof request.catch === "function") request.catch(function () {});
+          } catch {
+            return;
+          }
+        }
+      }
+
+      function makeOverview() {
+        var container = document.getElementById("overviewList");
+        slides.forEach(function (slide) {
+          var button = document.createElement("button");
+          button.type = "button";
+          button.setAttribute("aria-label", slide.dataset.section + " " + slide.dataset.title);
+          var number = document.createElement("span");
+          number.className = "overview-id";
+          number.textContent = slide.dataset.section;
+          var title = document.createElement("span");
+          title.className = "overview-title";
+          title.textContent = slide.dataset.title;
+          button.append(number, title);
+          button.addEventListener("click", function () {
+            setReadingMode(false);
+            showSlide(slide, true);
+            closeDialog(overviewDialog);
+          });
+          container.appendChild(button);
+        });
+      }
+
+      function filterSlides(query) {
+        var normalized = query.trim().toLocaleLowerCase("zh-Hant");
+        var matchCount = 0;
+        slides.forEach(function (slide) {
+          var matches = !normalized || slide.textContent.toLocaleLowerCase("zh-Hant").indexOf(normalized) !== -1;
+          slide.hidden = !matches;
+          if (matches) matchCount += 1;
+        });
+        var sourceIndex = document.getElementById("source-index");
+        sourceIndex.hidden = Boolean(normalized) && sourceIndex.textContent.toLocaleLowerCase("zh-Hant").indexOf(normalized) === -1;
+        document.getElementById("searchStatus").textContent = normalized ? (matchCount ? "符合 " + matchCount + " 頁" : "沒有符合頁面") : "";
+      }
+
+      document.getElementById("readingMode").addEventListener("click", function () { setReadingMode(true); });
+      document.getElementById("presentationMode").addEventListener("click", function () { setReadingMode(false); });
+      document.getElementById("previousButton").addEventListener("click", previous);
+      document.getElementById("nextButton").addEventListener("click", next);
+      document.getElementById("notesButton").addEventListener("click", toggleNotes);
+      document.getElementById("overviewButton").addEventListener("click", function () { openDialog(overviewDialog); });
+      document.getElementById("fullscreenButton").addEventListener("click", toggleFullscreen);
+      document.getElementById("closeOverview").addEventListener("click", function () { closeDialog(overviewDialog); });
+      document.getElementById("closeHelp").addEventListener("click", function () { closeDialog(helpDialog); });
+      document.getElementById("searchInput").addEventListener("input", function (event) { filterSlides(event.target.value); });
+      overviewDialog.addEventListener("click", function (event) { if (event.target === overviewDialog) closeDialog(overviewDialog); });
+      helpDialog.addEventListener("click", function (event) { if (event.target === helpDialog) closeDialog(helpDialog); });
+      document.getElementById("overviewButton").addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") openDialog(overviewDialog);
+      });
+
+      window.addEventListener("hashchange", applyHash);
+      window.addEventListener("keydown", function (event) {
+        var target = event.target;
+        var typing = target && (target.matches("input, textarea, select") || target.isContentEditable);
+        var openModal = overviewDialog.classList.contains("open") ? overviewDialog : (helpDialog.classList.contains("open") ? helpDialog : null);
+        if (event.key === "Tab" && openModal) {
+          var focusable = Array.prototype.slice.call(openModal.querySelectorAll("button:not([disabled]), a[href], input:not([disabled])"));
+          if (focusable.length) {
+            var first = focusable[0];
+            var last = focusable[focusable.length - 1];
+            if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+            else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+          }
+          return;
+        }
+        if (event.key === "Escape") {
+          if (overviewDialog.classList.contains("open")) closeDialog(overviewDialog);
+          else if (helpDialog.classList.contains("open")) closeDialog(helpDialog);
+          else if (!notesPanel.hidden) { notesPanel.hidden = true; document.getElementById("notesButton").setAttribute("aria-expanded", "false"); }
+          else if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(function () {});
+          return;
+        }
+        if (typing || reading || overviewDialog.classList.contains("open") || helpDialog.classList.contains("open")) return;
+        if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") { event.preventDefault(); next(); }
+        else if (event.key === "ArrowLeft" || event.key === "PageUp") { event.preventDefault(); previous(); }
+        else if (event.key === "Home") { event.preventDefault(); showSlide(mainSlides[0], true); }
+        else if (event.key === "End") { event.preventDefault(); showSlide(mainSlides[mainSlides.length - 1], true); }
+        else if (event.key.toLowerCase() === "n") toggleNotes();
+        else if (event.key.toLowerCase() === "o") openDialog(overviewDialog);
+        else if (event.key.toLowerCase() === "f") toggleFullscreen();
+        else if (event.key === "?") openDialog(helpDialog);
+      });
+
+      makeOverview();
+      slides.forEach(function (slide) { slide.tabIndex = -1; });
+      if (window.matchMedia("(max-width: 760px)").matches) setReadingMode(true);
+      applyHash();
+    }());
+  </script>
+</body>
+</html>
