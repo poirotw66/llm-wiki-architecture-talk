@@ -5,13 +5,13 @@
 | Field | Value |
 |---|---|
 | Document ID | `llm-wiki-architecture-talk` |
-| Version | `3.1` |
-| Status | `Added LLM role contract, ambiguous evidence strength, and retrieval A/B bridge` |
+| Version | `3.2` |
+| Status | `Added Teams Agent VPN Knowledge Compilation candidate and 4-case regression evidence package` |
 | Prepared on | `2026-09-27` |
 | Event | Hello World 2026 |
 | Duration | 28 minutes planned narration + 2 minutes buffer |
 | Main slides | 15 |
-| Appendix | 4 optional evidence sections |
+| Appendix | 5 optional evidence sections |
 | Language | Traditional Chinese with English technical identifiers |
 
 ## 1. 新主軸
@@ -30,15 +30,24 @@
 
 > **Treat enterprise knowledge like a releaseable software artifact.**
 
-## 2. v3.1 補強點
+## 2. v3.2 補強點
 
-這版補三件會影響分數的內容：
+這版補兩個尚未落地的關鍵缺口：
 
-1. **LLM 角色定義**：LLM 不是真相來源，而是 **Knowledge Change Proposal Engine**。它提出 impact candidates、conflict candidates、mutation plan、regression queries；deterministic checks、semantic validation 與 human review 決定是否發布。
-2. **更不乾淨的 incident evidence**：Source D 改為「50 起 rollout cases 中 37 起與 device compliance 未完成相關」。這支持優先檢查，不支持把 DEMO-455 寫成 universal compliance cause。
-3. **Retrieval A/B bridge**：保留既有 Hybrid RAG vs Gemini File Search 的歷史數據，證明這不是放棄 RAG，而是在 retrieval 已被優化與比較後，往 knowledge lifecycle 追下一層瓶頸。
+1. **Teams Agent 真實案例 slice**：選用 `teams-agent` 既有 VPN / FortiClient eval cluster，不再只靠合成 DEMO-455。這組包含 multi-source troubleshooting、cross-document synthesis、process knowledge、no-answer boundary。
+2. **4 題 regression eval contract**：新增 `evidence/teams-agent-vpn-compilation/regression-cases.json`，明確定義 Knowledge Compilation 後要通過的四個案例。
 
-## 3. 固定案例：DEMO-455 Knowledge Resolution
+保留 v3.1 的三個補強：
+
+- LLM 不是真相來源，而是 **Knowledge Change Proposal Engine**。
+- Source D 使用 37/50 association，不宣稱 universal causation。
+- Retrieval A/B bridge 證明這不是放棄 RAG，而是在 retrieval 已比較後往 knowledge lifecycle 追下一層問題。
+
+## 3. 兩層案例設計
+
+### A. 主敘事案例：DEMO-455 Knowledge Resolution
+
+用途：講 partial supersession、evidence strength、claim-level provenance。
 
 固定問題：
 
@@ -53,24 +62,37 @@
 | C — Service Desk FAQ | 高頻客服知識 | DEMO-455 = 帳密錯誤，但 FAQ 沒區分新舊架構 |
 | D — Incident Postmortem | 上線後事件證據 | 37/50 rollout cases 與 device compliance 未完成相關，屬於 scoped associated evidence，不是 universal causation |
 
-關鍵：四份來源都不是單純錯誤。傳統 RAG 可能把四份都找回來，但模型仍要在 query time 決定哪一份適用於這個人，以及 incident evidence 應該如何措辭。
+### B. 補強實證案例：Teams Agent VPN / FortiClient cluster
+
+用途：補上「真的來自既有專案 eval 的回歸案例」。
+
+來源：`evidence/teams-agent-vpn-compilation/`。
+
+| Regression | Pattern | Query | Why it matters |
+|---|---|---|---|
+| R1 | Multi-source troubleshooting | `FortiClient 出現 Permission denied 錯誤碼 -455 怎麼辦？` | 可能同時需要 FortiClient 錯訊與 VPN Q&A |
+| R2 | Cross-document synthesis | `VPN 密碼到期了要怎麼處理？` | 症狀與動作分散在相鄰文件 |
+| R3 | Process knowledge | `員工要出國，需要短暫申請 VPN 國外連線，流程是什麼？` | procedure / approval / escalation 不是 error-code lookup |
+| R4 | No-answer boundary | `VPN連線出現 Error -619，這是什麼問題？` | 不可因為都是 VPN 就腦補未收錄錯誤碼 |
+
+誠實界線：`teams-agent/data/sources/*.md` 未進公開 repo，因此目前新增的是 **selected real-case slice + local run contract**，不是 completed execution result。要達到 95 分，仍需在本機匯出 sanitized corpus 並實際產生 `output/regression-results.json`。
 
 ## 4. 15 頁主線
 
 | # | Slide | Time | 角色 |
 |---|---|---:|---|
 | S01 | LLM Wiki：企業內部知識問答系統的架構演進 | 0:30 | 開場與 thesis |
-| S02 | 一個 VPN 問題，四個都「正確」的答案 | 2:00 | Hook；建立難題 |
+| S02 | 一個 VPN 問題，四個都「正確」的答案 | 2:00 | Hook；建立 hard case |
 | S03 | 我們真的先優化過 Retrieval | 1:30 | Agentic RAG + A/B bridge |
 | S04 | Retrieval 成功，為什麼 Answer 還會錯？ | 2:00 | 從 retrieval 拉到 knowledge resolution |
 | S05 | Query Time 還承擔了什麼？ | 2:00 | 第一張核心架構圖 |
 | S06 | 把 Knowledge Work 搬到 Update Time | 2:00 | 定義 LLM Wiki / Knowledge Compilation |
-| S07 | Hard Case：四份互相交疊的 VPN 文件 | 2:00 | 展示來源張力與 evidence strength |
+| S07 | Hard Case：partial supersession + evidence strength | 2:00 | 展示來源張力 |
 | S08 | LLM 是 Knowledge Change Proposal Engine | 2:00 | 補足 LLM Wiki 的 LLM 角色 |
 | S09 | Impact Discovery：哪些頁面會被牽動？ | 2:00 | 機制一 |
-| S10 | Partial Supersession + Evidence Strength | 3:00 | 機制二；全場技術高潮 |
-| S11 | Claim-level Provenance | 2:00 | 機制三；來源與適用條件 |
-| S12 | Draft → Validate → Knowledge Release | 2:30 | 機制四；避免半套更新 |
+| S10 | Claim-level Provenance + Evidence Strength | 3:00 | 機制二；技術高潮 |
+| S11 | Draft → Validate → Knowledge Release | 2:30 | 機制三；避免半套更新 |
+| S12 | Teams Agent VPN cluster：可回歸的真實 slice | 2:00 | 補充實證接口 |
 | S13 | Structural Valid ≠ Semantic Correct | 1:30 | 保留 v2 實測 lint 洞見 |
 | S14 | Knowledge Layer 接到 Teams Agent / WeKnora | 2:00 | 落地邊界 + 外部佐證 |
 | S15 | 三句帶走 | 1:00 | 收束 |
@@ -93,8 +115,6 @@
 
 ### S03 — 我們真的先優化過 Retrieval
 
-**投影內容**：
-
 | Metric | Hybrid RAG | Gemini File Search |
 |---|---:|---:|
 | P50 latency | 3.00s | 5.71s |
@@ -102,9 +122,9 @@
 | Avg cost/query | US$0.001059 | US$0.001804 |
 | Reported answer proxy | 25/25 | 25/25 |
 
-**講者稿**：這裡不是說 retrieval 不重要。我們真的比較過 retrieval backend。當小語料測試裡品質 proxy 接近，架構選型會看 latency、cost、操作控制。但下一層問題是：如果系統把四份都找回來，哪一份才應該成為這個使用者的答案？
+講者稿：這裡不是說 retrieval 不重要。我們真的比較過 retrieval backend。當小語料測試裡品質 proxy 接近，架構選型會看 latency、cost、操作控制。但下一層問題是：如果系統把四份都找回來，哪一份才應該成為這個使用者的答案？
 
-**限制**：這是歷史 A/B，小語料、proxy metric，不是 LLM Wiki 效益實驗。
+限制：這是歷史 A/B，小語料、proxy metric，不是 LLM Wiki 效益實驗。
 
 ### S04 — Retrieval 成功，為什麼 Answer 還會錯？
 
@@ -150,13 +170,11 @@ Retrieval / Agent
 
 主句：我們沒有消滅複雜度，而是把可重用的複雜度搬到可以 review 和 release 的地方。
 
-### S07 — Hard Case：四份互相交疊的 VPN 文件
+### S07 — Hard Case：partial supersession + evidence strength
 
 投影四份 source 的 one-liner + validity condition。重點：A/C 對 Legacy VPN 仍有效；B 只部分取代 A；D 只支持「分公司 managed device rollout」族群，而且 37/50 是關聯證據，不是 universal causation。
 
 ### S08 — LLM 是 Knowledge Change Proposal Engine
-
-投影：
 
 ```text
 Source change
@@ -185,7 +203,7 @@ active knowledge
 
 誠實界線：這是 worked design，不是已量測的大規模自動召回率。
 
-### S10 — Partial Supersession + Evidence Strength
+### S10 — Claim-level Provenance + Evidence Strength
 
 | Population | Access path | DEMO-455 first action | Evidence wording |
 |---|---|---|---|
@@ -194,29 +212,35 @@ active knowledge
 | Contractor | Legacy VPN | Check credentials / OTP | Zero Trust policy does not migrate contractors |
 | Unknown context | Unknown | Ask clarification | Missing applicability fields |
 
-主句：新政策不是讓舊手冊失效，而是只取代特定族群的 first action；postmortem 不是 universal cause，而是 priority signal。
-
-### S11 — Claim-level Provenance
-
-例：
-
-- Branch managed device migrated to Zero Trust → Source B
-- Incomplete compliance observed in 37/50 DEMO-455 rollout cases → Source D
-- Legacy users still credential-first → Source A + Source C
-
 錯誤寫法：DEMO-455 is caused by device compliance.
 
 較好寫法：During branch Zero Trust rollout, incomplete compliance was observed in 37/50 reviewed DEMO-455 cases; check compliance first for this population.
 
 主句：整頁 citation 不夠，架構上要知道每個 claim 的來源、適用條件與 evidence strength。
 
-### S12 — Draft → Validate → Knowledge Release
+### S11 — Draft → Validate → Knowledge Release
 
 ```text
 Impact Discovery → Mutation Plan → Draft Release → Structural Validation → Semantic Validation → Regression Queries → Human Review → Atomic Publish
 ```
 
 主句：企業知識要像軟體 artifact 一樣發布。失敗時 ACTIVE pointer 不動。
+
+### S12 — Teams Agent VPN cluster：可回歸的真實 slice
+
+投影：
+
+```text
+Teams Agent existing eval slice
+  R1 -455              multi-source troubleshooting
+  R2 password expiry   cross-document synthesis
+  R3 overseas VPN      process / approval flow
+  R4 unknown -619      no-answer boundary
+```
+
+說法：這組不是新的表演題，而是從既有 Teams Agent eval 選出來的 VPN / FortiClient cluster。它補上這場演講最需要的 bridge：Knowledge Compilation 不只是一個漂亮概念，它可以接回既有 regression practice。
+
+誠實界線：目前公開 repo 沒有 gitignored `data/sources/*.md`，所以這頁先作為 selected real-case slice + local run contract；完成本機 sanitized export 後，再替換成 executed run result。
 
 ### S13 — Structural Valid ≠ Semantic Correct
 
@@ -247,27 +271,40 @@ Impact Discovery → Mutation Plan → Draft Release → Structural Validation �
 
 | ID | Source | 用途 |
 |---|---|---|
-| KR-01 | `evidence/knowledge-resolution-demo/README.md` | 新主案例總覽 |
+| KR-01 | `evidence/knowledge-resolution-demo/README.md` | DEMO-455 主案例總覽 |
 | KR-02 | `evidence/knowledge-resolution-demo/sources/*.md` | 四份合成來源 |
-| KR-03 | `evidence/knowledge-resolution-demo/claim-resolution.md` | claim-level provenance、evidence strength 與 resolution |
+| KR-03 | `evidence/knowledge-resolution-demo/claim-resolution.md` | claim-level provenance 與 resolution |
 | KR-04 | `evidence/knowledge-resolution-demo/mutation-plan.md` | impact discovery / changeset / guardrails |
 | KR-05 | `evidence/knowledge-resolution-demo/knowledge-release.md` | release pipeline / validation layers |
 | KR-06 | `evidence/knowledge-resolution-demo/llm-role.md` | LLM role contract |
+| TA-VPN-01 | `evidence/teams-agent-vpn-compilation/README.md` | Teams Agent VPN evidence package |
+| TA-VPN-02 | `evidence/teams-agent-vpn-compilation/source-selection.md` | local source export list |
+| TA-VPN-03 | `evidence/teams-agent-vpn-compilation/regression-cases.json` | four regression cases |
+| TA-VPN-04 | `evidence/teams-agent-vpn-compilation/compilation-target.md` | target output artifacts |
+| TA-VPN-05 | `evidence/teams-agent-vpn-compilation/runbook.md` | how to execute the missing local run |
 | AB-01 | `evidence/retrieval-ab-bridge.md` | Retrieval A/B bridge |
 | WD-01 | `evidence/wiki-update-demo/README.md` | v2 實際 lint / graph fixture 總覽 |
 | WD-02 | `evidence/wiki-update-demo/records/runs.json` | 實際工具執行紀錄 |
-| WD-03 | `evidence/wiki-update-demo/records/content-revision.diff` | 舊案例三頁 diff，附錄用 |
+| WK-01 | Tencent WeKnora public repository | 外部知識基礎設施趨勢佐證 |
 
 ## 7. Acceptance criteria
 
-- [x] 新 demo 已建立在 `evidence/knowledge-resolution-demo/`。
-- [x] LLM role 已補成 `llm-role.md`，並進入 S08。
-- [x] Source D 已改成 37/50 關聯證據，並進入 S10 / S11。
-- [x] Retrieval A/B bridge 已補成 `evidence/retrieval-ab-bridge.md`，並進入 S03。
-- [ ] `index.html` 主線與本 spec 同步。
-- [ ] 開場 3 分鐘內能說出：這場在討論 query-time vs update-time knowledge integration。
-- [ ] S10 清楚解釋 partial supersession 與 evidence strength，不把新版政策說成全量取代。
-- [ ] S11 清楚展示 claim-level provenance。
-- [ ] S12 明確呈現 atomic knowledge release，而不是 LLM 直接改 production Markdown。
-- [ ] S13 壓縮 v2 工具證據，且不讓它重新主導全場。
-- [ ] 結尾三句可被觀眾複述。
+- [x] 新 DEMO-455 hard case 已建立在 `evidence/knowledge-resolution-demo/`。
+- [x] LLM role contract 已補入 `llm-role.md` 與主線 S08。
+- [x] Source D 已改成 evidence strength / association，不宣稱 universal causation。
+- [x] Retrieval A/B bridge 已補入 S03。
+- [x] Teams Agent VPN real-case slice 已建立在 `evidence/teams-agent-vpn-compilation/`。
+- [x] 4 題 regression contract 已補入 `regression-cases.json` 與 S12。
+- [ ] 本機匯出 sanitized `teams-agent/data/sources/*.md` 到 `input-sources/`。
+- [ ] 執行 Knowledge Compilation，產生 `output/` artifacts。
+- [ ] 實際跑四題 regression，產生 `output/regression-results.json`。
+- [ ] `index.html` 主線同步 v3.2。
+
+## 8. Next evidence needed for 95-point target
+
+目前 v3.2 已經把案例與評測 slice 找好。要進一步把「run contract」升級成「execution evidence」，還需要：
+
+1. 從本機 `teams-agent/data/sources/` 匯出 5 份 sanitized VPN source。
+2. 實際跑一次 Knowledge Compilation。
+3. 將 `output/compilation-summary.md`、`output/regression-results.json`、`output/diffstat.txt` commit 回 repo。
+4. 把 S12 文字從「selected real-case slice + local run contract」改成「executed local sanitized run」。
