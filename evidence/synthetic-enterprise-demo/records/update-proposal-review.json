@@ -1,0 +1,76 @@
+{
+  "reviewed_at": "2026-10-11T04:09:29.016237+00:00",
+  "reviewer": "codex/in-session",
+  "human_review": "pending",
+  "proposal_sha256": "862f96d0f4d9ce82b1383f616a0d53c1e3ebc73a8443b888d968d67d9195397d",
+  "semantic_corrections": [
+    {
+      "path": "ops/purpose.md",
+      "issue": "Proposal marked the original six-source scope as retain although this is the active updated snapshot.",
+      "resolution": "Updated active scope to SRC-01 through SRC-07 at 2030-03-02; preserved original baseline in its separate snapshot."
+    }
+  ],
+  "metadata_actions": [
+    "Added keyed source metadata for changed concept, entity and query pages; index retains only okf_version.",
+    "Added required SRC-07 source page with analysis receipt, governance, draft status and model provenance.",
+    "No human verified metadata was added."
+  ],
+  "review_checks": [
+    "Confirmed lock, full-time employment, managed laptop and prior enrollment must all apply.",
+    "First action changes only on/after 2030-03-01; historical baseline retained.",
+    "Unknown qualifications or date require clarification; failure or unclear result retains service-desk fallback.",
+    "Password-expiry, network, device, resource and overseas procedures remain unchanged.",
+    "Baseline source archives and original source summaries retained."
+  ],
+  "changes": [
+    {
+      "path": "wiki/index.md",
+      "before_sha256": "0ec73bba682c20168bf2c7851edbb0a12ce6c1f639e538bc566d45296d4367a3",
+      "after_sha256": "38da583315b01e38ed0ab1191f2d7143525935921573716d791ceb2e22e7cb87",
+      "reason": "保留初始基準描述，補充目前答案草稿的情境日期與局部更新入口。",
+      "actor": "model-proposal+agent-metadata-review"
+    },
+    {
+      "path": "wiki/concepts/account-state-and-recovery.md",
+      "before_sha256": "d6e79fdad00f5ebb251c286e99b2f50bc1b65d3ed3591bd4e033d8a1feb9ce12",
+      "after_sha256": "6633ab98b1f00384e072ec2eae1a774b8271ae1cf0b127f641b05f2a70a9f924",
+      "reason": "將基準鎖定入口改為有時間與資格邊界的局部更新，同時保留診斷、到期與服務台程序。",
+      "actor": "model-proposal+agent-metadata-review"
+    },
+    {
+      "path": "wiki/entities/exampledesk.md",
+      "before_sha256": "c3bb8e1d08d03f8985432b02b1c1270f8fe8ca4033e8f0d3376d8e380c503286",
+      "after_sha256": "c6c5c771aea8c4ae8892d64c1af003844d4d1c631a76fe2053c53db982e87892",
+      "reason": "保留 ExampleDesk 的歷史基準描述，補充局部更新後的服務台適用情境。",
+      "actor": "model-proposal+agent-metadata-review"
+    },
+    {
+      "path": "wiki/queries/account-locked.md",
+      "before_sha256": "6fa8c487b54b348c158e1b5ef63fcfc5eb9b4c7d421dad2109d8a423180cfc6a",
+      "after_sha256": "b15ddb47ee49790b84aa62d7a7f474d38e630208fb3285e0133baf9aa7a39f76",
+      "reason": "提供截至新情境日期的條件式回答，保留歷史事件、未知資訊、完整服務台請求與密碼到期邊界。",
+      "actor": "model-proposal+agent-metadata-review"
+    },
+    {
+      "path": "wiki/sources/account-recovery-update-v2.md",
+      "before_sha256": null,
+      "after_sha256": "e2960b1dae92cf08c30d8a57a842c24b3b9c39f2bac8957a7ba2f3b8010bbaa8",
+      "reason": "Required new source summary with private analysis receipt.",
+      "actor": "model-proposal+agent-metadata-review"
+    },
+    {
+      "path": "ops/purpose.md",
+      "before_sha256": "631c67382596a3c6e9cd9cb2da89620eb196ad2f744a8573b6516d38f576091f",
+      "after_sha256": "00a87d5861bb3a7bd41cc8be6fa5f25ddb0f788ba0b905ebb7b7d8094159031b",
+      "reason": "Agent correction: proposal retained a six-source purpose that would conflict with the updated snapshot scope.",
+      "actor": "codex/in-session"
+    }
+  ],
+  "structural_repairs": [
+    {
+      "path": "ops/purpose.md",
+      "issue": "Existing lint requires # Purpose and YAML mode: template.",
+      "resolution": "Restored the required purpose schema; third lint passed."
+    }
+  ]
+}

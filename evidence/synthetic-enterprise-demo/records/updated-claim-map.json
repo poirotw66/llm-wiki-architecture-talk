@@ -1,0 +1,519 @@
+{
+  "knowledge_as_of": "2030-03-02",
+  "status": "draft",
+  "claims": [
+    {
+      "id": "CL-101-UNCERTAIN",
+      "statement": "DEMO-101 是多種可能原因的分流線索，不能單獨證明帳戶鎖定。",
+      "support": [
+        {
+          "source_id": "SRC-01",
+          "resource": "raw/sources/vpn-common-qa.md",
+          "quote": "DEMO-101 可能與密碼輸入錯誤、已確認的帳戶鎖定、密碼到期或當下網路狀況有關。這些是待查原因；不可只因代碼出現就判定帳戶已鎖定。",
+          "strength": "diagnostic-hypotheses"
+        },
+        {
+          "source_id": "SRC-02",
+          "resource": "raw/sources/examplevpn-error-reference.md",
+          "quote": "DEMO-101 | 密碼輸入錯誤、已確認鎖定、密碼到期或網路狀況 | 先釐清狀態；代碼本身不代表帳戶鎖定。",
+          "strength": "diagnostic-hypotheses"
+        }
+      ],
+      "applies_when": {
+        "error_code": "DEMO-101",
+        "account_state": "unknown"
+      },
+      "limits": [
+        "不可只憑代碼選擇解鎖。"
+      ]
+    },
+    {
+      "id": "CL-LOCK-BASE",
+      "statement": "已確認帳戶鎖定時，提交 ExampleDesk 帳戶復原請求，由服務台檢視。",
+      "support": [
+        {
+          "source_id": "SRC-03",
+          "resource": "raw/sources/account-recovery-v1.md",
+          "quote": "已確認鎖定時，使用者透過 ExampleDesk 提交帳戶復原請求，交由 Example IT Service Desk 檢視。",
+          "strength": "explicit-procedure"
+        }
+      ],
+      "applies_when": {
+        "account_state": "confirmed-locked",
+        "knowledge_as_of": "2030-02-01"
+      },
+      "limits": [
+        "本頁未執行解鎖，不保證服務台直接解除鎖定。",
+        "不可把密碼到期當作鎖定。"
+      ]
+    },
+    {
+      "id": "CL-REQUEST-FIELDS",
+      "statement": "復原請求需附非機密錯訊、時間及管理／復原註冊狀態；不清楚時可標未知。",
+      "support": [
+        {
+          "source_id": "SRC-03",
+          "resource": "raw/sources/account-recovery-v1.md",
+          "quote": "2. 不含秘密的錯誤文字或代碼，以及發生時間。\n3. 裝置是否由公司管理；若不清楚，填「未知」。\n4. 自助復原是否已註冊；若不清楚，填「未知」。",
+          "strength": "explicit-procedure"
+        }
+      ],
+      "applies_when": {
+        "route": "service-desk-request"
+      },
+      "limits": [
+        "不得為了填欄位推定符合資格。"
+      ]
+    },
+    {
+      "id": "CL-NO-SECRETS",
+      "statement": "請求不得包含密碼、驗證碼或復原連結。",
+      "support": [
+        {
+          "source_id": "SRC-03",
+          "resource": "raw/sources/account-recovery-v1.md",
+          "quote": "不得在請求中放入密碼、驗證碼、復原連結或其他登入秘密。",
+          "strength": "explicit-procedure"
+        }
+      ],
+      "applies_when": {
+        "route": "support-request"
+      },
+      "limits": [
+        "非機密資訊收集不是授權執行。"
+      ]
+    },
+    {
+      "id": "CL-EXPIRY-CHANGE",
+      "statement": "公司管理筆電已確認密碼到期，先連公司網路，再以 Ctrl+Alt+Delete 變更密碼。",
+      "support": [
+        {
+          "source_id": "SRC-02",
+          "resource": "raw/sources/examplevpn-error-reference.md",
+          "quote": "若已確認密碼到期，且使用者正在使用公司管理筆電，先連上公司網路，再按 Ctrl+Alt+Delete 並選擇變更密碼，依畫面完成變更。",
+          "strength": "explicit-procedure"
+        },
+        {
+          "source_id": "SRC-01",
+          "resource": "raw/sources/vpn-common-qa.md",
+          "quote": "若確認密碼已到期，請改走 [SRC-02](examplevpn-error-reference.md) 的到期處理程序。",
+          "strength": "explicit-procedure"
+        }
+      ],
+      "applies_when": {
+        "account_state": "confirmed-expired",
+        "device_management": "managed",
+        "company_network_available": true
+      },
+      "limits": [
+        "這是虛構案例步驟，不保證適用其他環境。"
+      ]
+    },
+    {
+      "id": "CL-EXPIRY-STOP",
+      "statement": "無法連公司網路或無法操作時停止嘗試並聯絡服務台；不能以消費者入口同步或解鎖替代改密碼。",
+      "support": [
+        {
+          "source_id": "SRC-02",
+          "resource": "raw/sources/examplevpn-error-reference.md",
+          "quote": "若人在遠端而無法連公司網路，或上述步驟無法使用，請停止自行嘗試並聯絡 Example IT Service Desk。不要改用消費者入口網站同步密碼，也不可聲稱解除帳戶鎖定就會重設或延長已到期密碼。",
+          "strength": "explicit-procedure"
+        }
+      ],
+      "applies_when": {
+        "account_state": "confirmed-expired"
+      },
+      "limits": [
+        "不得宣稱解鎖會延長密碼有效期。"
+      ]
+    },
+    {
+      "id": "CL-UNKNOWN-CODE",
+      "statement": "未記錄代碼不提供原因推論；收集原文後交服務台。",
+      "support": [
+        {
+          "source_id": "SRC-02",
+          "resource": "raw/sources/examplevpn-error-reference.md",
+          "quote": "未列出的代碼沒有在此定義原因，請記錄原文並交由服務台判讀，不要自行推測。",
+          "strength": "knowledge-boundary"
+        }
+      ],
+      "applies_when": {
+        "error_code": "not-documented-in-snapshot"
+      },
+      "limits": [
+        "只界定這份資料集，不宣稱所有地方都沒有資料。"
+      ]
+    },
+    {
+      "id": "CL-DEVICE-SETUP",
+      "statement": "DEMO-303 可能涉及裝置註冊或授權指派，需分別確認。",
+      "support": [
+        {
+          "source_id": "SRC-04",
+          "resource": "raw/sources/managed-laptop-remote-access.md",
+          "quote": "DEMO-303 可能與裝置註冊或授權指派有關。請先分別確認：",
+          "strength": "diagnostic-hypotheses"
+        }
+      ],
+      "applies_when": {
+        "error_code": "DEMO-303",
+        "device_management": "managed"
+      },
+      "limits": [
+        "不是所有登入故障都是授權問題。"
+      ]
+    },
+    {
+      "id": "CL-ENROLLMENT-DISTINCT",
+      "statement": "裝置管理／註冊、帳戶自助復原註冊與授權是不同狀態，不可互相推定。",
+      "support": [
+        {
+          "source_id": "SRC-04",
+          "resource": "raw/sources/managed-laptop-remote-access.md",
+          "quote": "裝置受管理或已完成裝置註冊，不代表使用者已註冊自助復原；自助復原註冊也不是本文件判斷 DEMO-303 的前提。",
+          "strength": "scope-rule"
+        },
+        {
+          "source_id": "SRC-04",
+          "resource": "raw/sources/managed-laptop-remote-access.md",
+          "quote": "不要以裝置已註冊推定授權已指派。",
+          "strength": "scope-rule"
+        }
+      ],
+      "applies_when": {
+        "topic": "enrollment"
+      },
+      "limits": [
+        "不從管理狀態推論復原服務資格。"
+      ]
+    },
+    {
+      "id": "CL-DEVICE-STOP",
+      "statement": "個人所有或管理狀態未知的裝置，先停止設定並由服務台釐清。",
+      "support": [
+        {
+          "source_id": "SRC-04",
+          "resource": "raw/sources/managed-laptop-remote-access.md",
+          "quote": "若裝置為個人所有、管理狀態不明，或使用者無法確認裝置類型，本指南不適用。先停止設定操作，請服務台釐清裝置狀態及適用流程；不可猜測設定方式或承諾個人裝置可連線。",
+          "strength": "scope-rule"
+        }
+      ],
+      "applies_when": {
+        "device_management": "unmanaged-or-unknown"
+      },
+      "limits": [
+        "不得承諾個人裝置可接入。"
+      ]
+    },
+    {
+      "id": "CL-VPN-NOT-AUTHORIZATION",
+      "statement": "ExampleVPN 連線成功不代表資源權限或海外核准。",
+      "support": [
+        {
+          "source_id": "SRC-04",
+          "resource": "raw/sources/managed-laptop-remote-access.md",
+          "quote": "成功建立 ExampleVPN 連線不會自動授予 ExampleCRM、TeamShare 或其他資源權限。",
+          "strength": "scope-rule"
+        },
+        {
+          "source_id": "SRC-05",
+          "resource": "raw/sources/shared-resource-access-policy.md",
+          "quote": "使用者連上 ExampleVPN，只代表目前有一條遠端連線；是否可使用特定資源，仍依下列群組與網路條件判斷。",
+          "strength": "scope-rule"
+        },
+        {
+          "source_id": "SRC-04",
+          "resource": "raw/sources/managed-laptop-remote-access.md",
+          "quote": "海外臨時存取仍須完成 [SRC-06](overseas-access-request.md) 的核准程序。",
+          "strength": "scope-rule"
+        },
+        {
+          "source_id": "SRC-05",
+          "resource": "raw/sources/shared-resource-access-policy.md",
+          "quote": "臨時海外遠端存取需要個別核准，見 [SRC-06](overseas-access-request.md)；一般連線不會取代該程序。",
+          "strength": "scope-rule"
+        }
+      ],
+      "applies_when": {
+        "vpn_connected": true
+      },
+      "limits": [
+        "這不是檢索 ACL 實作證據。"
+      ]
+    },
+    {
+      "id": "CL-BRANCH-RESTRICTION",
+      "statement": "Branch Support 遠端 ExampleVPN 範圍不含 TeamShare；一般申請不能覆蓋限制。",
+      "support": [
+        {
+          "source_id": "SRC-05",
+          "resource": "raw/sources/shared-resource-access-policy.md",
+          "quote": "**Branch Support 群組：**經 ExampleVPN 遠端連線時，可以使用 ExampleCRM；此情境不包含 TeamShare。",
+          "strength": "scope-rule"
+        },
+        {
+          "source_id": "SRC-05",
+          "resource": "raw/sources/shared-resource-access-policy.md",
+          "quote": "此申請流程不會覆蓋該遠端路徑限制。",
+          "strength": "scope-rule"
+        }
+      ],
+      "applies_when": {
+        "support_group": "Branch Support",
+        "network_path": "remote-examplevpn",
+        "resource": "TeamShare"
+      },
+      "limits": [
+        "不得挪用 HQ 公司網路申請流程繞過限制。"
+      ]
+    },
+    {
+      "id": "CL-HQ-APPLICATION",
+      "statement": "HQ Support 在公司網路可提出 TeamShare 申請，需識別碼、邏輯資料夾與所需角色；申請不是核准。",
+      "support": [
+        {
+          "source_id": "SRC-05",
+          "resource": "raw/sources/shared-resource-access-policy.md",
+          "quote": "**HQ Support 群組：**在公司網路上可提出 TeamShare 權限申請。申請不代表已核准或已生效。",
+          "strength": "scope-rule"
+        },
+        {
+          "source_id": "SRC-05",
+          "resource": "raw/sources/shared-resource-access-policy.md",
+          "quote": "HQ Support 申請時，請透過 ExampleDesk 提供申請人的使用者識別碼（虛構示例：`EMP-DEMO-001`）、邏輯資料夾名稱及所需角色。",
+          "strength": "explicit-procedure"
+        }
+      ],
+      "applies_when": {
+        "support_group": "HQ Support",
+        "network_path": "corporate-network",
+        "resource": "TeamShare"
+      },
+      "limits": [
+        "不推論其他角色或路徑也適用。"
+      ]
+    },
+    {
+      "id": "CL-RESOURCE-CLARIFY",
+      "statement": "群組、網路或要求角色未知時先釐清並保留未決狀態。",
+      "support": [
+        {
+          "source_id": "SRC-05",
+          "resource": "raw/sources/shared-resource-access-policy.md",
+          "quote": "若使用者的群組、所在網路或要求角色未知，先向使用者釐清並保留未決狀態。",
+          "strength": "scope-rule"
+        }
+      ],
+      "applies_when": {
+        "missing_context": [
+          "support_group",
+          "network_path",
+          "requested_role"
+        ]
+      },
+      "limits": [
+        "不得預設群組、網路或角色。"
+      ]
+    },
+    {
+      "id": "CL-OVERSEAS-FIELDS",
+      "statement": "海外申請需申請人、目的地、起訖日期與業務目的；缺漏先補充。",
+      "support": [
+        {
+          "source_id": "SRC-06",
+          "resource": "raw/sources/overseas-access-request.md",
+          "quote": "- 申請人識別資訊。\n- 目的地國家或地區。\n- 預計開始日與結束日。\n- 業務目的及需要遠端連線的工作範圍。",
+          "strength": "explicit-procedure"
+        },
+        {
+          "source_id": "SRC-06",
+          "resource": "raw/sources/overseas-access-request.md",
+          "quote": "資料缺漏或日期不明時，服務台應退回補充或請申請人釐清，不應代填猜測。",
+          "strength": "explicit-procedure"
+        }
+      ],
+      "applies_when": {
+        "topic": "overseas-access"
+      },
+      "limits": [
+        "不能代填日期與個資。"
+      ]
+    },
+    {
+      "id": "CL-OVERSEAS-APPROVAL",
+      "statement": "申請先經主管審查，核准後轉 Network Operations 並納入 Security Review；獲准才安排啟用。",
+      "support": [
+        {
+          "source_id": "SRC-06",
+          "resource": "raw/sources/overseas-access-request.md",
+          "quote": "2. 直屬主管檢視業務目的與日期並作出核准或拒絕。\n3. 主管核准後，ExampleDesk 將申請轉交 Network Operations，並納入 Security Review。\n4. 只有相關審查完成且獲准後，才可安排啟用；拒絕或待審時不得先行啟用。",
+          "strength": "explicit-procedure"
+        }
+      ],
+      "applies_when": {
+        "topic": "overseas-access"
+      },
+      "limits": [
+        "連線成功不替代核准。",
+        "本輪不執行權限啟用。"
+      ]
+    },
+    {
+      "id": "CL-OVERSEAS-PERIOD",
+      "statement": "海外臨時安排只在核准日期範圍有效，延長需重新申請。",
+      "support": [
+        {
+          "source_id": "SRC-06",
+          "resource": "raw/sources/overseas-access-request.md",
+          "quote": "5. 核准僅在申請所列日期範圍內有效，結束日到期後停止該次臨時安排；需要延長時須重新提出申請。",
+          "strength": "explicit-procedure"
+        }
+      ],
+      "applies_when": {
+        "topic": "overseas-access"
+      },
+      "limits": [
+        "不提供自動延長或期限以外的保證。"
+      ]
+    },
+    {
+      "id": "CL-LOCK-QUALIFIED",
+      "statement": "Qualified confirmed lock uses a fictional self-service first action from 2030-03-01.",
+      "support": [
+        {
+          "source_id": "SRC-07",
+          "resource": "raw/sources/account-recovery-update-v2.md",
+          "quote": "自 2030-03-01 起，本通知只變更「已確認帳戶鎖定」時的第一步，而且必須同時符合下列三項條件：",
+          "strength": "explicit-scoped-policy"
+        },
+        {
+          "source_id": "SRC-07",
+          "resource": "raw/sources/account-recovery-update-v2.md",
+          "quote": "1. 使用者是全職員工。\n2. 使用者正在使用公司管理筆電。\n3. 使用者已註冊自助帳戶復原。",
+          "strength": "explicit-scoped-policy"
+        },
+        {
+          "source_id": "SRC-07",
+          "resource": "raw/sources/account-recovery-update-v2.md",
+          "quote": "三項都確認為符合時，請使用者前往虛構入口網站 <https://support.example.com/account-recovery> 嘗試自助復原。此連結僅供教學示例，不能執行真實交易，也不可視為已完成復原的證據。完成後仍須由使用者確認結果；若流程失敗或狀態不明，轉由 Example IT Service Desk 處理。",
+          "strength": "explicit-scoped-policy"
+        }
+      ],
+      "applies_when": {
+        "account_state": "confirmed-locked",
+        "employment_type": "full-time",
+        "device_management": "managed",
+        "self_service_enrolled": true,
+        "event_date_on_or_after": "2030-03-01"
+      },
+      "limits": [
+        "Synthetic placeholder; no recovery or access activation executed.",
+        "Human content review pending."
+      ]
+    },
+    {
+      "id": "CL-LOCK-FALLBACK",
+      "statement": "Known ineligible users and failed or uncertain recovery retain service-desk handling.",
+      "support": [
+        {
+          "source_id": "SRC-07",
+          "resource": "raw/sources/account-recovery-update-v2.md",
+          "quote": "三項都確認為符合時，請使用者前往虛構入口網站 <https://support.example.com/account-recovery> 嘗試自助復原。此連結僅供教學示例，不能執行真實交易，也不可視為已完成復原的證據。完成後仍須由使用者確認結果；若流程失敗或狀態不明，轉由 Example IT Service Desk 處理。",
+          "strength": "explicit-scoped-policy"
+        },
+        {
+          "source_id": "SRC-07",
+          "resource": "raw/sources/account-recovery-update-v2.md",
+          "quote": "已確認為承包人員、不受公司管理的裝置，或尚未註冊自助復原時，沿用 [SRC-03](account-recovery-v1.md) 的 ExampleDesk 服務台路徑。符合自助條件但自助復原失敗者，也轉服務台。",
+          "strength": "explicit-scoped-policy"
+        }
+      ],
+      "applies_when": {
+        "account_state": "confirmed-locked",
+        "eligibility": "known-ineligible-or-recovery-failed"
+      },
+      "limits": [
+        "Synthetic placeholder; no recovery or access activation executed.",
+        "Human content review pending."
+      ]
+    },
+    {
+      "id": "CL-LOCK-CLARIFY",
+      "statement": "Unknown qualifications or date must be clarified; conflicting information goes to the service desk.",
+      "support": [
+        {
+          "source_id": "SRC-07",
+          "resource": "raw/sources/account-recovery-update-v2.md",
+          "quote": "若任一資格條件或情境日期未知，先追問使用者身分類型、裝置管理狀態、自助復原註冊狀態或發生日期中的缺漏項目，再決定適用分支。不要為了使用入口網站而推定資格；若資訊互相矛盾或無法確認，交由服務台釐清，不承諾適用自助復原。",
+          "strength": "explicit-scoped-policy"
+        }
+      ],
+      "applies_when": {
+        "context": "unknown-or-conflicting"
+      },
+      "limits": [
+        "Synthetic placeholder; no recovery or access activation executed.",
+        "Human content review pending."
+      ]
+    },
+    {
+      "id": "CL-LOCK-HISTORICAL",
+      "statement": "Historical events before the effective date retain the prior baseline.",
+      "support": [
+        {
+          "source_id": "SRC-07",
+          "resource": "raw/sources/account-recovery-update-v2.md",
+          "quote": "2030-03-01 之前發生的情境依當時基準處理；自生效日起才依本通知的完整資格條件套用新第一步。這是局部更新，不代表所有舊文件失效。若文件未說明的例外出現，記錄問題並交由 Example IT Service Desk 的文件負責人確認，不要自行擴大適用範圍。\n",
+          "strength": "explicit-scoped-policy"
+        }
+      ],
+      "applies_when": {
+        "event_date_before": "2030-03-01"
+      },
+      "limits": [
+        "Synthetic placeholder; no recovery or access activation executed.",
+        "Human content review pending."
+      ]
+    },
+    {
+      "id": "CL-LOCK-PARTIAL-SUPERSESSION",
+      "statement": "Only the scoped confirmed-lock first action in SRC-01 and SRC-03 is replaced.",
+      "support": [
+        {
+          "source_id": "SRC-07",
+          "resource": "raw/sources/account-recovery-update-v2.md",
+          "quote": "| 基準文件與段落 | 2030-03-01 起的變更 | 仍適用的部分 |\n| --- | --- | --- |\n| [SRC-01](vpn-common-qa.md)：DEMO-101 中「已確認鎖定」的服務台第一步 | 僅符合上述三項條件者，第一步改為嘗試自助復原 | 其他 DEMO-101 原因、診斷方式與不符合者的服務台路徑不變 |\n| [SRC-03](account-recovery-v1.md)：已確認鎖定的基準復原入口 | 僅符合三項條件者，先走本通知的虛構自助入口 | 其餘使用者仍由 ExampleDesk 提交請求；不得蒐集秘密，也不保證服務台會直接解除鎖定 |",
+          "strength": "explicit-scoped-policy"
+        }
+      ],
+      "applies_when": {
+        "topic": "account-recovery-update"
+      },
+      "limits": [
+        "Synthetic placeholder; no recovery or access activation executed.",
+        "Human content review pending."
+      ]
+    },
+    {
+      "id": "CL-LOCK-UNCHANGED-PROCEDURES",
+      "statement": "Expiry, network, device, resource and overseas rules are unchanged.",
+      "support": [
+        {
+          "source_id": "SRC-07",
+          "resource": "raw/sources/account-recovery-update-v2.md",
+          "quote": "本通知不變更 [SRC-02](examplevpn-error-reference.md) 的密碼到期程序、DEMO-202 網路診斷、DEMO-303 裝置註冊或授權檢查、[SRC-05](shared-resource-access-policy.md) 資源規則，亦不變更 [SRC-06](overseas-access-request.md) 海外核准流程。到期密碼仍依公司網路與 Ctrl+Alt+Delete 的虛構程序處理，不能以鎖定復原替代。",
+          "strength": "explicit-scoped-policy"
+        }
+      ],
+      "applies_when": {
+        "topic": "unaffected-procedures"
+      },
+      "limits": [
+        "Synthetic placeholder; no recovery or access activation executed.",
+        "Human content review pending."
+      ]
+    }
+  ],
+  "semantic_review": "agent-source-comparison; human review pending"
+}

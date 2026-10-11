@@ -1,0 +1,99 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "impact_candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "decision": {
+            "type": "string",
+            "enum": [
+              "change",
+              "retain",
+              "create"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "decision",
+          "reason"
+        ]
+      }
+    },
+    "scope_resolution": {
+      "type": "string"
+    },
+    "changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "add_source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "reason": {
+            "type": "string"
+          },
+          "edits": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "old": {
+                  "type": "string"
+                },
+                "new": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "old",
+                "new"
+              ]
+            }
+          }
+        },
+        "required": [
+          "path",
+          "add_source_ids",
+          "reason",
+          "edits"
+        ]
+      }
+    },
+    "new_source_body": {
+      "type": "string"
+    },
+    "review_items": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "impact_candidates",
+    "scope_resolution",
+    "changes",
+    "new_source_body",
+    "review_items"
+  ]
+}

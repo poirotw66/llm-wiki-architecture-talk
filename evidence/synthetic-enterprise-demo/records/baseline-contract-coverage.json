@@ -1,0 +1,289 @@
+{
+  "checked_at": "2026-10-11T03:56:25.223643+00:00",
+  "phase": "baseline",
+  "scenario_date": "2030-02-01",
+  "method": "Agent-selected evidence mapping; executable checks confirm excerpts, linked source IDs and supporting claim references exist.",
+  "contract_sha256": "83d25b7efc06fd36b1576860a76e1fe8b146c0dd01385dbbd9e0d90679fc208b",
+  "covered_case_count": 10,
+  "case_count": 10,
+  "coverage_is_answer_accuracy": false,
+  "runtime_evaluation": false,
+  "independent_review": false,
+  "human_review": "pending",
+  "cases": [
+    {
+      "case_id": "SYN-01",
+      "coverage_status": "covered",
+      "page": "wiki/queries/account-locked.md",
+      "page_sha256": "6fa8c487b54b348c158e1b5ef63fcfc5eb9b4c7d421dad2109d8a423180cfc6a",
+      "claim_ids": [
+        "CL-LOCK-BASE",
+        "CL-REQUEST-FIELDS",
+        "CL-NO-SECRETS"
+      ],
+      "required_source_ids": [
+        "SRC-03"
+      ],
+      "page_source_ids": [
+        "SRC-03"
+      ],
+      "matching_page_excerpts": [
+        "請透過 ExampleDesk 提交帳戶復原請求",
+        "請求中不得包含密碼、驗證碼或復原連結。",
+        "目前尚未替您解鎖，服務台收到請求也不保證直接解除鎖定。",
+        "若問題實際是密碼到期，應使用另頁的密碼更新流程。",
+        "即使使用者是全職員工、使用公司管理筆電"
+      ],
+      "expected_route": "ANSWER",
+      "expected_first_action": "SERVICE_DESK_REQUEST",
+      "answer_runtime_status": "not-run",
+      "rubric_evaluation_status": "not-run"
+    },
+    {
+      "case_id": "SYN-02",
+      "coverage_status": "covered",
+      "page": "wiki/queries/account-locked.md",
+      "page_sha256": "6fa8c487b54b348c158e1b5ef63fcfc5eb9b4c7d421dad2109d8a423180cfc6a",
+      "claim_ids": [
+        "CL-LOCK-BASE",
+        "CL-NO-SECRETS"
+      ],
+      "required_source_ids": [
+        "SRC-03"
+      ],
+      "page_source_ids": [
+        "SRC-03"
+      ],
+      "matching_page_excerpts": [
+        "請透過 ExampleDesk 提交帳戶復原請求",
+        "請求中不得包含密碼、驗證碼或復原連結。",
+        "目前尚未替您解鎖，服務台收到請求也不保證直接解除鎖定。",
+        "若問題實際是密碼到期，應使用另頁的密碼更新流程。",
+        "本基準適用於全職員工與承包人員的已確認鎖定情境。"
+      ],
+      "expected_route": "ANSWER",
+      "expected_first_action": "SERVICE_DESK_REQUEST",
+      "answer_runtime_status": "not-run",
+      "rubric_evaluation_status": "not-run"
+    },
+    {
+      "case_id": "SYN-03",
+      "coverage_status": "covered",
+      "page": "wiki/queries/account-locked.md",
+      "page_sha256": "6fa8c487b54b348c158e1b5ef63fcfc5eb9b4c7d421dad2109d8a423180cfc6a",
+      "claim_ids": [
+        "CL-LOCK-BASE",
+        "CL-REQUEST-FIELDS",
+        "CL-NO-SECRETS"
+      ],
+      "required_source_ids": [
+        "SRC-03"
+      ],
+      "page_source_ids": [
+        "SRC-03"
+      ],
+      "matching_page_excerpts": [
+        "請透過 ExampleDesk 提交帳戶復原請求",
+        "請求中不得包含密碼、驗證碼或復原連結。",
+        "目前尚未替您解鎖，服務台收到請求也不保證直接解除鎖定。",
+        "若問題實際是密碼到期，應使用另頁的密碼更新流程。",
+        "不清楚的狀態填未知。"
+      ],
+      "expected_route": "ANSWER",
+      "expected_first_action": "SERVICE_DESK_REQUEST",
+      "answer_runtime_status": "not-run",
+      "rubric_evaluation_status": "not-run"
+    },
+    {
+      "case_id": "SYN-04",
+      "coverage_status": "covered",
+      "page": "wiki/queries/account-locked.md",
+      "page_sha256": "6fa8c487b54b348c158e1b5ef63fcfc5eb9b4c7d421dad2109d8a423180cfc6a",
+      "claim_ids": [
+        "CL-LOCK-BASE",
+        "CL-NO-SECRETS"
+      ],
+      "required_source_ids": [
+        "SRC-03"
+      ],
+      "page_source_ids": [
+        "SRC-03"
+      ],
+      "matching_page_excerpts": [
+        "請透過 ExampleDesk 提交帳戶復原請求",
+        "請求中不得包含密碼、驗證碼或復原連結。",
+        "目前尚未替您解鎖，服務台收到請求也不保證直接解除鎖定。",
+        "若問題實際是密碼到期，應使用另頁的密碼更新流程。",
+        "2030-01-20 的已確認鎖定事件位於此基準生效期間，仍採服務台流程"
+      ],
+      "expected_route": "ANSWER",
+      "expected_first_action": "SERVICE_DESK_REQUEST",
+      "answer_runtime_status": "not-run",
+      "rubric_evaluation_status": "not-run"
+    },
+    {
+      "case_id": "SYN-05",
+      "coverage_status": "covered",
+      "page": "wiki/queries/demo-101.md",
+      "page_sha256": "0949d4b2604d9c390c3edbe48a6e6abc134c933b589085d7ccd6c137f15f5ebd",
+      "claim_ids": [
+        "CL-101-UNCERTAIN"
+      ],
+      "required_source_ids": [
+        "SRC-01",
+        "SRC-02"
+      ],
+      "page_source_ids": [
+        "SRC-01",
+        "SRC-02"
+      ],
+      "matching_page_excerpts": [
+        "不能只憑 DEMO-101 確定原因。",
+        "請先確認是否收到明確的鎖定或密碼到期提示",
+        "不要提供密碼或驗證碼。",
+        "目前不給單一解鎖動作"
+      ],
+      "expected_route": "CLARIFY",
+      "expected_first_action": "ASK_ACCOUNT_STATE",
+      "answer_runtime_status": "not-run",
+      "rubric_evaluation_status": "not-run"
+    },
+    {
+      "case_id": "SYN-06",
+      "coverage_status": "covered",
+      "page": "wiki/queries/password-expired.md",
+      "page_sha256": "4e0c1fec5b4a2650f23ed18b0fe6a245d45e961d9e65dd60524a86c42ec4fad9",
+      "claim_ids": [
+        "CL-EXPIRY-CHANGE",
+        "CL-EXPIRY-STOP"
+      ],
+      "required_source_ids": [
+        "SRC-01",
+        "SRC-02"
+      ],
+      "page_source_ids": [
+        "SRC-01",
+        "SRC-02"
+      ],
+      "matching_page_excerpts": [
+        "先確認已連上公司網路，再按 Ctrl+Alt+Delete，選擇變更密碼並依畫面完成。",
+        "這是合成教學案例的操作設定",
+        "停止自行嘗試並聯絡 Example IT Service Desk。",
+        "不要使用消費者入口網站同步密碼",
+        "不要把帳戶解鎖當成改密碼或延長到期時間。",
+        "必須已確認到期且裝置受公司管理"
+      ],
+      "expected_route": "ANSWER",
+      "expected_first_action": "CHANGE_PASSWORD_ON_COMPANY_NETWORK",
+      "answer_runtime_status": "not-run",
+      "rubric_evaluation_status": "not-run"
+    },
+    {
+      "case_id": "SYN-07",
+      "coverage_status": "covered",
+      "page": "wiki/queries/teamshare-access.md",
+      "page_sha256": "109ab10b21043ed492e09ab199798aab256a3f5611f62db4d41dc91dd9372d78",
+      "claim_ids": [
+        "CL-BRANCH-RESTRICTION",
+        "CL-VPN-NOT-AUTHORIZATION"
+      ],
+      "required_source_ids": [
+        "SRC-04",
+        "SRC-05"
+      ],
+      "page_source_ids": [
+        "SRC-04",
+        "SRC-05"
+      ],
+      "matching_page_excerpts": [
+        "Branch Support 且透過 ExampleVPN 遠端連線，此範圍不含 TeamShare。",
+        "成功連線不等於資源授權，一般申請不能覆蓋該路徑限制。",
+        "HQ Support 且在公司網路",
+        "送出仍不代表已核准或生效。",
+        "本文沒有授權或測試檢索 ACL"
+      ],
+      "expected_route": "ANSWER",
+      "expected_first_action": "EXPLAIN_RESOURCE_RESTRICTION",
+      "answer_runtime_status": "not-run",
+      "rubric_evaluation_status": "not-run"
+    },
+    {
+      "case_id": "SYN-08",
+      "coverage_status": "covered",
+      "page": "wiki/queries/teamshare-access.md",
+      "page_sha256": "109ab10b21043ed492e09ab199798aab256a3f5611f62db4d41dc91dd9372d78",
+      "claim_ids": [
+        "CL-RESOURCE-CLARIFY"
+      ],
+      "required_source_ids": [
+        "SRC-05"
+      ],
+      "page_source_ids": [
+        "SRC-04",
+        "SRC-05"
+      ],
+      "matching_page_excerpts": [
+        "先確認群組、所在網路及所需角色。",
+        "若任一項未知，先追問，不假定使用者是 HQ Support，也不替使用者選角色。"
+      ],
+      "expected_route": "CLARIFY",
+      "expected_first_action": "ASK_RESOURCE_CONTEXT",
+      "answer_runtime_status": "not-run",
+      "rubric_evaluation_status": "not-run"
+    },
+    {
+      "case_id": "SYN-09",
+      "coverage_status": "covered",
+      "page": "wiki/queries/overseas-request.md",
+      "page_sha256": "051ec2460d7603f71ba8b8c9a13cc37e11d165299ec7abb361ca9e9eb06c2318",
+      "claim_ids": [
+        "CL-OVERSEAS-FIELDS",
+        "CL-OVERSEAS-APPROVAL",
+        "CL-OVERSEAS-PERIOD"
+      ],
+      "required_source_ids": [
+        "SRC-06"
+      ],
+      "page_source_ids": [
+        "SRC-06"
+      ],
+      "matching_page_excerpts": [
+        "缺日期時先問起訖日期，不代填。",
+        "由直屬主管先審查。主管核准後，轉交 Network Operations 並納入 Security Review",
+        "相關審查完成且獲准後才安排啟用。",
+        "核准僅在申請日期範圍有效",
+        "VPN 成功連線不表示海外申請已獲准。",
+        "未替您提交、核准或啟用。"
+      ],
+      "expected_route": "CLARIFY",
+      "expected_first_action": "COMPLETE_OVERSEAS_APPLICATION",
+      "answer_runtime_status": "not-run",
+      "rubric_evaluation_status": "not-run"
+    },
+    {
+      "case_id": "SYN-10",
+      "coverage_status": "covered",
+      "page": "wiki/queries/unknown-error.md",
+      "page_sha256": "571327875e9e643fc7c515ce97bd4968fb2dd3a952d37dcc9e6f63c9c0638e2d",
+      "claim_ids": [
+        "CL-UNKNOWN-CODE"
+      ],
+      "required_source_ids": [
+        "SRC-02"
+      ],
+      "page_source_ids": [
+        "SRC-02"
+      ],
+      "matching_page_excerpts": [
+        "未提供 DEMO-999 的原因或處置。",
+        "不能從相鄰代碼推論",
+        "保存不含機密的完整錯訊與情境，交由服務台判讀。",
+        "並非宣稱所有產品或資料來源都沒有相關資訊。"
+      ],
+      "expected_route": "NO_ANSWER",
+      "expected_first_action": "ACKNOWLEDGE_UNDOCUMENTED_ERROR",
+      "answer_runtime_status": "not-run",
+      "rubric_evaluation_status": "not-run"
+    }
+  ]
+}

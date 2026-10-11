@@ -1,0 +1,1041 @@
+{
+  "run_id": "synthetic-enterprise-baseline-20261011",
+  "started_at": "2026-10-11T03:48:30.327035+00:00",
+  "status": "completed-draft",
+  "generation_mode": "codex-session-assisted-existing-ingest-workflow",
+  "exact_model": null,
+  "model_note": "Current Codex session; exact serving snapshot is not exposed.",
+  "fresh_model_api_call": false,
+  "source_blind": false,
+  "scenario_date": "2030-02-01",
+  "source_ids": [
+    "SRC-01",
+    "SRC-02",
+    "SRC-03",
+    "SRC-04",
+    "SRC-05",
+    "SRC-06"
+  ],
+  "input_hashes": {
+    "SRC-01": "d59a8fc31afd03b58670211eb38bd5d7c01031d989066209bef422b6df1e277a",
+    "SRC-02": "0e29b6236aec4d3b9e06204db79a67d191071c9b8f4eac124a8d4d7012b0deff",
+    "SRC-03": "8be47d524d37d33abd258fa27cab30b46bb4e41937bb18f25ea87b086ec26928",
+    "SRC-04": "cd79876f43c56b6e18e80d7086570249b3b8a2fd72fb314bd166fa37464e5ee9",
+    "SRC-05": "3b0327bba0be07df6f62362fd56e24ebf81b9bea5650e883131286fe9d9c854d",
+    "SRC-06": "c23286dcb14629cb72bd3ca1ea631706d07b507a8a098b1ce3a276d41b52d003"
+  },
+  "human_content_review": "pending",
+  "answer_model_evaluation": "not-run",
+  "token_count": null,
+  "cost_usd": null,
+  "commands": [
+    {
+      "label": "telemetry-start-ingest",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-usage.py",
+        "--ledger",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/.llm-wiki/usage/events.jsonl",
+        "start",
+        "ingest",
+        "--title",
+        "Synthetic enterprise baseline ingest"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:30.396970+00:00",
+      "exit_code": 0,
+      "stdout": "Codex Desktop token counter unavailable; this operation will be counted without token measurement.\n",
+      "stderr": ""
+    },
+    {
+      "label": "preflight-SRC-01",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "inspect",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/vpn-common-qa.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:30.464553+00:00",
+      "exit_code": 0,
+      "stdout": "{\"policy_version\": \"2\", \"outcome\": \"review_ready\", \"reason_codes\": [\"human_approval_required\"], \"source_sha256\": \"d59a8fc31afd03b58670211eb38bd5d7c01031d989066209bef422b6df1e277a\", \"findings\": []}\n",
+      "stderr": ""
+    },
+    {
+      "label": "approve-SRC-01",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "approve",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/vpn-common-qa.md",
+        "--classification",
+        "public",
+        "--owner",
+        "process:synthetic-enterprise-demo",
+        "--access-scope",
+        "public",
+        "--retention",
+        "permanent",
+        "--approved-by",
+        "human:demo-owner"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:30.529715+00:00",
+      "exit_code": 0,
+      "stdout": "approved id=source-d59a8fc31afd03b5\n",
+      "stderr": ""
+    },
+    {
+      "label": "approved-inspect-SRC-01",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "inspect",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/vpn-common-qa.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:30.595695+00:00",
+      "exit_code": 0,
+      "stdout": "{\"policy_version\": \"2\", \"outcome\": \"approved\", \"reason_codes\": [\"source_approved\"], \"source_sha256\": \"d59a8fc31afd03b58670211eb38bd5d7c01031d989066209bef422b6df1e277a\", \"findings\": []}\n",
+      "stderr": ""
+    },
+    {
+      "label": "cache-lookup-SRC-01",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-cache.py",
+        "--cache",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/.llm-wiki/ingest/cache.json",
+        "lookup",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/vpn-common-qa.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:30.662062+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"hit\": false,\n  \"sha256\": \"d59a8fc31afd03b58670211eb38bd5d7c01031d989066209bef422b6df1e277a\",\n  \"path\": \"/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/vpn-common-qa.md\",\n  \"force\": false,\n  \"entry\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "lineage-SRC-01",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "register",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+        "--source-id",
+        "source-d59a8fc31afd03b5",
+        "--artifact",
+        "original=/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/raw/originals/vpn-common-qa.md",
+        "--artifact",
+        "source=/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/raw/sources/vpn-common-qa.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:30.722683+00:00",
+      "exit_code": 0,
+      "stdout": "registered artifacts=2 source_id=source-d59a8fc31afd03b5\n",
+      "stderr": ""
+    },
+    {
+      "label": "preflight-SRC-02",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "inspect",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/examplevpn-error-reference.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:30.779379+00:00",
+      "exit_code": 0,
+      "stdout": "{\"policy_version\": \"2\", \"outcome\": \"review_ready\", \"reason_codes\": [\"human_approval_required\"], \"source_sha256\": \"0e29b6236aec4d3b9e06204db79a67d191071c9b8f4eac124a8d4d7012b0deff\", \"findings\": []}\n",
+      "stderr": ""
+    },
+    {
+      "label": "approve-SRC-02",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "approve",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/examplevpn-error-reference.md",
+        "--classification",
+        "public",
+        "--owner",
+        "process:synthetic-enterprise-demo",
+        "--access-scope",
+        "public",
+        "--retention",
+        "permanent",
+        "--approved-by",
+        "human:demo-owner"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:30.837234+00:00",
+      "exit_code": 0,
+      "stdout": "approved id=source-0e29b6236aec4d3b\n",
+      "stderr": ""
+    },
+    {
+      "label": "approved-inspect-SRC-02",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "inspect",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/examplevpn-error-reference.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:30.891662+00:00",
+      "exit_code": 0,
+      "stdout": "{\"policy_version\": \"2\", \"outcome\": \"approved\", \"reason_codes\": [\"source_approved\"], \"source_sha256\": \"0e29b6236aec4d3b9e06204db79a67d191071c9b8f4eac124a8d4d7012b0deff\", \"findings\": []}\n",
+      "stderr": ""
+    },
+    {
+      "label": "cache-lookup-SRC-02",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-cache.py",
+        "--cache",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/.llm-wiki/ingest/cache.json",
+        "lookup",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/examplevpn-error-reference.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:30.949781+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"hit\": false,\n  \"sha256\": \"0e29b6236aec4d3b9e06204db79a67d191071c9b8f4eac124a8d4d7012b0deff\",\n  \"path\": \"/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/examplevpn-error-reference.md\",\n  \"force\": false,\n  \"entry\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "lineage-SRC-02",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "register",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+        "--source-id",
+        "source-0e29b6236aec4d3b",
+        "--artifact",
+        "original=/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/raw/originals/examplevpn-error-reference.md",
+        "--artifact",
+        "source=/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/raw/sources/examplevpn-error-reference.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:31.005304+00:00",
+      "exit_code": 0,
+      "stdout": "registered artifacts=2 source_id=source-0e29b6236aec4d3b\n",
+      "stderr": ""
+    },
+    {
+      "label": "preflight-SRC-03",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "inspect",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/account-recovery-v1.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:31.062270+00:00",
+      "exit_code": 0,
+      "stdout": "{\"policy_version\": \"2\", \"outcome\": \"review_ready\", \"reason_codes\": [\"human_approval_required\"], \"source_sha256\": \"8be47d524d37d33abd258fa27cab30b46bb4e41937bb18f25ea87b086ec26928\", \"findings\": []}\n",
+      "stderr": ""
+    },
+    {
+      "label": "approve-SRC-03",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "approve",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/account-recovery-v1.md",
+        "--classification",
+        "public",
+        "--owner",
+        "process:synthetic-enterprise-demo",
+        "--access-scope",
+        "public",
+        "--retention",
+        "permanent",
+        "--approved-by",
+        "human:demo-owner"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:31.122958+00:00",
+      "exit_code": 0,
+      "stdout": "approved id=source-8be47d524d37d33a\n",
+      "stderr": ""
+    },
+    {
+      "label": "approved-inspect-SRC-03",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "inspect",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/account-recovery-v1.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:31.183252+00:00",
+      "exit_code": 0,
+      "stdout": "{\"policy_version\": \"2\", \"outcome\": \"approved\", \"reason_codes\": [\"source_approved\"], \"source_sha256\": \"8be47d524d37d33abd258fa27cab30b46bb4e41937bb18f25ea87b086ec26928\", \"findings\": []}\n",
+      "stderr": ""
+    },
+    {
+      "label": "cache-lookup-SRC-03",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-cache.py",
+        "--cache",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/.llm-wiki/ingest/cache.json",
+        "lookup",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/account-recovery-v1.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:31.240380+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"hit\": false,\n  \"sha256\": \"8be47d524d37d33abd258fa27cab30b46bb4e41937bb18f25ea87b086ec26928\",\n  \"path\": \"/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/account-recovery-v1.md\",\n  \"force\": false,\n  \"entry\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "lineage-SRC-03",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "register",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+        "--source-id",
+        "source-8be47d524d37d33a",
+        "--artifact",
+        "original=/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/raw/originals/account-recovery-v1.md",
+        "--artifact",
+        "source=/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/raw/sources/account-recovery-v1.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:31.299714+00:00",
+      "exit_code": 0,
+      "stdout": "registered artifacts=2 source_id=source-8be47d524d37d33a\n",
+      "stderr": ""
+    },
+    {
+      "label": "preflight-SRC-04",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "inspect",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/managed-laptop-remote-access.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:31.351060+00:00",
+      "exit_code": 0,
+      "stdout": "{\"policy_version\": \"2\", \"outcome\": \"review_ready\", \"reason_codes\": [\"human_approval_required\"], \"source_sha256\": \"cd79876f43c56b6e18e80d7086570249b3b8a2fd72fb314bd166fa37464e5ee9\", \"findings\": []}\n",
+      "stderr": ""
+    },
+    {
+      "label": "approve-SRC-04",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "approve",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/managed-laptop-remote-access.md",
+        "--classification",
+        "public",
+        "--owner",
+        "process:synthetic-enterprise-demo",
+        "--access-scope",
+        "public",
+        "--retention",
+        "permanent",
+        "--approved-by",
+        "human:demo-owner"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:31.407290+00:00",
+      "exit_code": 0,
+      "stdout": "approved id=source-cd79876f43c56b6e\n",
+      "stderr": ""
+    },
+    {
+      "label": "approved-inspect-SRC-04",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "inspect",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/managed-laptop-remote-access.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:31.473950+00:00",
+      "exit_code": 0,
+      "stdout": "{\"policy_version\": \"2\", \"outcome\": \"approved\", \"reason_codes\": [\"source_approved\"], \"source_sha256\": \"cd79876f43c56b6e18e80d7086570249b3b8a2fd72fb314bd166fa37464e5ee9\", \"findings\": []}\n",
+      "stderr": ""
+    },
+    {
+      "label": "cache-lookup-SRC-04",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-cache.py",
+        "--cache",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/.llm-wiki/ingest/cache.json",
+        "lookup",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/managed-laptop-remote-access.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:31.527669+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"hit\": false,\n  \"sha256\": \"cd79876f43c56b6e18e80d7086570249b3b8a2fd72fb314bd166fa37464e5ee9\",\n  \"path\": \"/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/managed-laptop-remote-access.md\",\n  \"force\": false,\n  \"entry\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "lineage-SRC-04",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "register",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+        "--source-id",
+        "source-cd79876f43c56b6e",
+        "--artifact",
+        "original=/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/raw/originals/managed-laptop-remote-access.md",
+        "--artifact",
+        "source=/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/raw/sources/managed-laptop-remote-access.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:31.587049+00:00",
+      "exit_code": 0,
+      "stdout": "registered artifacts=2 source_id=source-cd79876f43c56b6e\n",
+      "stderr": ""
+    },
+    {
+      "label": "preflight-SRC-05",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "inspect",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/shared-resource-access-policy.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:31.651406+00:00",
+      "exit_code": 0,
+      "stdout": "{\"policy_version\": \"2\", \"outcome\": \"review_ready\", \"reason_codes\": [\"human_approval_required\"], \"source_sha256\": \"3b0327bba0be07df6f62362fd56e24ebf81b9bea5650e883131286fe9d9c854d\", \"findings\": []}\n",
+      "stderr": ""
+    },
+    {
+      "label": "approve-SRC-05",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "approve",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/shared-resource-access-policy.md",
+        "--classification",
+        "public",
+        "--owner",
+        "process:synthetic-enterprise-demo",
+        "--access-scope",
+        "public",
+        "--retention",
+        "permanent",
+        "--approved-by",
+        "human:demo-owner"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:31.721895+00:00",
+      "exit_code": 0,
+      "stdout": "approved id=source-3b0327bba0be07df\n",
+      "stderr": ""
+    },
+    {
+      "label": "approved-inspect-SRC-05",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "inspect",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/shared-resource-access-policy.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:31.775107+00:00",
+      "exit_code": 0,
+      "stdout": "{\"policy_version\": \"2\", \"outcome\": \"approved\", \"reason_codes\": [\"source_approved\"], \"source_sha256\": \"3b0327bba0be07df6f62362fd56e24ebf81b9bea5650e883131286fe9d9c854d\", \"findings\": []}\n",
+      "stderr": ""
+    },
+    {
+      "label": "cache-lookup-SRC-05",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-cache.py",
+        "--cache",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/.llm-wiki/ingest/cache.json",
+        "lookup",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/shared-resource-access-policy.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:31.825170+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"hit\": false,\n  \"sha256\": \"3b0327bba0be07df6f62362fd56e24ebf81b9bea5650e883131286fe9d9c854d\",\n  \"path\": \"/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/shared-resource-access-policy.md\",\n  \"force\": false,\n  \"entry\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "lineage-SRC-05",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "register",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+        "--source-id",
+        "source-3b0327bba0be07df",
+        "--artifact",
+        "original=/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/raw/originals/shared-resource-access-policy.md",
+        "--artifact",
+        "source=/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/raw/sources/shared-resource-access-policy.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:31.886646+00:00",
+      "exit_code": 0,
+      "stdout": "registered artifacts=2 source_id=source-3b0327bba0be07df\n",
+      "stderr": ""
+    },
+    {
+      "label": "preflight-SRC-06",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "inspect",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/overseas-access-request.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:31.953436+00:00",
+      "exit_code": 0,
+      "stdout": "{\"policy_version\": \"2\", \"outcome\": \"review_ready\", \"reason_codes\": [\"human_approval_required\"], \"source_sha256\": \"c23286dcb14629cb72bd3ca1ea631706d07b507a8a098b1ce3a276d41b52d003\", \"findings\": []}\n",
+      "stderr": ""
+    },
+    {
+      "label": "approve-SRC-06",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "approve",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/overseas-access-request.md",
+        "--classification",
+        "public",
+        "--owner",
+        "process:synthetic-enterprise-demo",
+        "--access-scope",
+        "public",
+        "--retention",
+        "permanent",
+        "--approved-by",
+        "human:demo-owner"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:32.011008+00:00",
+      "exit_code": 0,
+      "stdout": "approved id=source-c23286dcb14629cb\n",
+      "stderr": ""
+    },
+    {
+      "label": "approved-inspect-SRC-06",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "inspect",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/overseas-access-request.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:32.070321+00:00",
+      "exit_code": 0,
+      "stdout": "{\"policy_version\": \"2\", \"outcome\": \"approved\", \"reason_codes\": [\"source_approved\"], \"source_sha256\": \"c23286dcb14629cb72bd3ca1ea631706d07b507a8a098b1ce3a276d41b52d003\", \"findings\": []}\n",
+      "stderr": ""
+    },
+    {
+      "label": "cache-lookup-SRC-06",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-cache.py",
+        "--cache",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/.llm-wiki/ingest/cache.json",
+        "lookup",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/overseas-access-request.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:32.127361+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"hit\": false,\n  \"sha256\": \"c23286dcb14629cb72bd3ca1ea631706d07b507a8a098b1ce3a276d41b52d003\",\n  \"path\": \"/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/overseas-access-request.md\",\n  \"force\": false,\n  \"entry\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "lineage-SRC-06",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/governance/raw-approvals.json",
+        "register",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+        "--source-id",
+        "source-c23286dcb14629cb",
+        "--artifact",
+        "original=/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/raw/originals/overseas-access-request.md",
+        "--artifact",
+        "source=/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/raw/sources/overseas-access-request.md"
+      ],
+      "cwd": "baseline-v1",
+      "completed_at": "2026-10-11T03:48:32.187406+00:00",
+      "exit_code": 0,
+      "stdout": "registered artifacts=2 source_id=source-c23286dcb14629cb\n",
+      "stderr": ""
+    },
+    {
+      "label": "initial-wiki-lint",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-lint.py",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+      "completed_at": "2026-10-11T03:53:44.516022+00:00",
+      "exit_code": 0,
+      "stdout": "wiki-lint: ok\n",
+      "stderr": ""
+    },
+    {
+      "label": "Verify baseline account-state routing",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-review.py",
+        "--queue",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/ops/review-queue.md",
+        "append",
+        "--title",
+        "Verify baseline account-state routing",
+        "--reason",
+        "Source admission was approved by the user; compiled content remains an agent-authored draft. Verify confirmed lock, ambiguity, password expiry, historical scope and secret exclusions against SRC-01 through SRC-03.",
+        "--action",
+        "human_verify",
+        "--related",
+        "wiki/concepts/account-state-and-recovery.md"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+      "completed_at": "2026-10-11T03:54:01.218924+00:00",
+      "exit_code": 0,
+      "stdout": "appended id=49d2edf8 -> /Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/ops/review-queue.md\n",
+      "stderr": ""
+    },
+    {
+      "label": "Verify role and network applicability",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-review.py",
+        "--queue",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/ops/review-queue.md",
+        "append",
+        "--title",
+        "Verify role and network applicability",
+        "--reason",
+        "Verify Branch Support remote restrictions, HQ Support corporate-network application and unknown-context questions. Confirm that compiled policy text does not imply implemented retrieval ACLs.",
+        "--action",
+        "human_verify",
+        "--related",
+        "wiki/concepts/resource-access-boundaries.md"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+      "completed_at": "2026-10-11T03:54:01.305700+00:00",
+      "exit_code": 0,
+      "stdout": "appended id=8f7582ed -> /Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/ops/review-queue.md\n",
+      "stderr": ""
+    },
+    {
+      "label": "Verify overseas approval sequence",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-review.py",
+        "--queue",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/ops/review-queue.md",
+        "append",
+        "--title",
+        "Verify overseas approval sequence",
+        "--reason",
+        "Verify application fields, manager-first approval, Network Operations and Security Review handoff, activation boundaries and date-limited validity against SRC-06.",
+        "--action",
+        "human_verify",
+        "--related",
+        "wiki/concepts/overseas-approval.md"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+      "completed_at": "2026-10-11T03:54:01.377141+00:00",
+      "exit_code": 0,
+      "stdout": "appended id=49823435 -> /Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/ops/review-queue.md\n",
+      "stderr": ""
+    },
+    {
+      "label": "baseline-graph-insights",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-graph-insights.py",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+      "completed_at": "2026-10-11T03:54:01.436552+00:00",
+      "exit_code": 0,
+      "stdout": "wrote ops/graph-insights.md\n",
+      "stderr": ""
+    },
+    {
+      "label": "post-review-queue-wiki-lint",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-lint.py",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+      "completed_at": "2026-10-11T03:54:01.530319+00:00",
+      "exit_code": 0,
+      "stdout": "wiki-lint: ok\n",
+      "stderr": ""
+    },
+    {
+      "label": "SRC-01-cache-record",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-cache.py",
+        "--cache",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/.llm-wiki/ingest/cache.json",
+        "record",
+        "--sha256",
+        "d59a8fc31afd03b58670211eb38bd5d7c01031d989066209bef422b6df1e277a",
+        "--original-name",
+        "vpn-common-qa.md",
+        "--archive-slug",
+        "vpn-common-qa",
+        "--source-page",
+        "wiki/sources/vpn-common-qa.md",
+        "--analysis-receipt",
+        "fd33c14af4acac4098a6178e792789b09289511a37ec34496d54c9dd0ac0863f",
+        "--analysis-version",
+        "1",
+        "--analysis-source-sha256",
+        "d59a8fc31afd03b58670211eb38bd5d7c01031d989066209bef422b6df1e277a",
+        "--analysis-generated-by",
+        "codex/in-session",
+        "--analysis-generated-at",
+        "2026-10-11T03:49:06.773146+00:00"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+      "completed_at": "2026-10-11T03:54:01.586517+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"recorded\": {\n    \"sha256\": \"d59a8fc31afd03b58670211eb38bd5d7c01031d989066209bef422b6df1e277a\",\n    \"archive_slug\": \"vpn-common-qa\",\n    \"source_page\": \"wiki/sources/vpn-common-qa.md\",\n    \"original_name\": \"vpn-common-qa.md\",\n    \"ingested_at\": \"2026-10-11T03:54:01Z\",\n    \"analysis_receipt\": {\n      \"version\": \"1\",\n      \"sha256\": \"fd33c14af4acac4098a6178e792789b09289511a37ec34496d54c9dd0ac0863f\",\n      \"source_sha256\": \"d59a8fc31afd03b58670211eb38bd5d7c01031d989066209bef422b6df1e277a\",\n      \"generated_by\": \"codex/in-session\",\n      \"generated_at\": \"2026-10-11T03:49:06.773146+00:00\"\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "SRC-02-cache-record",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-cache.py",
+        "--cache",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/.llm-wiki/ingest/cache.json",
+        "record",
+        "--sha256",
+        "0e29b6236aec4d3b9e06204db79a67d191071c9b8f4eac124a8d4d7012b0deff",
+        "--original-name",
+        "examplevpn-error-reference.md",
+        "--archive-slug",
+        "examplevpn-error-reference",
+        "--source-page",
+        "wiki/sources/examplevpn-error-reference.md",
+        "--analysis-receipt",
+        "9563dead5efdec514f922d38bd7ddbe9871d17deaf969dbb5116f025bd75458a",
+        "--analysis-version",
+        "1",
+        "--analysis-source-sha256",
+        "0e29b6236aec4d3b9e06204db79a67d191071c9b8f4eac124a8d4d7012b0deff",
+        "--analysis-generated-by",
+        "codex/in-session",
+        "--analysis-generated-at",
+        "2026-10-11T03:49:06.774474+00:00"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+      "completed_at": "2026-10-11T03:54:01.644634+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"recorded\": {\n    \"sha256\": \"0e29b6236aec4d3b9e06204db79a67d191071c9b8f4eac124a8d4d7012b0deff\",\n    \"archive_slug\": \"examplevpn-error-reference\",\n    \"source_page\": \"wiki/sources/examplevpn-error-reference.md\",\n    \"original_name\": \"examplevpn-error-reference.md\",\n    \"ingested_at\": \"2026-10-11T03:54:01Z\",\n    \"analysis_receipt\": {\n      \"version\": \"1\",\n      \"sha256\": \"9563dead5efdec514f922d38bd7ddbe9871d17deaf969dbb5116f025bd75458a\",\n      \"source_sha256\": \"0e29b6236aec4d3b9e06204db79a67d191071c9b8f4eac124a8d4d7012b0deff\",\n      \"generated_by\": \"codex/in-session\",\n      \"generated_at\": \"2026-10-11T03:49:06.774474+00:00\"\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "SRC-03-cache-record",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-cache.py",
+        "--cache",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/.llm-wiki/ingest/cache.json",
+        "record",
+        "--sha256",
+        "8be47d524d37d33abd258fa27cab30b46bb4e41937bb18f25ea87b086ec26928",
+        "--original-name",
+        "account-recovery-v1.md",
+        "--archive-slug",
+        "account-recovery-v1",
+        "--source-page",
+        "wiki/sources/account-recovery-v1.md",
+        "--analysis-receipt",
+        "18436fbe2ee8fa264b995e84f47361dc2ca1e1a897e7d5ba9063b55040202e7f",
+        "--analysis-version",
+        "1",
+        "--analysis-source-sha256",
+        "8be47d524d37d33abd258fa27cab30b46bb4e41937bb18f25ea87b086ec26928",
+        "--analysis-generated-by",
+        "codex/in-session",
+        "--analysis-generated-at",
+        "2026-10-11T03:49:06.774829+00:00"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+      "completed_at": "2026-10-11T03:54:01.701768+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"recorded\": {\n    \"sha256\": \"8be47d524d37d33abd258fa27cab30b46bb4e41937bb18f25ea87b086ec26928\",\n    \"archive_slug\": \"account-recovery-v1\",\n    \"source_page\": \"wiki/sources/account-recovery-v1.md\",\n    \"original_name\": \"account-recovery-v1.md\",\n    \"ingested_at\": \"2026-10-11T03:54:01Z\",\n    \"analysis_receipt\": {\n      \"version\": \"1\",\n      \"sha256\": \"18436fbe2ee8fa264b995e84f47361dc2ca1e1a897e7d5ba9063b55040202e7f\",\n      \"source_sha256\": \"8be47d524d37d33abd258fa27cab30b46bb4e41937bb18f25ea87b086ec26928\",\n      \"generated_by\": \"codex/in-session\",\n      \"generated_at\": \"2026-10-11T03:49:06.774829+00:00\"\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "SRC-04-cache-record",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-cache.py",
+        "--cache",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/.llm-wiki/ingest/cache.json",
+        "record",
+        "--sha256",
+        "cd79876f43c56b6e18e80d7086570249b3b8a2fd72fb314bd166fa37464e5ee9",
+        "--original-name",
+        "managed-laptop-remote-access.md",
+        "--archive-slug",
+        "managed-laptop-remote-access",
+        "--source-page",
+        "wiki/sources/managed-laptop-remote-access.md",
+        "--analysis-receipt",
+        "fc74bbcacd2b81f762079e03ff6220479a89dab4aad57931a91de853e121a38d",
+        "--analysis-version",
+        "1",
+        "--analysis-source-sha256",
+        "cd79876f43c56b6e18e80d7086570249b3b8a2fd72fb314bd166fa37464e5ee9",
+        "--analysis-generated-by",
+        "codex/in-session",
+        "--analysis-generated-at",
+        "2026-10-11T03:49:06.775176+00:00"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+      "completed_at": "2026-10-11T03:54:01.763186+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"recorded\": {\n    \"sha256\": \"cd79876f43c56b6e18e80d7086570249b3b8a2fd72fb314bd166fa37464e5ee9\",\n    \"archive_slug\": \"managed-laptop-remote-access\",\n    \"source_page\": \"wiki/sources/managed-laptop-remote-access.md\",\n    \"original_name\": \"managed-laptop-remote-access.md\",\n    \"ingested_at\": \"2026-10-11T03:54:01Z\",\n    \"analysis_receipt\": {\n      \"version\": \"1\",\n      \"sha256\": \"fc74bbcacd2b81f762079e03ff6220479a89dab4aad57931a91de853e121a38d\",\n      \"source_sha256\": \"cd79876f43c56b6e18e80d7086570249b3b8a2fd72fb314bd166fa37464e5ee9\",\n      \"generated_by\": \"codex/in-session\",\n      \"generated_at\": \"2026-10-11T03:49:06.775176+00:00\"\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "SRC-05-cache-record",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-cache.py",
+        "--cache",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/.llm-wiki/ingest/cache.json",
+        "record",
+        "--sha256",
+        "3b0327bba0be07df6f62362fd56e24ebf81b9bea5650e883131286fe9d9c854d",
+        "--original-name",
+        "shared-resource-access-policy.md",
+        "--archive-slug",
+        "shared-resource-access-policy",
+        "--source-page",
+        "wiki/sources/shared-resource-access-policy.md",
+        "--analysis-receipt",
+        "59f477afd5ab86c95c42d2d638470cb4ade267f93955b6a9d123ab3b5c39eb13",
+        "--analysis-version",
+        "1",
+        "--analysis-source-sha256",
+        "3b0327bba0be07df6f62362fd56e24ebf81b9bea5650e883131286fe9d9c854d",
+        "--analysis-generated-by",
+        "codex/in-session",
+        "--analysis-generated-at",
+        "2026-10-11T03:49:06.775476+00:00"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+      "completed_at": "2026-10-11T03:54:01.820171+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"recorded\": {\n    \"sha256\": \"3b0327bba0be07df6f62362fd56e24ebf81b9bea5650e883131286fe9d9c854d\",\n    \"archive_slug\": \"shared-resource-access-policy\",\n    \"source_page\": \"wiki/sources/shared-resource-access-policy.md\",\n    \"original_name\": \"shared-resource-access-policy.md\",\n    \"ingested_at\": \"2026-10-11T03:54:01Z\",\n    \"analysis_receipt\": {\n      \"version\": \"1\",\n      \"sha256\": \"59f477afd5ab86c95c42d2d638470cb4ade267f93955b6a9d123ab3b5c39eb13\",\n      \"source_sha256\": \"3b0327bba0be07df6f62362fd56e24ebf81b9bea5650e883131286fe9d9c854d\",\n      \"generated_by\": \"codex/in-session\",\n      \"generated_at\": \"2026-10-11T03:49:06.775476+00:00\"\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "SRC-06-cache-record",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-cache.py",
+        "--cache",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/.llm-wiki/ingest/cache.json",
+        "record",
+        "--sha256",
+        "c23286dcb14629cb72bd3ca1ea631706d07b507a8a098b1ce3a276d41b52d003",
+        "--original-name",
+        "overseas-access-request.md",
+        "--archive-slug",
+        "overseas-access-request",
+        "--source-page",
+        "wiki/sources/overseas-access-request.md",
+        "--analysis-receipt",
+        "65e4796bb85b69ae08a528b72a40fc9c5a2af6c49f81b427103dd4eb78ffdd6c",
+        "--analysis-version",
+        "1",
+        "--analysis-source-sha256",
+        "c23286dcb14629cb72bd3ca1ea631706d07b507a8a098b1ce3a276d41b52d003",
+        "--analysis-generated-by",
+        "codex/in-session",
+        "--analysis-generated-at",
+        "2026-10-11T03:49:06.775792+00:00"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+      "completed_at": "2026-10-11T03:54:01.879801+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"recorded\": {\n    \"sha256\": \"c23286dcb14629cb72bd3ca1ea631706d07b507a8a098b1ce3a276d41b52d003\",\n    \"archive_slug\": \"overseas-access-request\",\n    \"source_page\": \"wiki/sources/overseas-access-request.md\",\n    \"original_name\": \"overseas-access-request.md\",\n    \"ingested_at\": \"2026-10-11T03:54:01Z\",\n    \"analysis_receipt\": {\n      \"version\": \"1\",\n      \"sha256\": \"65e4796bb85b69ae08a528b72a40fc9c5a2af6c49f81b427103dd4eb78ffdd6c\",\n      \"source_sha256\": \"c23286dcb14629cb72bd3ca1ea631706d07b507a8a098b1ce3a276d41b52d003\",\n      \"generated_by\": \"codex/in-session\",\n      \"generated_at\": \"2026-10-11T03:49:06.775792+00:00\"\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "finish-ingest-telemetry",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-usage.py",
+        "--ledger",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/.llm-wiki/usage/events.jsonl",
+        "finish",
+        "ingest",
+        "--log",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/wiki/log.md",
+        "--title",
+        "Synthetic enterprise baseline ingest"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+      "completed_at": "2026-10-11T03:54:01.943249+00:00",
+      "exit_code": 0,
+      "stdout": "No start snapshot or prior measured boundary; refusing to record 0 token(s).\n",
+      "stderr": ""
+    },
+    {
+      "label": "final-wiki-lint",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-lint.py",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+      "completed_at": "2026-10-11T03:57:32.417581+00:00",
+      "exit_code": 0,
+      "stdout": "wiki-lint: ok\n",
+      "stderr": ""
+    }
+  ],
+  "cleanup": {
+    "status": "not-applicable",
+    "reason": "Approved authoritative inputs are outside this snapshot root and inbox; originals were retained. No files were deleted."
+  },
+  "artifact_adjustments": [
+    {
+      "path": "ops/graph-insights.md",
+      "reason": "Existing graph tool emits wiki-relative links even when its default output is in ops. Corrected only the local report links to resolve from ops; project code was not changed.",
+      "link_count": 18,
+      "tool_output_sha256": "870845b77526aed50eb0f37ea63453f4145e2c99bb64d74e0a91360cd54927b5",
+      "adjusted_sha256": "ca7110a66e86c21a05e6e5e6cf66dd25628b591e3fa37d8512e31a4eb5580f65"
+    },
+    {
+      "path": "wiki/sources/vpn-common-qa.md",
+      "reason": "Limited password-expiry summary to the referral supported directly by SRC-01; detailed procedure remains attributed to SRC-02."
+    }
+  ],
+  "tool_version": {
+    "project_head": "0c02fd346e9711d8b556cc2b94c841a2185ac77e",
+    "worktree_state": "pre-existing changes preserved",
+    "script_sha256": {
+      "_common.py": "119970430caf1c58291b72247b89dc847ad5d6195323ad3f4db129827b34f7e1",
+      "cross_platform_lock.py": "83b4e32a077c6a4694b1649e3b02cdd9f6efe8a4909e2063edace82949aa384b",
+      "docling-pdf.py": "349bd0c12e35dbe8689631c835b1861b56589134e6dd7ab0713eccd9feb3a6d6",
+      "docling_pdf_assets.py": "19184a06d346e65f0c780de52950d1a9b24e42f8d821504efa3661bbc5dd184e",
+      "export-question-bank.py": "39b9937167732e431eea775e8ff4b71abea5cb8636c7255a3ce44f5483c539aa",
+      "governance-gate.py": "203097129d6c7a25a22d4ab993c690b98af802710434b00e1378007900c5a918",
+      "governance_policy.py": "e9957a5f2e603433ba5fba02bf4bb0a500688ec27395e8f967b12f31f43b5623",
+      "ingest-cache.py": "a9eaba76def9c1e675e35a19e1380a38c589fca90f95479dae6dd523d13d8083",
+      "ingest-cleanup.py": "98ded0d54f0150af15e249fc9ec54643a48c34272637e51e48089ce395a856f6",
+      "ingest-governance.py": "f9e3cce9edbf2934a6b823e3a39d95ed269b00a3f7317fe5ae595c578c5e71ec",
+      "ingest-review.py": "9faf2736e2b1a7afb0eb085a4b9e3f820011010ad9a3c2fc25a809a09d4982a1",
+      "question_bank_policy.py": "4ec2f389d117354b0c992361337383b1d5daf2eb5ece12dc5acbf91274977814",
+      "wiki-graph-insights.py": "e32b7dc51279da862ace23578177ac9790f71c0e10ca1fd8798071f43cca2247",
+      "wiki-lint.py": "b33d9eae89c4ca21da0add4b8c52e4d31a4ee05c8f30f08f257dbb0b0f820a40",
+      "wiki-reset.py": "4a664aa372c8118dbd23f1ede0447fece9987a814ebd6c822e251d8a898a6614",
+      "wiki-usage.py": "9c8a381d23e56eb428481979f55505bedc8523666783f5455dadf9de0a5a4809"
+    }
+  },
+  "validation": {
+    "method": "One-off Python integrity and coverage checks; existing governance_policy helpers validate approval and artifact schemas.",
+    "checked_at": "2026-10-11T03:56:57.147890+00:00",
+    "status": "PASS",
+    "coverage_record": "records/baseline-contract-coverage.json",
+    "integrity_record": "records/baseline-integrity.json",
+    "preservation_record": "records/existing-project-preservation.json"
+  },
+  "telemetry_status": "unavailable-no-start-snapshot",
+  "repository_diff_check": {
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "",
+    "note": "Git diff checks tracked changes; new fixture files additionally passed explicit trailing-whitespace and JSON/YAML parsing checks."
+  },
+  "finished_at": "2026-10-11T03:57:32.489517+00:00",
+  "result": {
+    "source_count": 6,
+    "knowledge_page_count": 18,
+    "claim_count": 17,
+    "static_covered_case_count": 10,
+    "answer_runtime_status": "not-run",
+    "updated_compilation_status": "not-run",
+    "human_content_review": "pending",
+    "presentation_update": "not-started"
+  }
+}

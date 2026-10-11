@@ -1,0 +1,247 @@
+{
+  "answers": [
+    {
+      "case_id": "SYN-01",
+      "route": "ANSWER",
+      "first_action": "TRY_SELF_SERVICE_RECOVERY",
+      "answer": "以目前情境日期 2030-03-02 判斷，你已確認鎖定，且三項資格皆符合，第一步是前往 https://support.example.com/account-recovery 嘗試自助復原。這是合成教學用的虛構入口，沒有實際服務或交易，不能當成已完成復原的證據；結果仍須由使用者確認。若流程失敗或結果不明，轉由 Example IT Service Desk 處理。[SRC-07] 此回答依尚待人工審查的知識草稿整理，未執行復原。",
+      "missing_fields": [],
+      "citations": [
+        {
+          "source_id": "SRC-07",
+          "path": "raw/sources/account-recovery-update-v2.md",
+          "quote": "自 2030-03-01 起，本通知只變更「已確認帳戶鎖定」時的第一步，而且必須同時符合下列三項條件：\n\n1. 使用者是全職員工。\n2. 使用者正在使用公司管理筆電。\n3. 使用者已註冊自助帳戶復原。"
+        },
+        {
+          "source_id": "SRC-07",
+          "path": "raw/sources/account-recovery-update-v2.md",
+          "quote": "三項都確認為符合時，請使用者前往虛構入口網站 <https://support.example.com/account-recovery> 嘗試自助復原。此連結僅供教學示例，不能執行真實交易，也不可視為已完成復原的證據。完成後仍須由使用者確認結果；若流程失敗或狀態不明，轉由 Example IT Service Desk 處理。"
+        }
+      ]
+    },
+    {
+      "case_id": "SYN-02",
+      "route": "ANSWER",
+      "first_action": "SUBMIT_RECOVERY_REQUEST",
+      "answer": "不能套用相同的自助第一步。以 2030-03-02 判斷，承包人員即使使用公司管理筆電且已註冊自助復原，仍沿用 ExampleDesk 服務台路徑。[SRC-07] 請提交帳戶復原請求，附識別與聯絡資訊、非機密錯訊及發生時間、裝置管理狀態、自助復原註冊狀態與已確認鎖定的訊息；不得附密碼、驗證碼或復原連結。由 Example IT Service Desk 檢視，提交不代表已解鎖，也不保證處理時間。[SRC-03] 這是合成教學草稿的流程建議，未替你提交請求。",
+      "missing_fields": [],
+      "citations": [
+        {
+          "source_id": "SRC-07",
+          "path": "raw/sources/account-recovery-update-v2.md",
+          "quote": "已確認為承包人員、不受公司管理的裝置，或尚未註冊自助復原時，沿用 [SRC-03](account-recovery-v1.md) 的 ExampleDesk 服務台路徑。"
+        },
+        {
+          "source_id": "SRC-03",
+          "path": "raw/sources/account-recovery-v1.md",
+          "quote": "已確認鎖定時，使用者透過 ExampleDesk 提交帳戶復原請求，交由 Example IT Service Desk 檢視。此基準流程不表示服務台人員一定會直接解除鎖定，也不承諾特定處理時間。後續操作須依核實結果與支援流程決定。"
+        },
+        {
+          "source_id": "SRC-03",
+          "path": "raw/sources/account-recovery-v1.md",
+          "quote": "請求應包含：\n\n1. 使用者識別資訊與聯絡方式。\n2. 不含秘密的錯誤文字或代碼，以及發生時間。\n3. 裝置是否由公司管理；若不清楚，填「未知」。\n4. 自助復原是否已註冊；若不清楚，填「未知」。\n5. 使用者已確認的狀態，例如「收到鎖定提示」或「尚未確認」。\n\n不得在請求中放入密碼、驗證碼、復原連結或其他登入秘密。"
+        }
+      ]
+    },
+    {
+      "case_id": "SYN-03",
+      "route": "ANSWER",
+      "first_action": "SUBMIT_RECOVERY_REQUEST",
+      "answer": "以 2030-03-02 判斷，尚未註冊自助復原就不符合自助第一步的完整資格，應透過 ExampleDesk 提交帳戶復原請求。[SRC-07] 請附識別與聯絡資訊、非機密錯訊及發生時間，註明筆電受公司管理、自助復原尚未註冊，以及已確認鎖定。不要附密碼、驗證碼或復原連結；服務台檢視不代表已解除鎖定，也沒有特定處理時間保證。[SRC-03] 這是合成教學草稿的流程建議，未執行提交或解鎖。",
+      "missing_fields": [],
+      "citations": [
+        {
+          "source_id": "SRC-07",
+          "path": "raw/sources/account-recovery-update-v2.md",
+          "quote": "已確認為承包人員、不受公司管理的裝置，或尚未註冊自助復原時，沿用 [SRC-03](account-recovery-v1.md) 的 ExampleDesk 服務台路徑。"
+        },
+        {
+          "source_id": "SRC-03",
+          "path": "raw/sources/account-recovery-v1.md",
+          "quote": "已確認鎖定時，使用者透過 ExampleDesk 提交帳戶復原請求，交由 Example IT Service Desk 檢視。此基準流程不表示服務台人員一定會直接解除鎖定，也不承諾特定處理時間。後續操作須依核實結果與支援流程決定。"
+        },
+        {
+          "source_id": "SRC-03",
+          "path": "raw/sources/account-recovery-v1.md",
+          "quote": "請求應包含：\n\n1. 使用者識別資訊與聯絡方式。\n2. 不含秘密的錯誤文字或代碼，以及發生時間。\n3. 裝置是否由公司管理；若不清楚，填「未知」。\n4. 自助復原是否已註冊；若不清楚，填「未知」。\n5. 使用者已確認的狀態，例如「收到鎖定提示」或「尚未確認」。\n\n不得在請求中放入密碼、驗證碼、復原連結或其他登入秘密。"
+        }
+      ]
+    },
+    {
+      "case_id": "SYN-04",
+      "route": "ANSWER",
+      "first_action": "SUBMIT_RECOVERY_REQUEST",
+      "answer": "應以事件日期 2030-01-20 判斷，採用當時已生效的 ExampleDesk 基準流程；2030-03-01 才生效的自助第一步不能回溯套用，即使三項資格都符合也一樣。[SRC-03][SRC-07] 當時應提交帳戶復原請求，由 Example IT Service Desk 檢視，附識別與聯絡資訊、非機密錯訊及發生時間、裝置管理與自助復原註冊狀態、明確鎖定訊息。不得附登入秘密，且提交不代表已解鎖或保證處理時間。[SRC-03] 這是合成教學草稿對歷史流程的說明，沒有證明當時已提交或完成復原。",
+      "missing_fields": [],
+      "citations": [
+        {
+          "source_id": "SRC-03",
+          "path": "raw/sources/account-recovery-v1.md",
+          "quote": "本文件記錄 2030-01-10 起使用的鎖定復原基準。"
+        },
+        {
+          "source_id": "SRC-07",
+          "path": "raw/sources/account-recovery-update-v2.md",
+          "quote": "2030-03-01 之前發生的情境依當時基準處理；自生效日起才依本通知的完整資格條件套用新第一步。這是局部更新，不代表所有舊文件失效。"
+        },
+        {
+          "source_id": "SRC-03",
+          "path": "raw/sources/account-recovery-v1.md",
+          "quote": "已確認鎖定時，使用者透過 ExampleDesk 提交帳戶復原請求，交由 Example IT Service Desk 檢視。此基準流程不表示服務台人員一定會直接解除鎖定，也不承諾特定處理時間。後續操作須依核實結果與支援流程決定。"
+        },
+        {
+          "source_id": "SRC-03",
+          "path": "raw/sources/account-recovery-v1.md",
+          "quote": "請求應包含：\n\n1. 使用者識別資訊與聯絡方式。\n2. 不含秘密的錯誤文字或代碼，以及發生時間。\n3. 裝置是否由公司管理；若不清楚，填「未知」。\n4. 自助復原是否已註冊；若不清楚，填「未知」。\n5. 使用者已確認的狀態，例如「收到鎖定提示」或「尚未確認」。\n\n不得在請求中放入密碼、驗證碼、復原連結或其他登入秘密。"
+        }
+      ]
+    },
+    {
+      "case_id": "SYN-05",
+      "route": "CLARIFY",
+      "first_action": "CLARIFY_ACCOUNT_STATE",
+      "answer": "不能只憑 DEMO-101 判定帳戶鎖定；它也可能涉及密碼輸入錯誤、密碼到期或網路狀況，目前原因仍未確認。[SRC-01][SRC-02] 你是否收到明確的鎖定或到期通知？請補充不含秘密的完整錯訊、發生時間、装置是否受公司管理，以及當時是否可連公司網路。也可說明是否能在其他公司核准的工作流程中登入；不要提供密碼或驗證碼。確認狀態後才能選擇適用分支。[SRC-01] 此判斷依合成教學草稿，尚未完成診斷。",
+      "missing_fields": [
+        "account_state",
+        "error_message",
+        "event_time",
+        "device_management",
+        "company_network_available"
+      ],
+      "citations": [
+        {
+          "source_id": "SRC-01",
+          "path": "raw/sources/vpn-common-qa.md",
+          "quote": "先記錄使用者看到的完整訊息、發生時間、裝置管理狀態，以及當時是否可連公司網路。錯誤代碼只協助判斷方向，不能單獨證明帳戶、密碼或授權的狀態。"
+        },
+        {
+          "source_id": "SRC-01",
+          "path": "raw/sources/vpn-common-qa.md",
+          "quote": "DEMO-101 可能與密碼輸入錯誤、已確認的帳戶鎖定、密碼到期或當下網路狀況有關。這些是待查原因；不可只因代碼出現就判定帳戶已鎖定。先確認使用者能否在其他公司核准的工作流程中登入，並詢問是否收到明確的到期或鎖定通知。不要索取密碼或驗證碼。"
+        },
+        {
+          "source_id": "SRC-02",
+          "path": "raw/sources/examplevpn-error-reference.md",
+          "quote": "| DEMO-101 | 密碼輸入錯誤、已確認鎖定、密碼到期或網路狀況 | 先釐清狀態；代碼本身不代表帳戶鎖定。 |"
+        }
+      ]
+    },
+    {
+      "case_id": "SYN-06",
+      "route": "ANSWER",
+      "first_action": "CONNECT_COMPANY_NETWORK",
+      "answer": "你已確認密碼到期、使用公司管理筆電且公司網路可用，請先連上公司網路，再按 Ctrl+Alt+Delete，選擇「變更密碼」並依畫面完成；變更後依組織核准流程測試登入，不要把密碼提供給支援人員。[SRC-02] 若操作無法使用，停止自行嘗試並聯絡 Example IT Service Desk。不能改用消費者入口網站同步密碼，也不能以帳戶解鎖重設或延長到期密碼。[SRC-02] SRC-07 沒有變更這項到期程序；以上僅為合成教學草稿的操作建議，未執行密碼變更。[SRC-07]",
+      "missing_fields": [],
+      "citations": [
+        {
+          "source_id": "SRC-02",
+          "path": "raw/sources/examplevpn-error-reference.md",
+          "quote": "若已確認密碼到期，且使用者正在使用公司管理筆電，先連上公司網路，再按 Ctrl+Alt+Delete 並選擇變更密碼，依畫面完成變更。這是本虛構案例的明確步驟，不保證適用於其他環境。變更後再依組織核准流程測試登入，不要把密碼提供給支援人員。"
+        },
+        {
+          "source_id": "SRC-02",
+          "path": "raw/sources/examplevpn-error-reference.md",
+          "quote": "若人在遠端而無法連公司網路，或上述步驟無法使用，請停止自行嘗試並聯絡 Example IT Service Desk。不要改用消費者入口網站同步密碼，也不可聲稱解除帳戶鎖定就會重設或延長已到期密碼。"
+        },
+        {
+          "source_id": "SRC-07",
+          "path": "raw/sources/account-recovery-update-v2.md",
+          "quote": "本通知不變更 [SRC-02](examplevpn-error-reference.md) 的密碼到期程序、DEMO-202 網路診斷、DEMO-303 裝置註冊或授權檢查、[SRC-05](shared-resource-access-policy.md) 資源規則，亦不變更 [SRC-06](overseas-access-request.md) 海外核准流程。"
+        }
+      ]
+    },
+    {
+      "case_id": "SYN-07",
+      "route": "ANSWER",
+      "first_action": "RESPECT_RESOURCE_RESTRICTION",
+      "answer": "依本合成教學草稿，Branch Support 經 ExampleVPN 遠端連線的範圍包含 ExampleCRM，但不包含 TeamShare；不能透過一般資料夾權限申請覆蓋這項路徑限制，即使只要求 reader 角色也沒有例外依據。[SRC-05] VPN 連線成功不等於資源授權，這裡未申請或開通 TeamShare，也不能據此推論檢索系統已實作群組存取控制。[SRC-05]",
+      "missing_fields": [],
+      "citations": [
+        {
+          "source_id": "SRC-05",
+          "path": "raw/sources/shared-resource-access-policy.md",
+          "quote": "- **Branch Support 群組：**經 ExampleVPN 遠端連線時，可以使用 ExampleCRM；此情境不包含 TeamShare。"
+        },
+        {
+          "source_id": "SRC-05",
+          "path": "raw/sources/shared-resource-access-policy.md",
+          "quote": "Branch Support 即使已連上 ExampleVPN，也不能據此要求 TeamShare 存取。此申請流程不會覆蓋該遠端路徑限制。HQ Support 在公司網路上提出申請，也不表示系統已完成授權。不得把連線成功、群組名稱或已送出請求當成權限核准證明。"
+        },
+        {
+          "source_id": "SRC-05",
+          "path": "raw/sources/shared-resource-access-policy.md",
+          "quote": "此文件沒有說明任何檢索系統的受眾中繼資料、資料列過濾或存取控制實作；不可從本文推論系統已按群組限制檢索結果。"
+        }
+      ]
+    },
+    {
+      "case_id": "SYN-08",
+      "route": "CLARIFY",
+      "first_action": "CLARIFY_ACCESS_CONTEXT",
+      "answer": "請先提供所屬群組、目前所在網路或連線路徑，以及需要的角色；目前保留未決狀態，不能假定你符合 TeamShare 申請條件。[SRC-05] 若確認是 HQ Support 且在公司網路，可透過 ExampleDesk 申請，屆時需附使用者識別碼、邏輯資料夾名稱與所需角色；申請不代表核准或生效。若是 Branch Support 經 ExampleVPN 遠端連線，則不能用此申請流程覆蓋 TeamShare 限制。[SRC-05] 以上依合成教學草稿說明，尚未替你提交申請。",
+      "missing_fields": [
+        "support_group",
+        "network_path",
+        "requested_role"
+      ],
+      "citations": [
+        {
+          "source_id": "SRC-05",
+          "path": "raw/sources/shared-resource-access-policy.md",
+          "quote": "若使用者的群組、所在網路或要求角色未知，先向使用者釐清並保留未決狀態。"
+        },
+        {
+          "source_id": "SRC-05",
+          "path": "raw/sources/shared-resource-access-policy.md",
+          "quote": "- **HQ Support 群組：**在公司網路上可提出 TeamShare 權限申請。申請不代表已核准或已生效。\n\nHQ Support 申請時，請透過 ExampleDesk 提供申請人的使用者識別碼（虛構示例：`EMP-DEMO-001`）、邏輯資料夾名稱及所需角色。"
+        },
+        {
+          "source_id": "SRC-05",
+          "path": "raw/sources/shared-resource-access-policy.md",
+          "quote": "Branch Support 即使已連上 ExampleVPN，也不能據此要求 TeamShare 存取。此申請流程不會覆蓋該遠端路徑限制。"
+        }
+      ]
+    },
+    {
+      "case_id": "SYN-09",
+      "route": "CLARIFY",
+      "first_action": "CLARIFY_TRAVEL_DATES",
+      "answer": "下一步先確認預計開始日與結束日；請提供這兩個日期，不應代填或猜測。你已提供申請人識別碼、目的地與業務目的，無須重填；申請內容也要列明教學專案需要遠端連線的工作範圍。[SRC-06] 資料齊備後透過 ExampleDesk 提交，由直屬主管先審查；主管核准後才轉交 Network Operations 並納入 Security Review，相關審查完成且獲准後才安排啟用。尚未送主管核准，不能視為已獲准或先行開通。核准僅於申請日期範圍有效，延長須重新申請。[SRC-06] 這是合成教學草稿的流程說明，未提交、核准或啟用海外存取。",
+      "missing_fields": [
+        "start_date",
+        "end_date"
+      ],
+      "citations": [
+        {
+          "source_id": "SRC-06",
+          "path": "raw/sources/overseas-access-request.md",
+          "quote": "- 申請人識別資訊。\n- 目的地國家或地區。\n- 預計開始日與結束日。\n- 業務目的及需要遠端連線的工作範圍。\n\n資料缺漏或日期不明時，服務台應退回補充或請申請人釐清，不應代填猜測。"
+        },
+        {
+          "source_id": "SRC-06",
+          "path": "raw/sources/overseas-access-request.md",
+          "quote": "1. 申請人透過 ExampleDesk 提交資料。\n2. 直屬主管檢視業務目的與日期並作出核准或拒絕。\n3. 主管核准後，ExampleDesk 將申請轉交 Network Operations，並納入 Security Review。\n4. 只有相關審查完成且獲准後，才可安排啟用；拒絕或待審時不得先行啟用。\n5. 核准僅在申請所列日期範圍內有效，結束日到期後停止該次臨時安排；需要延長時須重新提出申請。"
+        }
+      ]
+    },
+    {
+      "case_id": "SYN-10",
+      "route": "NO_ANSWER",
+      "first_action": "ESCALATE_UNDOCUMENTED_ERROR",
+      "answer": "本合成教學資料只記錄 DEMO-101、DEMO-202 與 DEMO-303，沒有記載 DEMO-999 的原因或修復方式，因此無法提供有依據的診斷或修復步驟，也不能從相鄰代碼推測是密碼、網路或裝置授權問題。[SRC-02] 建議保存不含機密的完整錯訊與發生情境，交由服務台判讀；目前未診斷或修復。這項限制只針對本次提供的證據，不表示其他資料來源也沒有相關資訊。[SRC-02]",
+      "missing_fields": [],
+      "citations": [
+        {
+          "source_id": "SRC-02",
+          "path": "raw/sources/examplevpn-error-reference.md",
+          "quote": "本表只涵蓋本教學案例已記錄的代碼。代碼描述是分流線索；須由使用者資訊或支援流程確認實際狀態。未列出的代碼沒有在此定義原因，請記錄原文並交由服務台判讀，不要自行推測。"
+        },
+        {
+          "source_id": "SRC-02",
+          "path": "raw/sources/examplevpn-error-reference.md",
+          "quote": "| DEMO-101 | 密碼輸入錯誤、已確認鎖定、密碼到期或網路狀況 | 先釐清狀態；代碼本身不代表帳戶鎖定。 |\n| DEMO-202 | 裝置目前無法建立網路連線 | 確認一般網路可用，記錄所在網路與完整訊息；無法排除時交服務台。 |\n| DEMO-303 | 裝置註冊或授權設定可能尚未完成 | 依 [SRC-04](managed-laptop-remote-access.md) 檢查公司管理裝置狀態；不可把所有登入失敗都視為授權問題。 |"
+        }
+      ]
+    }
+  ]
+}

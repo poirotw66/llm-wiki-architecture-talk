@@ -1,0 +1,49 @@
+{
+  "started_at": "2026-10-11T04:12:42.324192+00:00",
+  "finished_at": "2026-10-11T04:15:04.065761+00:00",
+  "elapsed_seconds": 141.741,
+  "argv": [
+    "codex",
+    "exec",
+    "--ignore-user-config",
+    "--ignore-rules",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--sandbox",
+    "read-only",
+    "--json",
+    "--color",
+    "never",
+    "-c",
+    "model=\"gpt-6.1-sol\"",
+    "-c",
+    "model_reasoning_effort=\"high\"",
+    "--output-schema",
+    "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/model-runs/updated-judge/response-schema.json",
+    "--output-last-message",
+    "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/model-runs/updated-judge/response.json",
+    "-"
+  ],
+  "cwd_mode": "empty-neutral-temporary-directory",
+  "requested_model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.1",
+  "exit_code": 0,
+  "prompt_sha256": "ba1fee1a35fe7bda8dc686404f2d0d1183e5a081d821b500a7973153f1a7cca8",
+  "schema_sha256": "9d668b21a32c3c4f8ccc3124afa7ad77b9275a407f41ebadeb0578971846ebd1",
+  "response_sha256": "ca90698c63dc6b25d92cc99f886c323655b8001e5183616127a441528835ded3",
+  "event_usage": [
+    {
+      "input_tokens": 33553,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 8561,
+      "reasoning_output_tokens": 1237
+    }
+  ],
+  "tool_item_count": 0,
+  "tool_item_types": [],
+  "event_parse_errors": [],
+  "cost_usd": null,
+  "exact_serving_snapshot": null
+}

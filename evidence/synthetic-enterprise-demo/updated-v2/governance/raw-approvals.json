@@ -1,0 +1,196 @@
+{
+  "version": 2,
+  "source_approvals": [
+    {
+      "id": "source-d59a8fc31afd03b5",
+      "source_sha256": "d59a8fc31afd03b58670211eb38bd5d7c01031d989066209bef422b6df1e277a",
+      "original_name": "vpn-common-qa.md",
+      "classification": "public",
+      "owner": "process:synthetic-enterprise-demo",
+      "access_scope": "public",
+      "retention": "permanent",
+      "contains_pii": false,
+      "redaction": "none",
+      "approved_by": "human:demo-owner",
+      "approved_at": "2026-10-11T03:48:30Z",
+      "policy_version": "2",
+      "acknowledged_findings": []
+    },
+    {
+      "id": "source-0e29b6236aec4d3b",
+      "source_sha256": "0e29b6236aec4d3b9e06204db79a67d191071c9b8f4eac124a8d4d7012b0deff",
+      "original_name": "examplevpn-error-reference.md",
+      "classification": "public",
+      "owner": "process:synthetic-enterprise-demo",
+      "access_scope": "public",
+      "retention": "permanent",
+      "contains_pii": false,
+      "redaction": "none",
+      "approved_by": "human:demo-owner",
+      "approved_at": "2026-10-11T03:48:30Z",
+      "policy_version": "2",
+      "acknowledged_findings": []
+    },
+    {
+      "id": "source-8be47d524d37d33a",
+      "source_sha256": "8be47d524d37d33abd258fa27cab30b46bb4e41937bb18f25ea87b086ec26928",
+      "original_name": "account-recovery-v1.md",
+      "classification": "public",
+      "owner": "process:synthetic-enterprise-demo",
+      "access_scope": "public",
+      "retention": "permanent",
+      "contains_pii": false,
+      "redaction": "none",
+      "approved_by": "human:demo-owner",
+      "approved_at": "2026-10-11T03:48:31Z",
+      "policy_version": "2",
+      "acknowledged_findings": []
+    },
+    {
+      "id": "source-cd79876f43c56b6e",
+      "source_sha256": "cd79876f43c56b6e18e80d7086570249b3b8a2fd72fb314bd166fa37464e5ee9",
+      "original_name": "managed-laptop-remote-access.md",
+      "classification": "public",
+      "owner": "process:synthetic-enterprise-demo",
+      "access_scope": "public",
+      "retention": "permanent",
+      "contains_pii": false,
+      "redaction": "none",
+      "approved_by": "human:demo-owner",
+      "approved_at": "2026-10-11T03:48:31Z",
+      "policy_version": "2",
+      "acknowledged_findings": []
+    },
+    {
+      "id": "source-3b0327bba0be07df",
+      "source_sha256": "3b0327bba0be07df6f62362fd56e24ebf81b9bea5650e883131286fe9d9c854d",
+      "original_name": "shared-resource-access-policy.md",
+      "classification": "public",
+      "owner": "process:synthetic-enterprise-demo",
+      "access_scope": "public",
+      "retention": "permanent",
+      "contains_pii": false,
+      "redaction": "none",
+      "approved_by": "human:demo-owner",
+      "approved_at": "2026-10-11T03:48:31Z",
+      "policy_version": "2",
+      "acknowledged_findings": []
+    },
+    {
+      "id": "source-c23286dcb14629cb",
+      "source_sha256": "c23286dcb14629cb72bd3ca1ea631706d07b507a8a098b1ce3a276d41b52d003",
+      "original_name": "overseas-access-request.md",
+      "classification": "public",
+      "owner": "process:synthetic-enterprise-demo",
+      "access_scope": "public",
+      "retention": "permanent",
+      "contains_pii": false,
+      "redaction": "none",
+      "approved_by": "human:demo-owner",
+      "approved_at": "2026-10-11T03:48:32Z",
+      "policy_version": "2",
+      "acknowledged_findings": []
+    },
+    {
+      "id": "source-08c4c942fb466895",
+      "source_sha256": "08c4c942fb46689528c55bcda5dcd890d225682f2149a0595ee7e9e58f41d53a",
+      "original_name": "account-recovery-update-v2.md",
+      "classification": "public",
+      "owner": "process:synthetic-enterprise-demo",
+      "access_scope": "public",
+      "retention": "permanent",
+      "contains_pii": false,
+      "redaction": "none",
+      "approved_by": "human:demo-owner",
+      "approved_at": "2026-10-11T04:03:49Z",
+      "policy_version": "2",
+      "acknowledged_findings": []
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "raw/originals/vpn-common-qa.md",
+      "source_id": "source-d59a8fc31afd03b5",
+      "artifact_sha256": "d59a8fc31afd03b58670211eb38bd5d7c01031d989066209bef422b6df1e277a",
+      "role": "original"
+    },
+    {
+      "path": "raw/sources/vpn-common-qa.md",
+      "source_id": "source-d59a8fc31afd03b5",
+      "artifact_sha256": "d59a8fc31afd03b58670211eb38bd5d7c01031d989066209bef422b6df1e277a",
+      "role": "source"
+    },
+    {
+      "path": "raw/originals/examplevpn-error-reference.md",
+      "source_id": "source-0e29b6236aec4d3b",
+      "artifact_sha256": "0e29b6236aec4d3b9e06204db79a67d191071c9b8f4eac124a8d4d7012b0deff",
+      "role": "original"
+    },
+    {
+      "path": "raw/sources/examplevpn-error-reference.md",
+      "source_id": "source-0e29b6236aec4d3b",
+      "artifact_sha256": "0e29b6236aec4d3b9e06204db79a67d191071c9b8f4eac124a8d4d7012b0deff",
+      "role": "source"
+    },
+    {
+      "path": "raw/originals/account-recovery-v1.md",
+      "source_id": "source-8be47d524d37d33a",
+      "artifact_sha256": "8be47d524d37d33abd258fa27cab30b46bb4e41937bb18f25ea87b086ec26928",
+      "role": "original"
+    },
+    {
+      "path": "raw/sources/account-recovery-v1.md",
+      "source_id": "source-8be47d524d37d33a",
+      "artifact_sha256": "8be47d524d37d33abd258fa27cab30b46bb4e41937bb18f25ea87b086ec26928",
+      "role": "source"
+    },
+    {
+      "path": "raw/originals/managed-laptop-remote-access.md",
+      "source_id": "source-cd79876f43c56b6e",
+      "artifact_sha256": "cd79876f43c56b6e18e80d7086570249b3b8a2fd72fb314bd166fa37464e5ee9",
+      "role": "original"
+    },
+    {
+      "path": "raw/sources/managed-laptop-remote-access.md",
+      "source_id": "source-cd79876f43c56b6e",
+      "artifact_sha256": "cd79876f43c56b6e18e80d7086570249b3b8a2fd72fb314bd166fa37464e5ee9",
+      "role": "source"
+    },
+    {
+      "path": "raw/originals/shared-resource-access-policy.md",
+      "source_id": "source-3b0327bba0be07df",
+      "artifact_sha256": "3b0327bba0be07df6f62362fd56e24ebf81b9bea5650e883131286fe9d9c854d",
+      "role": "original"
+    },
+    {
+      "path": "raw/sources/shared-resource-access-policy.md",
+      "source_id": "source-3b0327bba0be07df",
+      "artifact_sha256": "3b0327bba0be07df6f62362fd56e24ebf81b9bea5650e883131286fe9d9c854d",
+      "role": "source"
+    },
+    {
+      "path": "raw/originals/overseas-access-request.md",
+      "source_id": "source-c23286dcb14629cb",
+      "artifact_sha256": "c23286dcb14629cb72bd3ca1ea631706d07b507a8a098b1ce3a276d41b52d003",
+      "role": "original"
+    },
+    {
+      "path": "raw/sources/overseas-access-request.md",
+      "source_id": "source-c23286dcb14629cb",
+      "artifact_sha256": "c23286dcb14629cb72bd3ca1ea631706d07b507a8a098b1ce3a276d41b52d003",
+      "role": "source"
+    },
+    {
+      "path": "raw/originals/account-recovery-update-v2.md",
+      "source_id": "source-08c4c942fb466895",
+      "artifact_sha256": "08c4c942fb46689528c55bcda5dcd890d225682f2149a0595ee7e9e58f41d53a",
+      "role": "original"
+    },
+    {
+      "path": "raw/sources/account-recovery-update-v2.md",
+      "source_id": "source-08c4c942fb466895",
+      "artifact_sha256": "08c4c942fb46689528c55bcda5dcd890d225682f2149a0595ee7e9e58f41d53a",
+      "role": "source"
+    }
+  ]
+}

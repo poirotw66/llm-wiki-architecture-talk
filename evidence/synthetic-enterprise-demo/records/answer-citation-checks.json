@@ -1,0 +1,382 @@
+{
+  "checked_at": "2026-10-11T04:14:02.969483+00:00",
+  "checks": [
+    {
+      "phase": "baseline",
+      "case_id": "SYN-01",
+      "required_source_ids": [
+        "SRC-03"
+      ],
+      "cited_source_ids": [
+        "SRC-03"
+      ],
+      "inline_source_ids": [
+        "SRC-03"
+      ],
+      "missing_required_source_ids": [],
+      "invalid_citations": [],
+      "inline_citation_mismatch": [],
+      "prompt_compliance_findings": []
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-02",
+      "required_source_ids": [
+        "SRC-03"
+      ],
+      "cited_source_ids": [
+        "SRC-03"
+      ],
+      "inline_source_ids": [
+        "SRC-03"
+      ],
+      "missing_required_source_ids": [],
+      "invalid_citations": [],
+      "inline_citation_mismatch": [],
+      "prompt_compliance_findings": []
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-03",
+      "required_source_ids": [
+        "SRC-03"
+      ],
+      "cited_source_ids": [
+        "SRC-03"
+      ],
+      "inline_source_ids": [
+        "SRC-03"
+      ],
+      "missing_required_source_ids": [],
+      "invalid_citations": [],
+      "inline_citation_mismatch": [],
+      "prompt_compliance_findings": []
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-04",
+      "required_source_ids": [
+        "SRC-03"
+      ],
+      "cited_source_ids": [
+        "SRC-03"
+      ],
+      "inline_source_ids": [
+        "SRC-03"
+      ],
+      "missing_required_source_ids": [],
+      "invalid_citations": [],
+      "inline_citation_mismatch": [],
+      "prompt_compliance_findings": []
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-05",
+      "required_source_ids": [
+        "SRC-01",
+        "SRC-02"
+      ],
+      "cited_source_ids": [
+        "SRC-01",
+        "SRC-02"
+      ],
+      "inline_source_ids": [
+        "SRC-01",
+        "SRC-02"
+      ],
+      "missing_required_source_ids": [],
+      "invalid_citations": [],
+      "inline_citation_mismatch": [],
+      "prompt_compliance_findings": []
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-06",
+      "required_source_ids": [
+        "SRC-01",
+        "SRC-02"
+      ],
+      "cited_source_ids": [
+        "SRC-02"
+      ],
+      "inline_source_ids": [
+        "SRC-02"
+      ],
+      "missing_required_source_ids": [
+        "SRC-01"
+      ],
+      "invalid_citations": [],
+      "inline_citation_mismatch": [],
+      "prompt_compliance_findings": []
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-07",
+      "required_source_ids": [
+        "SRC-04",
+        "SRC-05"
+      ],
+      "cited_source_ids": [
+        "SRC-05"
+      ],
+      "inline_source_ids": [
+        "SRC-05"
+      ],
+      "missing_required_source_ids": [
+        "SRC-04"
+      ],
+      "invalid_citations": [],
+      "inline_citation_mismatch": [],
+      "prompt_compliance_findings": []
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-08",
+      "required_source_ids": [
+        "SRC-05"
+      ],
+      "cited_source_ids": [
+        "SRC-05"
+      ],
+      "inline_source_ids": [
+        "SRC-05"
+      ],
+      "missing_required_source_ids": [],
+      "invalid_citations": [],
+      "inline_citation_mismatch": [],
+      "prompt_compliance_findings": []
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-09",
+      "required_source_ids": [
+        "SRC-06"
+      ],
+      "cited_source_ids": [
+        "SRC-06"
+      ],
+      "inline_source_ids": [
+        "SRC-06"
+      ],
+      "missing_required_source_ids": [],
+      "invalid_citations": [],
+      "inline_citation_mismatch": [],
+      "prompt_compliance_findings": []
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-10",
+      "required_source_ids": [
+        "SRC-02"
+      ],
+      "cited_source_ids": [
+        "SRC-01",
+        "SRC-02"
+      ],
+      "inline_source_ids": [
+        "SRC-01",
+        "SRC-02"
+      ],
+      "missing_required_source_ids": [],
+      "invalid_citations": [],
+      "inline_citation_mismatch": [],
+      "prompt_compliance_findings": []
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-01",
+      "required_source_ids": [
+        "SRC-07"
+      ],
+      "cited_source_ids": [
+        "SRC-07"
+      ],
+      "inline_source_ids": [
+        "SRC-07"
+      ],
+      "missing_required_source_ids": [],
+      "invalid_citations": [],
+      "inline_citation_mismatch": [],
+      "prompt_compliance_findings": []
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-02",
+      "required_source_ids": [
+        "SRC-03",
+        "SRC-07"
+      ],
+      "cited_source_ids": [
+        "SRC-03",
+        "SRC-07"
+      ],
+      "inline_source_ids": [
+        "SRC-03",
+        "SRC-07"
+      ],
+      "missing_required_source_ids": [],
+      "invalid_citations": [],
+      "inline_citation_mismatch": [],
+      "prompt_compliance_findings": []
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-03",
+      "required_source_ids": [
+        "SRC-03",
+        "SRC-07"
+      ],
+      "cited_source_ids": [
+        "SRC-03",
+        "SRC-07"
+      ],
+      "inline_source_ids": [
+        "SRC-03",
+        "SRC-07"
+      ],
+      "missing_required_source_ids": [],
+      "invalid_citations": [],
+      "inline_citation_mismatch": [],
+      "prompt_compliance_findings": []
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-04",
+      "required_source_ids": [
+        "SRC-03",
+        "SRC-07"
+      ],
+      "cited_source_ids": [
+        "SRC-03",
+        "SRC-07"
+      ],
+      "inline_source_ids": [
+        "SRC-03",
+        "SRC-07"
+      ],
+      "missing_required_source_ids": [],
+      "invalid_citations": [],
+      "inline_citation_mismatch": [],
+      "prompt_compliance_findings": []
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-05",
+      "required_source_ids": [
+        "SRC-01",
+        "SRC-02"
+      ],
+      "cited_source_ids": [
+        "SRC-01",
+        "SRC-02"
+      ],
+      "inline_source_ids": [
+        "SRC-01",
+        "SRC-02"
+      ],
+      "missing_required_source_ids": [],
+      "invalid_citations": [],
+      "inline_citation_mismatch": [],
+      "prompt_compliance_findings": [
+        {
+          "kind": "language",
+          "codepoint": "U+88C5",
+          "reason": "Answer contains a Simplified Chinese character despite the Traditional Chinese request. Raw output retained."
+        }
+      ]
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-06",
+      "required_source_ids": [
+        "SRC-01",
+        "SRC-02"
+      ],
+      "cited_source_ids": [
+        "SRC-02",
+        "SRC-07"
+      ],
+      "inline_source_ids": [
+        "SRC-02",
+        "SRC-07"
+      ],
+      "missing_required_source_ids": [
+        "SRC-01"
+      ],
+      "invalid_citations": [],
+      "inline_citation_mismatch": [],
+      "prompt_compliance_findings": []
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-07",
+      "required_source_ids": [
+        "SRC-04",
+        "SRC-05"
+      ],
+      "cited_source_ids": [
+        "SRC-05"
+      ],
+      "inline_source_ids": [
+        "SRC-05"
+      ],
+      "missing_required_source_ids": [
+        "SRC-04"
+      ],
+      "invalid_citations": [],
+      "inline_citation_mismatch": [],
+      "prompt_compliance_findings": []
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-08",
+      "required_source_ids": [
+        "SRC-05"
+      ],
+      "cited_source_ids": [
+        "SRC-05"
+      ],
+      "inline_source_ids": [
+        "SRC-05"
+      ],
+      "missing_required_source_ids": [],
+      "invalid_citations": [],
+      "inline_citation_mismatch": [],
+      "prompt_compliance_findings": []
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-09",
+      "required_source_ids": [
+        "SRC-06"
+      ],
+      "cited_source_ids": [
+        "SRC-06"
+      ],
+      "inline_source_ids": [
+        "SRC-06"
+      ],
+      "missing_required_source_ids": [],
+      "invalid_citations": [],
+      "inline_citation_mismatch": [],
+      "prompt_compliance_findings": []
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-10",
+      "required_source_ids": [
+        "SRC-02"
+      ],
+      "cited_source_ids": [
+        "SRC-02"
+      ],
+      "inline_source_ids": [
+        "SRC-02"
+      ],
+      "missing_required_source_ids": [],
+      "invalid_citations": [],
+      "inline_citation_mismatch": [],
+      "prompt_compliance_findings": []
+    }
+  ]
+}

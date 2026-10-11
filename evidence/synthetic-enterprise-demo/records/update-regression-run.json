@@ -1,0 +1,464 @@
+{
+  "run_id": "synthetic-enterprise-query-update-20261011",
+  "started_at": "2026-10-11T04:02:04.947863+00:00",
+  "status": "completed-with-findings",
+  "project_preservation_before": {
+    "head": "0c02fd346e9711d8b556cc2b94c841a2185ac77e",
+    "git_status_sha256": "d55086f1c58065266e796d14cfbbb494e502c4538ef78c8df24941dc7d3f7e02",
+    "file_count": 239,
+    "content_manifest_sha256": "76dbab6b9606f2840584f8d3b1b1d02b19201c24d78d2f2a54b910cc95488c6a"
+  },
+  "baseline_snapshot_before": {
+    ".gitignore": "0394652e09a228d2f3b428ea90e4629273405ab070a05aa7a36cdd8c75e9ee0a",
+    "wiki/log.md": "10594647dc4e95fb3dc0401e084766f130949c76e2c853f3e84182e314d79cda",
+    "wiki/index.md": "0ec73bba682c20168bf2c7851edbb0a12ce6c1f639e538bc566d45296d4367a3",
+    "wiki/queries/overseas-request.md": "051ec2460d7603f71ba8b8c9a13cc37e11d165299ec7abb361ca9e9eb06c2318",
+    "wiki/queries/unknown-error.md": "571327875e9e643fc7c515ce97bd4968fb2dd3a952d37dcc9e6f63c9c0638e2d",
+    "wiki/queries/teamshare-access.md": "109ab10b21043ed492e09ab199798aab256a3f5611f62db4d41dc91dd9372d78",
+    "wiki/queries/password-expired.md": "4e0c1fec5b4a2650f23ed18b0fe6a245d45e961d9e65dd60524a86c42ec4fad9",
+    "wiki/queries/account-locked.md": "6fa8c487b54b348c158e1b5ef63fcfc5eb9b4c7d421dad2109d8a423180cfc6a",
+    "wiki/queries/demo-101.md": "0949d4b2604d9c390c3edbe48a6e6abc134c933b589085d7ccd6c137f15f5ebd",
+    "wiki/concepts/resource-access-boundaries.md": "e02af911f9ebaa416e98c699aa948fb696a476be2952c4266bc215e6d31a5656",
+    "wiki/concepts/device-and-account-enrollment.md": "f1dff152d3a96d3bec4cb6f396f4defccd0c793cba3aa2c141cec628285bb392",
+    "wiki/concepts/account-state-and-recovery.md": "d6e79fdad00f5ebb251c286e99b2f50bc1b65d3ed3591bd4e033d8a1feb9ce12",
+    "wiki/concepts/overseas-approval.md": "dc1ea91c1fc2e8676fbdbe9f16ac41649bf6d1a2fa4ab9e728415aba78ae13b6",
+    "wiki/sources/shared-resource-access-policy.md": "f0173aceac951fbe6dc5932f838c4103571559dd3c2c78529a919635aa920533",
+    "wiki/sources/vpn-common-qa.md": "9db203c87326790c136e4ed9a1bc46bf8809e7e79eb3a8d51f01780fde0a8caa",
+    "wiki/sources/overseas-access-request.md": "f85da9c1d8b4ff62bb95fb016e1beed9683370e2f2038c6544c538ff58fa6d57",
+    "wiki/sources/managed-laptop-remote-access.md": "9aecd68b207ab196db62e54e977a73a9e0794fddf65b69b143f44ba628bfbbfd",
+    "wiki/sources/account-recovery-v1.md": "0dcf07146f1ff99c0078dc1b64892981cbe896aa2d934c0fee6c7638cd2f20cd",
+    "wiki/sources/examplevpn-error-reference.md": "6f58cc6cb95ca8fc88d4d59b4a206d437b06df7686fa44de2066254a79ed56e0",
+    "wiki/entities/examplevpn.md": "2e9862e00907fed4a7d9a6265a0b38325da06bbbb3c47b1b977746a90113215b",
+    "wiki/entities/exampledesk.md": "c3bb8e1d08d03f8985432b02b1c1270f8fe8ca4033e8f0d3376d8e380c503286",
+    "governance/raw-approvals.json": "4b0efe2832bda00feae813719388d617d6a0e8572a9b5c73db906773ced853bf",
+    "ops/graph-insights.md": "ca7110a66e86c21a05e6e5e6cf66dd25628b591e3fa37d8512e31a4eb5580f65",
+    "ops/review-queue.md": "de5175cda5249e332adb49b50a2f1688a6fd3a18867a62b9e4bba04c25e2eb49",
+    "ops/purpose.md": "631c67382596a3c6e9cd9cb2da89620eb196ad2f744a8573b6516d38f576091f",
+    "raw/originals/shared-resource-access-policy.md": "3b0327bba0be07df6f62362fd56e24ebf81b9bea5650e883131286fe9d9c854d",
+    "raw/originals/vpn-common-qa.md": "d59a8fc31afd03b58670211eb38bd5d7c01031d989066209bef422b6df1e277a",
+    "raw/originals/overseas-access-request.md": "c23286dcb14629cb72bd3ca1ea631706d07b507a8a098b1ce3a276d41b52d003",
+    "raw/originals/managed-laptop-remote-access.md": "cd79876f43c56b6e18e80d7086570249b3b8a2fd72fb314bd166fa37464e5ee9",
+    "raw/originals/account-recovery-v1.md": "8be47d524d37d33abd258fa27cab30b46bb4e41937bb18f25ea87b086ec26928",
+    "raw/originals/examplevpn-error-reference.md": "0e29b6236aec4d3b9e06204db79a67d191071c9b8f4eac124a8d4d7012b0deff",
+    "raw/sources/shared-resource-access-policy.md": "3b0327bba0be07df6f62362fd56e24ebf81b9bea5650e883131286fe9d9c854d",
+    "raw/sources/vpn-common-qa.md": "d59a8fc31afd03b58670211eb38bd5d7c01031d989066209bef422b6df1e277a",
+    "raw/sources/overseas-access-request.md": "c23286dcb14629cb72bd3ca1ea631706d07b507a8a098b1ce3a276d41b52d003",
+    "raw/sources/managed-laptop-remote-access.md": "cd79876f43c56b6e18e80d7086570249b3b8a2fd72fb314bd166fa37464e5ee9",
+    "raw/sources/account-recovery-v1.md": "8be47d524d37d33abd258fa27cab30b46bb4e41937bb18f25ea87b086ec26928",
+    "raw/sources/examplevpn-error-reference.md": "0e29b6236aec4d3b9e06204db79a67d191071c9b8f4eac124a8d4d7012b0deff"
+  },
+  "contract_sha256": "83d25b7efc06fd36b1576860a76e1fe8b146c0dd01385dbbd9e0d90679fc208b",
+  "commands": [
+    {
+      "label": "baseline-query-start",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-usage.py",
+        "--ledger",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/.runtime/usage/events.jsonl",
+        "start",
+        "query",
+        "--title",
+        "Synthetic baseline ten-question runtime"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+      "exit_code": 0,
+      "stdout": "Codex Desktop token counter unavailable; this operation will be counted without token measurement.\n",
+      "stderr": "",
+      "completed_at": "2026-10-11T04:02:42.184708+00:00"
+    },
+    {
+      "label": "update-ingest-start",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-usage.py",
+        "--ledger",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2/.llm-wiki/usage/events.jsonl",
+        "start",
+        "ingest",
+        "--title",
+        "Synthetic conditional account recovery update"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2",
+      "exit_code": 0,
+      "stdout": "Codex Desktop token counter unavailable; this operation will be counted without token measurement.\n",
+      "stderr": "",
+      "completed_at": "2026-10-11T04:03:49.176530+00:00"
+    },
+    {
+      "label": "SRC-07-preflight",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2/governance/raw-approvals.json",
+        "inspect",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/account-recovery-update-v2.md"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2",
+      "exit_code": 0,
+      "stdout": "{\"policy_version\": \"2\", \"outcome\": \"review_ready\", \"reason_codes\": [\"human_approval_required\"], \"source_sha256\": \"08c4c942fb46689528c55bcda5dcd890d225682f2149a0595ee7e9e58f41d53a\", \"findings\": []}\n",
+      "stderr": "",
+      "completed_at": "2026-10-11T04:03:49.243159+00:00"
+    },
+    {
+      "label": "SRC-07-source-admission",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2/governance/raw-approvals.json",
+        "approve",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/account-recovery-update-v2.md",
+        "--classification",
+        "public",
+        "--owner",
+        "process:synthetic-enterprise-demo",
+        "--access-scope",
+        "public",
+        "--retention",
+        "permanent",
+        "--approved-by",
+        "human:demo-owner"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2",
+      "exit_code": 0,
+      "stdout": "approved id=source-08c4c942fb466895\n",
+      "stderr": "",
+      "completed_at": "2026-10-11T04:03:49.311958+00:00"
+    },
+    {
+      "label": "SRC-07-approved-inspect",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2/governance/raw-approvals.json",
+        "inspect",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/account-recovery-update-v2.md"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2",
+      "exit_code": 0,
+      "stdout": "{\"policy_version\": \"2\", \"outcome\": \"approved\", \"reason_codes\": [\"source_approved\"], \"source_sha256\": \"08c4c942fb46689528c55bcda5dcd890d225682f2149a0595ee7e9e58f41d53a\", \"findings\": []}\n",
+      "stderr": "",
+      "completed_at": "2026-10-11T04:03:49.370014+00:00"
+    },
+    {
+      "label": "SRC-07-cache-lookup",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-cache.py",
+        "--cache",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2/.llm-wiki/ingest/cache.json",
+        "lookup",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/account-recovery-update-v2.md"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2",
+      "exit_code": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"hit\": false,\n  \"sha256\": \"08c4c942fb46689528c55bcda5dcd890d225682f2149a0595ee7e9e58f41d53a\",\n  \"path\": \"/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/account-recovery-update-v2.md\",\n  \"force\": false,\n  \"entry\": null\n}\n",
+      "stderr": "",
+      "completed_at": "2026-10-11T04:03:49.427130+00:00"
+    },
+    {
+      "label": "SRC-07-artifact-lineage",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2/governance/raw-approvals.json",
+        "register",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2",
+        "--source-id",
+        "source-08c4c942fb466895",
+        "--artifact",
+        "original=/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2/raw/originals/account-recovery-update-v2.md",
+        "--artifact",
+        "source=/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2/raw/sources/account-recovery-update-v2.md"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2",
+      "exit_code": 0,
+      "stdout": "registered artifacts=2 source_id=source-08c4c942fb466895\n",
+      "stderr": "",
+      "completed_at": "2026-10-11T04:03:49.486089+00:00"
+    },
+    {
+      "label": "baseline-query-finish",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-usage.py",
+        "--ledger",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/.runtime/usage/events.jsonl",
+        "finish",
+        "query",
+        "--log",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1/wiki/log.md",
+        "--title",
+        "Synthetic baseline ten-question runtime"
+      ],
+      "exit_code": 0,
+      "stdout": "No start snapshot or prior measured boundary; refusing to record 0 token(s).\n",
+      "stderr": "",
+      "completed_at": "2026-10-11T04:06:17.342405+00:00"
+    },
+    {
+      "label": "updated-draft-lint",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-lint.py",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "wiki-lint: 1 issue(s)\nops/purpose.md must contain '# Purpose' or '# 目的'\n",
+      "completed_at": "2026-10-11T04:09:29.266295+00:00"
+    },
+    {
+      "label": "updated-lint-after-purpose-heading-fix",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-lint.py",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "wiki-lint: 1 issue(s)\nops/purpose.md must declare mode: template or production in YAML frontmatter\n",
+      "completed_at": "2026-10-11T04:09:50.159211+00:00"
+    },
+    {
+      "label": "updated-lint-after-purpose-mode-fix",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-lint.py",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2",
+      "exit_code": 0,
+      "stdout": "wiki-lint: ok\n",
+      "stderr": "",
+      "completed_at": "2026-10-11T04:10:19.718469+00:00"
+    },
+    {
+      "label": "conditional-update-human-review-item",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-review.py",
+        "--queue",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2/ops/review-queue.md",
+        "append",
+        "--title",
+        "Verify conditional partial supersession",
+        "--reason",
+        "Model proposal was reviewed by a maintenance agent. Human verification is pending for all qualifications, effective date, historical scope, unknown-state handling, service-desk fallback and retained procedures. Source admission is already authorized.",
+        "--action",
+        "human_verify",
+        "--related",
+        "wiki/queries/account-locked.md"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2",
+      "exit_code": 0,
+      "stdout": "appended id=41ce51b8 -> /Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2/ops/review-queue.md\n",
+      "stderr": "",
+      "completed_at": "2026-10-11T04:10:19.774562+00:00"
+    },
+    {
+      "label": "updated-graph-insights",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-graph-insights.py",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2",
+      "exit_code": 0,
+      "stdout": "wrote ops/graph-insights.md\n",
+      "stderr": "",
+      "completed_at": "2026-10-11T04:10:19.831765+00:00"
+    },
+    {
+      "label": "SRC-07-cache-record",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-cache.py",
+        "--cache",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2/.llm-wiki/ingest/cache.json",
+        "record",
+        "--sha256",
+        "08c4c942fb46689528c55bcda5dcd890d225682f2149a0595ee7e9e58f41d53a",
+        "--original-name",
+        "account-recovery-update-v2.md",
+        "--archive-slug",
+        "account-recovery-update-v2",
+        "--source-page",
+        "wiki/sources/account-recovery-update-v2.md",
+        "--analysis-receipt",
+        "ae1068d1a9918d5962fe6e1d0f08b8e70b5eeccb57a92e2b6c941f01c83c8d56",
+        "--analysis-version",
+        "1",
+        "--analysis-source-sha256",
+        "08c4c942fb46689528c55bcda5dcd890d225682f2149a0595ee7e9e58f41d53a",
+        "--analysis-generated-by",
+        "codex/in-session",
+        "--analysis-generated-at",
+        "2026-10-11T04:03:49.486708+00:00"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2",
+      "exit_code": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"recorded\": {\n    \"sha256\": \"08c4c942fb46689528c55bcda5dcd890d225682f2149a0595ee7e9e58f41d53a\",\n    \"archive_slug\": \"account-recovery-update-v2\",\n    \"source_page\": \"wiki/sources/account-recovery-update-v2.md\",\n    \"original_name\": \"account-recovery-update-v2.md\",\n    \"ingested_at\": \"2026-10-11T04:10:19Z\",\n    \"analysis_receipt\": {\n      \"version\": \"1\",\n      \"sha256\": \"ae1068d1a9918d5962fe6e1d0f08b8e70b5eeccb57a92e2b6c941f01c83c8d56\",\n      \"source_sha256\": \"08c4c942fb46689528c55bcda5dcd890d225682f2149a0595ee7e9e58f41d53a\",\n      \"generated_by\": \"codex/in-session\",\n      \"generated_at\": \"2026-10-11T04:03:49.486708+00:00\"\n    }\n  }\n}\n",
+      "stderr": "",
+      "completed_at": "2026-10-11T04:10:19.888982+00:00"
+    },
+    {
+      "label": "update-ingest-finish",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-usage.py",
+        "--ledger",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2/.llm-wiki/usage/events.jsonl",
+        "finish",
+        "ingest",
+        "--log",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2/wiki/log.md",
+        "--title",
+        "Synthetic conditional account recovery update"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2",
+      "exit_code": 0,
+      "stdout": "No start snapshot or prior measured boundary; refusing to record 0 token(s).\n",
+      "stderr": "",
+      "completed_at": "2026-10-11T04:10:19.954566+00:00"
+    },
+    {
+      "label": "updated-query-start",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-usage.py",
+        "--ledger",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2/.llm-wiki/usage/events.jsonl",
+        "start",
+        "query",
+        "--title",
+        "Synthetic updated ten-question runtime"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2",
+      "exit_code": 0,
+      "stdout": "Codex Desktop token counter unavailable; this operation will be counted without token measurement.\n",
+      "stderr": "",
+      "completed_at": "2026-10-11T04:10:20.029139+00:00"
+    },
+    {
+      "label": "updated-query-finish",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-usage.py",
+        "--ledger",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2/.llm-wiki/usage/events.jsonl",
+        "finish",
+        "query",
+        "--log",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2/wiki/log.md",
+        "--title",
+        "Synthetic updated ten-question runtime"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2",
+      "exit_code": 0,
+      "stdout": "No start snapshot or prior measured boundary; refusing to record 0 token(s).\n",
+      "stderr": "",
+      "completed_at": "2026-10-11T04:12:43.517279+00:00"
+    },
+    {
+      "label": "baseline-v1-final-wiki-lint",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-lint.py",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/baseline-v1",
+      "exit_code": 0,
+      "stdout": "wiki-lint: ok\n",
+      "stderr": "",
+      "completed_at": "2026-10-11T04:19:19.958155+00:00"
+    },
+    {
+      "label": "updated-v2-final-wiki-lint",
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/wiki-lint.py",
+        "--root",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2"
+      ],
+      "cwd": "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/updated-v2",
+      "exit_code": 0,
+      "stdout": "wiki-lint: ok\n",
+      "stderr": "",
+      "completed_at": "2026-10-11T04:19:20.060667+00:00"
+    }
+  ],
+  "model_config": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "high",
+    "selection": "Existing user CLI configuration"
+  },
+  "cost_usd": null,
+  "human_semantic_review": "pending",
+  "graph_report_adjusted_link_count": 19,
+  "project_preservation_after": {
+    "head": "0c02fd346e9711d8b556cc2b94c841a2185ac77e",
+    "git_status_sha256": "d55086f1c58065266e796d14cfbbb494e502c4538ef78c8df24941dc7d3f7e02",
+    "file_count": 239,
+    "content_manifest_sha256": "76dbab6b9606f2840584f8d3b1b1d02b19201c24d78d2f2a54b910cc95488c6a"
+  },
+  "project_preservation_status": "PASS",
+  "preservation_scope": "All tracked and untracked regular files plus Git status and HEAD; ignored runtime files not hashed.",
+  "model_artifact_policy_scan": {
+    "status": "PASS",
+    "file_count": 35,
+    "note": "Existing scanner patterns found no PII/secret signals. Scan is a pattern check, not independent human privacy review."
+  },
+  "checks": {
+    "status": "PASS",
+    "json_files_parsed": 43,
+    "markdown_files_checked": 89,
+    "local_links_resolved": 518,
+    "frozen_contract": true,
+    "model_tool_items": 0,
+    "actual_answer_count": 20,
+    "all_runtime_receipts_valid": true,
+    "existing_project_preserved": true
+  },
+  "result": {
+    "baseline": {
+      "case_count": 10,
+      "passed": 8,
+      "failed": 2,
+      "route_and_action_matches": 10
+    },
+    "updated": {
+      "case_count": 10,
+      "passed": 8,
+      "failed": 2,
+      "route_and_action_matches": 10
+    },
+    "expected_action_change_matches": 10,
+    "case_contract_findings": "SYN-06 and SYN-07 missing required sources in both phases; updated SYN-07 also omits required user-facing HQ distinction.",
+    "format_findings": "One Traditional Chinese prompt compliance issue in updated SYN-05.",
+    "human_content_review": "pending",
+    "publication": "not-run",
+    "presentation_update": "not-run"
+  },
+  "actual_cli_usage": {
+    "input_tokens": 180513,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 39977,
+    "reasoning_output_tokens": 5987
+  },
+  "finished_at": "2026-10-11T04:19:20.351917+00:00",
+  "final_log_append_at": "2026-10-11T04:20:06.765681+00:00"
+}

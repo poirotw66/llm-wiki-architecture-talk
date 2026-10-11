@@ -1,0 +1,161 @@
+{
+  "operation": "ingest-preflight",
+  "completed_at": "2026-10-11T03:44:41.319990+00:00",
+  "tool_project": "llm-wiki-example",
+  "tool_head": "0c02fd346e9711d8b556cc2b94c841a2185ac77e",
+  "tool_worktree_has_changes": true,
+  "tool_files": {
+    "scripts/ingest-governance.py": "f9e3cce9edbf2934a6b823e3a39d95ed269b00a3f7317fe5ae595c578c5e71ec",
+    "scripts/governance_policy.py": "e9957a5f2e603433ba5fba02bf4bb0a500688ec27395e8f967b12f31f43b5623",
+    "scripts/_common.py": "119970430caf1c58291b72247b89dc847ad5d6195323ad3f4db129827b34f7e1"
+  },
+  "source_count": 6,
+  "raw_artifacts_written": false,
+  "human_approval_recorded": false,
+  "results": [
+    {
+      "source_id": "SRC-01",
+      "input": "sources/vpn-common-qa.md",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/demo-raw-approvals.json",
+        "inspect",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/vpn-common-qa.md"
+      ],
+      "completed_at": "2026-10-11T03:44:41.027358+00:00",
+      "exit_code": 0,
+      "decision": {
+        "policy_version": "2",
+        "outcome": "review_ready",
+        "reason_codes": [
+          "human_approval_required"
+        ],
+        "source_sha256": "d59a8fc31afd03b58670211eb38bd5d7c01031d989066209bef422b6df1e277a",
+        "findings": []
+      },
+      "stderr": ""
+    },
+    {
+      "source_id": "SRC-02",
+      "input": "sources/examplevpn-error-reference.md",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/demo-raw-approvals.json",
+        "inspect",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/examplevpn-error-reference.md"
+      ],
+      "completed_at": "2026-10-11T03:44:41.084330+00:00",
+      "exit_code": 0,
+      "decision": {
+        "policy_version": "2",
+        "outcome": "review_ready",
+        "reason_codes": [
+          "human_approval_required"
+        ],
+        "source_sha256": "0e29b6236aec4d3b9e06204db79a67d191071c9b8f4eac124a8d4d7012b0deff",
+        "findings": []
+      },
+      "stderr": ""
+    },
+    {
+      "source_id": "SRC-03",
+      "input": "sources/account-recovery-v1.md",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/demo-raw-approvals.json",
+        "inspect",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/account-recovery-v1.md"
+      ],
+      "completed_at": "2026-10-11T03:44:41.148035+00:00",
+      "exit_code": 0,
+      "decision": {
+        "policy_version": "2",
+        "outcome": "review_ready",
+        "reason_codes": [
+          "human_approval_required"
+        ],
+        "source_sha256": "8be47d524d37d33abd258fa27cab30b46bb4e41937bb18f25ea87b086ec26928",
+        "findings": []
+      },
+      "stderr": ""
+    },
+    {
+      "source_id": "SRC-04",
+      "input": "sources/managed-laptop-remote-access.md",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/demo-raw-approvals.json",
+        "inspect",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/managed-laptop-remote-access.md"
+      ],
+      "completed_at": "2026-10-11T03:44:41.205037+00:00",
+      "exit_code": 0,
+      "decision": {
+        "policy_version": "2",
+        "outcome": "review_ready",
+        "reason_codes": [
+          "human_approval_required"
+        ],
+        "source_sha256": "cd79876f43c56b6e18e80d7086570249b3b8a2fd72fb314bd166fa37464e5ee9",
+        "findings": []
+      },
+      "stderr": ""
+    },
+    {
+      "source_id": "SRC-05",
+      "input": "sources/shared-resource-access-policy.md",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/demo-raw-approvals.json",
+        "inspect",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/shared-resource-access-policy.md"
+      ],
+      "completed_at": "2026-10-11T03:44:41.263697+00:00",
+      "exit_code": 0,
+      "decision": {
+        "policy_version": "2",
+        "outcome": "review_ready",
+        "reason_codes": [
+          "human_approval_required"
+        ],
+        "source_sha256": "3b0327bba0be07df6f62362fd56e24ebf81b9bea5650e883131286fe9d9c854d",
+        "findings": []
+      },
+      "stderr": ""
+    },
+    {
+      "source_id": "SRC-06",
+      "input": "sources/overseas-access-request.md",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/cfh00896102/Github/llm-wiki-example/scripts/ingest-governance.py",
+        "--manifest",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/demo-raw-approvals.json",
+        "inspect",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/sources/overseas-access-request.md"
+      ],
+      "completed_at": "2026-10-11T03:44:41.319971+00:00",
+      "exit_code": 0,
+      "decision": {
+        "policy_version": "2",
+        "outcome": "review_ready",
+        "reason_codes": [
+          "human_approval_required"
+        ],
+        "source_sha256": "c23286dcb14629cb72bd3ca1ea631706d07b507a8a098b1ce3a276d41b52d003",
+        "findings": []
+      },
+      "stderr": ""
+    }
+  ]
+}

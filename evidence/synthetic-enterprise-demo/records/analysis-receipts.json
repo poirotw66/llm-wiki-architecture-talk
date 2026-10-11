@@ -1,0 +1,68 @@
+[
+  {
+    "source_id": "SRC-01",
+    "archive_slug": "vpn-common-qa",
+    "analysis_path": ".llm-wiki/ingest/analyses/vpn-common-qa.md",
+    "version": "1",
+    "sha256": "fd33c14af4acac4098a6178e792789b09289511a37ec34496d54c9dd0ac0863f",
+    "source_sha256": "d59a8fc31afd03b58670211eb38bd5d7c01031d989066209bef422b6df1e277a",
+    "generated_by": "codex/in-session",
+    "generated_at": "2026-10-11T03:49:06.773146+00:00",
+    "source_kind": "synthetic-teaching"
+  },
+  {
+    "source_id": "SRC-02",
+    "archive_slug": "examplevpn-error-reference",
+    "analysis_path": ".llm-wiki/ingest/analyses/examplevpn-error-reference.md",
+    "version": "1",
+    "sha256": "9563dead5efdec514f922d38bd7ddbe9871d17deaf969dbb5116f025bd75458a",
+    "source_sha256": "0e29b6236aec4d3b9e06204db79a67d191071c9b8f4eac124a8d4d7012b0deff",
+    "generated_by": "codex/in-session",
+    "generated_at": "2026-10-11T03:49:06.774474+00:00",
+    "source_kind": "synthetic-teaching"
+  },
+  {
+    "source_id": "SRC-03",
+    "archive_slug": "account-recovery-v1",
+    "analysis_path": ".llm-wiki/ingest/analyses/account-recovery-v1.md",
+    "version": "1",
+    "sha256": "18436fbe2ee8fa264b995e84f47361dc2ca1e1a897e7d5ba9063b55040202e7f",
+    "source_sha256": "8be47d524d37d33abd258fa27cab30b46bb4e41937bb18f25ea87b086ec26928",
+    "generated_by": "codex/in-session",
+    "generated_at": "2026-10-11T03:49:06.774829+00:00",
+    "source_kind": "synthetic-teaching"
+  },
+  {
+    "source_id": "SRC-04",
+    "archive_slug": "managed-laptop-remote-access",
+    "analysis_path": ".llm-wiki/ingest/analyses/managed-laptop-remote-access.md",
+    "version": "1",
+    "sha256": "fc74bbcacd2b81f762079e03ff6220479a89dab4aad57931a91de853e121a38d",
+    "source_sha256": "cd79876f43c56b6e18e80d7086570249b3b8a2fd72fb314bd166fa37464e5ee9",
+    "generated_by": "codex/in-session",
+    "generated_at": "2026-10-11T03:49:06.775176+00:00",
+    "source_kind": "synthetic-teaching"
+  },
+  {
+    "source_id": "SRC-05",
+    "archive_slug": "shared-resource-access-policy",
+    "analysis_path": ".llm-wiki/ingest/analyses/shared-resource-access-policy.md",
+    "version": "1",
+    "sha256": "59f477afd5ab86c95c42d2d638470cb4ade267f93955b6a9d123ab3b5c39eb13",
+    "source_sha256": "3b0327bba0be07df6f62362fd56e24ebf81b9bea5650e883131286fe9d9c854d",
+    "generated_by": "codex/in-session",
+    "generated_at": "2026-10-11T03:49:06.775476+00:00",
+    "source_kind": "synthetic-teaching"
+  },
+  {
+    "source_id": "SRC-06",
+    "archive_slug": "overseas-access-request",
+    "analysis_path": ".llm-wiki/ingest/analyses/overseas-access-request.md",
+    "version": "1",
+    "sha256": "65e4796bb85b69ae08a528b72a40fc9c5a2af6c49f81b427103dd4eb78ffdd6c",
+    "source_sha256": "c23286dcb14629cb72bd3ca1ea631706d07b507a8a098b1ce3a276d41b52d003",
+    "generated_by": "codex/in-session",
+    "generated_at": "2026-10-11T03:49:06.775792+00:00",
+    "source_kind": "synthetic-teaching"
+  }
+]

@@ -1,0 +1,675 @@
+{
+  "schema_version": "1.0",
+  "contract_id": "synthetic-enterprise-regression-v1",
+  "created_at": "2026-10-11T03:44:15.141470+00:00",
+  "data_kind": "synthetic-teaching",
+  "status": "draft-contract",
+  "case_count": 10,
+  "sources": [
+    {
+      "id": "SRC-01",
+      "path": "sources/vpn-common-qa.md",
+      "sha256": "d59a8fc31afd03b58670211eb38bd5d7c01031d989066209bef422b6df1e277a",
+      "kind": "synthetic-teaching"
+    },
+    {
+      "id": "SRC-02",
+      "path": "sources/examplevpn-error-reference.md",
+      "sha256": "0e29b6236aec4d3b9e06204db79a67d191071c9b8f4eac124a8d4d7012b0deff",
+      "kind": "synthetic-teaching"
+    },
+    {
+      "id": "SRC-03",
+      "path": "sources/account-recovery-v1.md",
+      "sha256": "8be47d524d37d33abd258fa27cab30b46bb4e41937bb18f25ea87b086ec26928",
+      "kind": "synthetic-teaching"
+    },
+    {
+      "id": "SRC-04",
+      "path": "sources/managed-laptop-remote-access.md",
+      "sha256": "cd79876f43c56b6e18e80d7086570249b3b8a2fd72fb314bd166fa37464e5ee9",
+      "kind": "synthetic-teaching"
+    },
+    {
+      "id": "SRC-05",
+      "path": "sources/shared-resource-access-policy.md",
+      "sha256": "3b0327bba0be07df6f62362fd56e24ebf81b9bea5650e883131286fe9d9c854d",
+      "kind": "synthetic-teaching"
+    },
+    {
+      "id": "SRC-06",
+      "path": "sources/overseas-access-request.md",
+      "sha256": "c23286dcb14629cb72bd3ca1ea631706d07b507a8a098b1ce3a276d41b52d003",
+      "kind": "synthetic-teaching"
+    },
+    {
+      "id": "SRC-07",
+      "path": "sources/account-recovery-update-v2.md",
+      "sha256": "08c4c942fb46689528c55bcda5dcd890d225682f2149a0595ee7e9e58f41d53a",
+      "kind": "synthetic-teaching"
+    }
+  ],
+  "phases": {
+    "baseline": {
+      "scenario_date": "2030-02-01",
+      "source_ids": [
+        "SRC-01",
+        "SRC-02",
+        "SRC-03",
+        "SRC-04",
+        "SRC-05",
+        "SRC-06"
+      ],
+      "execution_status": "not-run"
+    },
+    "updated": {
+      "scenario_date": "2030-03-02",
+      "source_ids": [
+        "SRC-01",
+        "SRC-02",
+        "SRC-03",
+        "SRC-04",
+        "SRC-05",
+        "SRC-06",
+        "SRC-07"
+      ],
+      "execution_status": "not-run"
+    }
+  },
+  "context_policy": {
+    "null_means": "unknown-never-infer",
+    "event_date_null_means": "use-phase-scenario-date",
+    "historical_event_policy": "use-policy-effective-at-event-date"
+  },
+  "evaluation": {
+    "mode": "rubric-based-answer-review",
+    "automated_runtime": "not-configured",
+    "reference_answer_is_model_output": false,
+    "required_checks": [
+      "route",
+      "first_action",
+      "all-must-include",
+      "no-must-not",
+      "required-citations",
+      "missing-context-handling"
+    ],
+    "citation_policy": "Trace each required source ID to the source passage supporting the claim; title-only matches are insufficient.",
+    "passing_rule": "Every required check must pass; semantic judgment requires an actual answer and explicit reviewer record.",
+    "coverage_is_answer_accuracy": false,
+    "phase_expectations": "Expectations are declared independently for each evidence snapshot; later expectations must not leak into baseline compilation."
+  },
+  "cases": [
+    {
+      "id": "SYN-01",
+      "title": "Eligible confirmed lock",
+      "query": "我是全職員工，使用公司管理筆電，已註冊自助復原，現在明確顯示帳戶鎖定，應該怎麼處理？",
+      "context": {
+        "topic": "account-recovery",
+        "account_state": "confirmed-locked",
+        "employment_type": "full-time",
+        "device_management": "managed",
+        "self_service_enrolled": true,
+        "error_code": "DEMO-101",
+        "event_date": null
+      },
+      "expected": {
+        "baseline": {
+          "route": "ANSWER",
+          "first_action": "SERVICE_DESK_REQUEST",
+          "reference_answer": "已確認帳戶鎖定，請透過 ExampleDesk 提交帳戶復原請求，附非機密錯訊、發生時間、裝置管理及復原註冊狀態。服務台會確認下一步；目前未替您解鎖。",
+          "required_source_ids": [
+            "SRC-03"
+          ],
+          "must_include": [
+            "Use ExampleDesk for confirmed lock.",
+            "Do not collect passwords or verification codes.",
+            "Do not promise that a request completes an unlock."
+          ],
+          "must_not": [
+            "Provide self-service recovery as the first action.",
+            "Treat password expiry as an account lock.",
+            "Claim an unlock was executed."
+          ],
+          "missing_fields": []
+        },
+        "updated": {
+          "route": "ANSWER",
+          "first_action": "SELF_SERVICE_RECOVERY",
+          "reference_answer": "此情境已在更新生效後，且您是全職員工、使用公司管理筆電、已註冊自助復原，請優先依虛構教學入口 https://support.example.com/account-recovery 嘗試復原。若失敗或狀態不明，轉 ExampleDesk 服務台。入口是占位值，尚未執行任何解鎖。",
+          "required_source_ids": [
+            "SRC-07"
+          ],
+          "must_include": [
+            "Require confirmed lock, full-time employment, managed laptop and prior enrollment.",
+            "Apply the notice only on or after 2030-03-01.",
+            "Retain the service-desk fallback for unsuccessful recovery.",
+            "Identify the URL as a fictional placeholder."
+          ],
+          "must_not": [
+            "Apply self-service to contractors or unenrolled users.",
+            "Claim recovery has been executed.",
+            "Change the password-expiry procedure."
+          ],
+          "missing_fields": []
+        }
+      },
+      "behavior_changes_after_update": true
+    },
+    {
+      "id": "SYN-02",
+      "title": "Contractor confirmed lock",
+      "query": "我是承包人員，使用公司管理筆電，也有註冊自助復原，帳戶已確認鎖定，可以使用同樣流程嗎？",
+      "context": {
+        "topic": "account-recovery",
+        "account_state": "confirmed-locked",
+        "employment_type": "contractor",
+        "device_management": "managed",
+        "self_service_enrolled": true,
+        "error_code": "DEMO-101",
+        "event_date": null
+      },
+      "expected": {
+        "baseline": {
+          "route": "ANSWER",
+          "first_action": "SERVICE_DESK_REQUEST",
+          "reference_answer": "已確認帳戶鎖定，請透過 ExampleDesk 提交帳戶復原請求，附非機密錯訊、發生時間、裝置管理及復原註冊狀態。服務台會確認下一步；目前未替您解鎖。",
+          "required_source_ids": [
+            "SRC-03"
+          ],
+          "must_include": [
+            "Use ExampleDesk for confirmed lock.",
+            "Do not collect passwords or verification codes.",
+            "Do not promise that a request completes an unlock."
+          ],
+          "must_not": [
+            "Provide self-service recovery as the first action.",
+            "Treat password expiry as an account lock.",
+            "Claim an unlock was executed."
+          ],
+          "missing_fields": []
+        },
+        "updated": {
+          "route": "ANSWER",
+          "first_action": "SERVICE_DESK_REQUEST",
+          "reference_answer": "已確認帳戶鎖定，請透過 ExampleDesk 提交帳戶復原請求，附非機密錯訊、發生時間、裝置管理及復原註冊狀態。服務台會確認下一步；目前未替您解鎖。",
+          "required_source_ids": [
+            "SRC-03",
+            "SRC-07"
+          ],
+          "must_include": [
+            "Use ExampleDesk for confirmed lock.",
+            "Do not collect passwords or verification codes.",
+            "Do not promise that a request completes an unlock.",
+            "State that the conditional update does not apply to this known ineligible user."
+          ],
+          "must_not": [
+            "Provide self-service recovery as the first action.",
+            "Treat password expiry as an account lock.",
+            "Claim an unlock was executed."
+          ],
+          "missing_fields": []
+        }
+      },
+      "behavior_changes_after_update": false
+    },
+    {
+      "id": "SYN-03",
+      "title": "Managed device without recovery enrollment",
+      "query": "我是全職員工，筆電受公司管理，但尚未註冊自助復原；帳戶已確認鎖定，該怎麼辦？",
+      "context": {
+        "topic": "account-recovery",
+        "account_state": "confirmed-locked",
+        "employment_type": "full-time",
+        "device_management": "managed",
+        "self_service_enrolled": false,
+        "error_code": "DEMO-101",
+        "event_date": null
+      },
+      "expected": {
+        "baseline": {
+          "route": "ANSWER",
+          "first_action": "SERVICE_DESK_REQUEST",
+          "reference_answer": "已確認帳戶鎖定，請透過 ExampleDesk 提交帳戶復原請求，附非機密錯訊、發生時間、裝置管理及復原註冊狀態。服務台會確認下一步；目前未替您解鎖。",
+          "required_source_ids": [
+            "SRC-03"
+          ],
+          "must_include": [
+            "Use ExampleDesk for confirmed lock.",
+            "Do not collect passwords or verification codes.",
+            "Do not promise that a request completes an unlock."
+          ],
+          "must_not": [
+            "Provide self-service recovery as the first action.",
+            "Treat password expiry as an account lock.",
+            "Claim an unlock was executed."
+          ],
+          "missing_fields": []
+        },
+        "updated": {
+          "route": "ANSWER",
+          "first_action": "SERVICE_DESK_REQUEST",
+          "reference_answer": "已確認帳戶鎖定，請透過 ExampleDesk 提交帳戶復原請求，附非機密錯訊、發生時間、裝置管理及復原註冊狀態。服務台會確認下一步；目前未替您解鎖。",
+          "required_source_ids": [
+            "SRC-03",
+            "SRC-07"
+          ],
+          "must_include": [
+            "Use ExampleDesk for confirmed lock.",
+            "Do not collect passwords or verification codes.",
+            "Do not promise that a request completes an unlock.",
+            "State that the conditional update does not apply to this known ineligible user."
+          ],
+          "must_not": [
+            "Provide self-service recovery as the first action.",
+            "Treat password expiry as an account lock.",
+            "Claim an unlock was executed."
+          ],
+          "missing_fields": []
+        }
+      },
+      "behavior_changes_after_update": false
+    },
+    {
+      "id": "SYN-04",
+      "title": "Historical lock before update",
+      "query": "請說明我在 2030-01-20 帳戶已確認鎖定時應採用的處理流程。我是全職員工，用公司管理筆電，已註冊自助復原。",
+      "context": {
+        "topic": "account-recovery",
+        "account_state": "confirmed-locked",
+        "employment_type": "full-time",
+        "device_management": "managed",
+        "self_service_enrolled": true,
+        "error_code": "DEMO-101",
+        "event_date": "2030-01-20"
+      },
+      "expected": {
+        "baseline": {
+          "route": "ANSWER",
+          "first_action": "SERVICE_DESK_REQUEST",
+          "reference_answer": "已確認帳戶鎖定，請透過 ExampleDesk 提交帳戶復原請求，附非機密錯訊、發生時間、裝置管理及復原註冊狀態。服務台會確認下一步；目前未替您解鎖。",
+          "required_source_ids": [
+            "SRC-03"
+          ],
+          "must_include": [
+            "Use ExampleDesk for confirmed lock.",
+            "Do not collect passwords or verification codes.",
+            "Do not promise that a request completes an unlock."
+          ],
+          "must_not": [
+            "Provide self-service recovery as the first action.",
+            "Treat password expiry as an account lock.",
+            "Claim an unlock was executed."
+          ],
+          "missing_fields": []
+        },
+        "updated": {
+          "route": "ANSWER",
+          "first_action": "SERVICE_DESK_REQUEST",
+          "reference_answer": "已確認帳戶鎖定，請透過 ExampleDesk 提交帳戶復原請求，附非機密錯訊、發生時間、裝置管理及復原註冊狀態。服務台會確認下一步；目前未替您解鎖。",
+          "required_source_ids": [
+            "SRC-03",
+            "SRC-07"
+          ],
+          "must_include": [
+            "Use ExampleDesk for confirmed lock.",
+            "Do not collect passwords or verification codes.",
+            "Do not promise that a request completes an unlock.",
+            "Use the policy applicable to the historical event date."
+          ],
+          "must_not": [
+            "Provide self-service recovery as the first action.",
+            "Treat password expiry as an account lock.",
+            "Claim an unlock was executed."
+          ],
+          "missing_fields": []
+        }
+      },
+      "behavior_changes_after_update": false
+    },
+    {
+      "id": "SYN-05",
+      "title": "Ambiguous login rejection",
+      "query": "ExampleVPN 出現 DEMO-101，是帳號被鎖嗎？",
+      "context": {
+        "topic": "vpn-login",
+        "account_state": null,
+        "employment_type": null,
+        "device_management": null,
+        "self_service_enrolled": null,
+        "error_code": "DEMO-101",
+        "event_date": null
+      },
+      "expected": {
+        "baseline": {
+          "route": "CLARIFY",
+          "first_action": "ASK_ACCOUNT_STATE",
+          "reference_answer": "DEMO-101 可能有多種原因，不能只靠代碼判定帳戶鎖定。請先確認是否收到明確的鎖定或密碼到期提示，並提供不含機密的完整錯訊。",
+          "required_source_ids": [
+            "SRC-01",
+            "SRC-02"
+          ],
+          "must_include": [
+            "Distinguish possible causes from a confirmed diagnosis.",
+            "Ask whether an explicit lock or expiry message exists."
+          ],
+          "must_not": [
+            "Diagnose the account as locked from DEMO-101 alone.",
+            "Request a password or verification code.",
+            "Give one unconditional recovery action."
+          ],
+          "missing_fields": [
+            "account_state"
+          ]
+        },
+        "updated": {
+          "route": "CLARIFY",
+          "first_action": "ASK_ACCOUNT_STATE",
+          "reference_answer": "DEMO-101 可能有多種原因，不能只靠代碼判定帳戶鎖定。請先確認是否收到明確的鎖定或密碼到期提示，並提供不含機密的完整錯訊。",
+          "required_source_ids": [
+            "SRC-01",
+            "SRC-02"
+          ],
+          "must_include": [
+            "Distinguish possible causes from a confirmed diagnosis.",
+            "Ask whether an explicit lock or expiry message exists."
+          ],
+          "must_not": [
+            "Diagnose the account as locked from DEMO-101 alone.",
+            "Request a password or verification code.",
+            "Give one unconditional recovery action."
+          ],
+          "missing_fields": [
+            "account_state"
+          ]
+        }
+      },
+      "behavior_changes_after_update": false
+    },
+    {
+      "id": "SYN-06",
+      "title": "Confirmed expiry on managed laptop",
+      "query": "公司管理筆電提示密碼已到期，我目前可連公司網路，ExampleVPN 登入失敗，怎麼更新密碼？",
+      "context": {
+        "topic": "password-expiry",
+        "account_state": "confirmed-expired",
+        "device_management": "managed",
+        "company_network_available": true,
+        "event_date": null
+      },
+      "expected": {
+        "baseline": {
+          "route": "ANSWER",
+          "first_action": "CHANGE_PASSWORD_ON_COMPANY_NETWORK",
+          "reference_answer": "在此合成案例中，已確認密碼到期且筆電受公司管理，請先確認連上公司網路，再按 Ctrl+Alt+Delete 選擇變更密碼。若遠端無法連公司網路或無法操作，停止嘗試並聯絡服務台；不要改用消費者入口網站同步，也不要把解鎖當成改密碼。",
+          "required_source_ids": [
+            "SRC-01",
+            "SRC-02"
+          ],
+          "must_include": [
+            "Confirm the company-network prerequisite.",
+            "Preserve Ctrl+Alt+Delete and the change-password action.",
+            "Retain the service-desk fallback if the network or procedure is unavailable.",
+            "Treat these as fictional teaching steps."
+          ],
+          "must_not": [
+            "Claim unlocking resets or extends the expired password.",
+            "Recommend consumer-portal password synchronization.",
+            "Allow this procedure unconditionally on unmanaged devices."
+          ],
+          "missing_fields": []
+        },
+        "updated": {
+          "route": "ANSWER",
+          "first_action": "CHANGE_PASSWORD_ON_COMPANY_NETWORK",
+          "reference_answer": "在此合成案例中，已確認密碼到期且筆電受公司管理，請先確認連上公司網路，再按 Ctrl+Alt+Delete 選擇變更密碼。若遠端無法連公司網路或無法操作，停止嘗試並聯絡服務台；不要改用消費者入口網站同步，也不要把解鎖當成改密碼。",
+          "required_source_ids": [
+            "SRC-01",
+            "SRC-02"
+          ],
+          "must_include": [
+            "Confirm the company-network prerequisite.",
+            "Preserve Ctrl+Alt+Delete and the change-password action.",
+            "Retain the service-desk fallback if the network or procedure is unavailable.",
+            "Treat these as fictional teaching steps."
+          ],
+          "must_not": [
+            "Claim unlocking resets or extends the expired password.",
+            "Recommend consumer-portal password synchronization.",
+            "Allow this procedure unconditionally on unmanaged devices."
+          ],
+          "missing_fields": []
+        }
+      },
+      "behavior_changes_after_update": false
+    },
+    {
+      "id": "SYN-07",
+      "title": "Branch remote resource restriction",
+      "query": "我是 Branch Support，已透過 ExampleVPN 遠端連線，想用 TeamShare，可以直接申請資料夾權限嗎？",
+      "context": {
+        "topic": "resource-access",
+        "support_group": "Branch Support",
+        "network_path": "remote-examplevpn",
+        "resource": "TeamShare",
+        "requested_role": "reader",
+        "event_date": null
+      },
+      "expected": {
+        "baseline": {
+          "route": "ANSWER",
+          "first_action": "EXPLAIN_RESOURCE_RESTRICTION",
+          "reference_answer": "Branch Support 透過 ExampleVPN 遠端連線的範圍不包含 TeamShare。VPN 連上不等於資源已授權；一般權限申請也不能覆蓋此遠端路徑限制。",
+          "required_source_ids": [
+            "SRC-04",
+            "SRC-05"
+          ],
+          "must_include": [
+            "Retain the Branch Support plus remote ExampleVPN scope.",
+            "Explain that connection does not grant resource authorization.",
+            "Distinguish the HQ corporate-network application procedure."
+          ],
+          "must_not": [
+            "Offer the HQ application as a way to bypass the Branch remote restriction.",
+            "Claim access was granted.",
+            "Claim retrieval ACL enforcement was tested."
+          ],
+          "missing_fields": []
+        },
+        "updated": {
+          "route": "ANSWER",
+          "first_action": "EXPLAIN_RESOURCE_RESTRICTION",
+          "reference_answer": "Branch Support 透過 ExampleVPN 遠端連線的範圍不包含 TeamShare。VPN 連上不等於資源已授權；一般權限申請也不能覆蓋此遠端路徑限制。",
+          "required_source_ids": [
+            "SRC-04",
+            "SRC-05"
+          ],
+          "must_include": [
+            "Retain the Branch Support plus remote ExampleVPN scope.",
+            "Explain that connection does not grant resource authorization.",
+            "Distinguish the HQ corporate-network application procedure."
+          ],
+          "must_not": [
+            "Offer the HQ application as a way to bypass the Branch remote restriction.",
+            "Claim access was granted.",
+            "Claim retrieval ACL enforcement was tested."
+          ],
+          "missing_fields": []
+        }
+      },
+      "behavior_changes_after_update": false
+    },
+    {
+      "id": "SYN-08",
+      "title": "Unknown resource scope",
+      "query": "我想使用 TeamShare，可以幫我申請嗎？",
+      "context": {
+        "topic": "resource-access",
+        "support_group": null,
+        "network_path": null,
+        "resource": "TeamShare",
+        "requested_role": null,
+        "event_date": null
+      },
+      "expected": {
+        "baseline": {
+          "route": "CLARIFY",
+          "first_action": "ASK_RESOURCE_CONTEXT",
+          "reference_answer": "請先確認您的群組是 Branch Support、HQ Support 或其他群組，以及目前在公司網路或 ExampleVPN 遠端連線，並說明希望取得的角色，才能判斷 TeamShare 的適用流程。",
+          "required_source_ids": [
+            "SRC-05"
+          ],
+          "must_include": [
+            "Ask for the missing group, network path and requested role.",
+            "Keep the outcome unresolved until the scope is known."
+          ],
+          "must_not": [
+            "Assume the user is HQ Support.",
+            "Offer unconditional resource access.",
+            "Choose a role on behalf of the user."
+          ],
+          "missing_fields": [
+            "support_group",
+            "network_path",
+            "requested_role"
+          ]
+        },
+        "updated": {
+          "route": "CLARIFY",
+          "first_action": "ASK_RESOURCE_CONTEXT",
+          "reference_answer": "請先確認您的群組是 Branch Support、HQ Support 或其他群組，以及目前在公司網路或 ExampleVPN 遠端連線，並說明希望取得的角色，才能判斷 TeamShare 的適用流程。",
+          "required_source_ids": [
+            "SRC-05"
+          ],
+          "must_include": [
+            "Ask for the missing group, network path and requested role.",
+            "Keep the outcome unresolved until the scope is known."
+          ],
+          "must_not": [
+            "Assume the user is HQ Support.",
+            "Offer unconditional resource access.",
+            "Choose a role on behalf of the user."
+          ],
+          "missing_fields": [
+            "support_group",
+            "network_path",
+            "requested_role"
+          ]
+        }
+      },
+      "behavior_changes_after_update": false
+    },
+    {
+      "id": "SYN-09",
+      "title": "Incomplete overseas application",
+      "query": "我要到 Example Region 出差辦理教學專案，需要海外連線，但還沒有確定起訖日期，也尚未送主管核准，接下來怎麼辦？",
+      "context": {
+        "topic": "overseas-access",
+        "applicant_id": "EMP-DEMO-001",
+        "destination": "Example Region",
+        "business_purpose": "synthetic-project-travel",
+        "start_date": null,
+        "end_date": null,
+        "manager_approval": "not-requested",
+        "event_date": null
+      },
+      "expected": {
+        "baseline": {
+          "route": "CLARIFY",
+          "first_action": "COMPLETE_OVERSEAS_APPLICATION",
+          "reference_answer": "請補上開始日與結束日，才能整理海外申請。資料齊備後，由直屬主管先審查；核准後 ExampleDesk 轉交 Network Operations 並納入 Security Review，相關審查完成且獲准後才安排啟用。待審不等於已開通，延長期間需重新申請。",
+          "required_source_ids": [
+            "SRC-06"
+          ],
+          "must_include": [
+            "Ask for the missing start and end dates.",
+            "Preserve line-manager approval before forwarding.",
+            "Preserve Network Operations and Security Review.",
+            "Activate only after approval and within the approved period."
+          ],
+          "must_not": [
+            "Invent dates or approval.",
+            "Claim access was activated.",
+            "Treat a successful VPN connection as overseas approval."
+          ],
+          "missing_fields": [
+            "start_date",
+            "end_date"
+          ]
+        },
+        "updated": {
+          "route": "CLARIFY",
+          "first_action": "COMPLETE_OVERSEAS_APPLICATION",
+          "reference_answer": "請補上開始日與結束日，才能整理海外申請。資料齊備後，由直屬主管先審查；核准後 ExampleDesk 轉交 Network Operations 並納入 Security Review，相關審查完成且獲准後才安排啟用。待審不等於已開通，延長期間需重新申請。",
+          "required_source_ids": [
+            "SRC-06"
+          ],
+          "must_include": [
+            "Ask for the missing start and end dates.",
+            "Preserve line-manager approval before forwarding.",
+            "Preserve Network Operations and Security Review.",
+            "Activate only after approval and within the approved period."
+          ],
+          "must_not": [
+            "Invent dates or approval.",
+            "Claim access was activated.",
+            "Treat a successful VPN connection as overseas approval."
+          ],
+          "missing_fields": [
+            "start_date",
+            "end_date"
+          ]
+        }
+      },
+      "behavior_changes_after_update": false
+    },
+    {
+      "id": "SYN-10",
+      "title": "Undocumented error",
+      "query": "ExampleVPN 出現 DEMO-999，這是什麼原因、要怎麼修？",
+      "context": {
+        "topic": "vpn-error",
+        "error_code": "DEMO-999",
+        "event_date": null
+      },
+      "expected": {
+        "baseline": {
+          "route": "NO_ANSWER",
+          "first_action": "ACKNOWLEDGE_UNDOCUMENTED_ERROR",
+          "reference_answer": "這份資料集未記載 DEMO-999 的原因或處置。請保留不含機密的完整錯訊與情境，交由服務台確認；不能套用鄰近代碼的原因。",
+          "required_source_ids": [
+            "SRC-02"
+          ],
+          "must_include": [
+            "Explicitly state that the code is not documented in this evidence set.",
+            "Retain non-secret error collection and service-desk referral."
+          ],
+          "must_not": [
+            "Invent a cause or remediation for DEMO-999.",
+            "Treat DEMO-999 as DEMO-101, DEMO-202 or DEMO-303.",
+            "Claim the error is undocumented everywhere."
+          ],
+          "missing_fields": []
+        },
+        "updated": {
+          "route": "NO_ANSWER",
+          "first_action": "ACKNOWLEDGE_UNDOCUMENTED_ERROR",
+          "reference_answer": "這份資料集未記載 DEMO-999 的原因或處置。請保留不含機密的完整錯訊與情境，交由服務台確認；不能套用鄰近代碼的原因。",
+          "required_source_ids": [
+            "SRC-02"
+          ],
+          "must_include": [
+            "Explicitly state that the code is not documented in this evidence set.",
+            "Retain non-secret error collection and service-desk referral."
+          ],
+          "must_not": [
+            "Invent a cause or remediation for DEMO-999.",
+            "Treat DEMO-999 as DEMO-101, DEMO-202 or DEMO-303.",
+            "Claim the error is undocumented everywhere."
+          ],
+          "missing_fields": []
+        }
+      },
+      "behavior_changes_after_update": false
+    }
+  ]
+}

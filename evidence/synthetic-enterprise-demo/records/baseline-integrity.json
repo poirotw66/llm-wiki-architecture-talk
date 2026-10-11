@@ -1,0 +1,88 @@
+{
+  "checked_at": "2026-10-11T03:56:57.147890+00:00",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "archive_scope",
+      "status": "PASS",
+      "detail": "Exactly six approved original/canonical pairs, no SRC-07."
+    },
+    {
+      "name": "approved_bytes",
+      "status": "PASS",
+      "detail": "Approved digest, source, original and canonical match."
+    },
+    {
+      "name": "source_inputs_unchanged",
+      "status": "PASS",
+      "detail": "All seven source inputs match frozen contract digests."
+    },
+    {
+      "name": "claim_quotes",
+      "status": "PASS",
+      "detail": "17 claims have exact source excerpts. Semantic review was by the agent, not independent adjudication."
+    },
+    {
+      "name": "draft_pages",
+      "status": "PASS",
+      "detail": "18 synthetic drafts; no human verification metadata."
+    },
+    {
+      "name": "no_future_source_references",
+      "status": "PASS",
+      "detail": "Only baseline sources cited; session was not source-blind."
+    },
+    {
+      "name": "analysis_receipts",
+      "status": "PASS",
+      "detail": "Private analysis bytes and public receipts match approved source digests."
+    },
+    {
+      "name": "governance_lineage",
+      "status": "PASS",
+      "detail": "Existing governance-policy helpers accept six approvals and 12 artifact receipts; not a Git repository gate."
+    },
+    {
+      "name": "cache_receipts",
+      "status": "PASS",
+      "detail": "Six source and analysis receipt pairs retained in cache."
+    },
+    {
+      "name": "static_case_coverage",
+      "status": "PASS",
+      "detail": "Ten case mappings have matching page excerpts and required source links; no actual answer outputs or rubric judgments."
+    },
+    {
+      "name": "local_markdown_links",
+      "status": "PASS",
+      "detail": "227 local Markdown links resolve, including ops report links; anchors not checked."
+    }
+  ],
+  "knowledge_page_digests": {
+    "wiki/concepts/account-state-and-recovery.md": "d6e79fdad00f5ebb251c286e99b2f50bc1b65d3ed3591bd4e033d8a1feb9ce12",
+    "wiki/concepts/device-and-account-enrollment.md": "f1dff152d3a96d3bec4cb6f396f4defccd0c793cba3aa2c141cec628285bb392",
+    "wiki/concepts/overseas-approval.md": "dc1ea91c1fc2e8676fbdbe9f16ac41649bf6d1a2fa4ab9e728415aba78ae13b6",
+    "wiki/concepts/resource-access-boundaries.md": "e02af911f9ebaa416e98c699aa948fb696a476be2952c4266bc215e6d31a5656",
+    "wiki/entities/exampledesk.md": "c3bb8e1d08d03f8985432b02b1c1270f8fe8ca4033e8f0d3376d8e380c503286",
+    "wiki/entities/examplevpn.md": "2e9862e00907fed4a7d9a6265a0b38325da06bbbb3c47b1b977746a90113215b",
+    "wiki/queries/account-locked.md": "6fa8c487b54b348c158e1b5ef63fcfc5eb9b4c7d421dad2109d8a423180cfc6a",
+    "wiki/queries/demo-101.md": "0949d4b2604d9c390c3edbe48a6e6abc134c933b589085d7ccd6c137f15f5ebd",
+    "wiki/queries/overseas-request.md": "051ec2460d7603f71ba8b8c9a13cc37e11d165299ec7abb361ca9e9eb06c2318",
+    "wiki/queries/password-expired.md": "4e0c1fec5b4a2650f23ed18b0fe6a245d45e961d9e65dd60524a86c42ec4fad9",
+    "wiki/queries/teamshare-access.md": "109ab10b21043ed492e09ab199798aab256a3f5611f62db4d41dc91dd9372d78",
+    "wiki/queries/unknown-error.md": "571327875e9e643fc7c515ce97bd4968fb2dd3a952d37dcc9e6f63c9c0638e2d",
+    "wiki/sources/account-recovery-v1.md": "0dcf07146f1ff99c0078dc1b64892981cbe896aa2d934c0fee6c7638cd2f20cd",
+    "wiki/sources/examplevpn-error-reference.md": "6f58cc6cb95ca8fc88d4d59b4a206d437b06df7686fa44de2066254a79ed56e0",
+    "wiki/sources/managed-laptop-remote-access.md": "9aecd68b207ab196db62e54e977a73a9e0794fddf65b69b143f44ba628bfbbfd",
+    "wiki/sources/overseas-access-request.md": "f85da9c1d8b4ff62bb95fb016e1beed9683370e2f2038c6544c538ff58fa6d57",
+    "wiki/sources/shared-resource-access-policy.md": "f0173aceac951fbe6dc5932f838c4103571559dd3c2c78529a919635aa920533",
+    "wiki/sources/vpn-common-qa.md": "9db203c87326790c136e4ed9a1bc46bf8809e7e79eb3a8d51f01780fde0a8caa"
+  },
+  "limitations": [
+    "No Git-base history checks.",
+    "Not source-blind.",
+    "No live answer evaluation or ACL enforcement test.",
+    "Human content review pending.",
+    "Exact model, tokens and cost not measured."
+  ]
+}

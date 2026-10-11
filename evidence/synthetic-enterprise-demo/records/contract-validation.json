@@ -1,0 +1,26 @@
+{
+  "check_kind": "contract-and-preflight-integrity",
+  "completed_at": "2026-10-11T03:46:20.189064+00:00",
+  "status": "PASS",
+  "contract_sha256": "83d25b7efc06fd36b1576860a76e1fe8b146c0dd01385dbbd9e0d90679fc208b",
+  "case_count": 10,
+  "source_count": 7,
+  "baseline_source_count": 6,
+  "checks": [
+    "case-count-and-unique-IDs",
+    "phase-and-date-consistency",
+    "source-digests-and-synthetic-metadata",
+    "required-and-forbidden-answer-rubrics",
+    "citations-within-phase-evidence",
+    "clarification-fields-are-unknown",
+    "only-SYN-01-changes-first-action",
+    "no-baseline-self-service-expectation",
+    "relative-links-and-whitespace",
+    "preflight-digests-and-status",
+    "no-raw-or-human-approval-written"
+  ],
+  "errors": [],
+  "answer_evaluation_performed": false,
+  "baseline_ingest_performed": false,
+  "human_approval_recorded": false
+}

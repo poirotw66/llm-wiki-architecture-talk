@@ -1,0 +1,346 @@
+--- baseline-v1/ops/purpose.md
++++ updated-v2/ops/purpose.md
+@@ -4,22 +4,29 @@
+ 
+ # Purpose
+ 
+-以六份合成教學文件形成可追溯基準知識，守住分流、適用條件、引用與未知邊界。
++## Mode
++
++template
++
++## Goal
++
++Compile and query a bounded draft knowledge snapshot for a synthetic enterprise presentation example. Preserve partial supersession, provenance, eligibility, clarification and retained procedures.
+ 
+ ## Scope
+ 
+-- Input evidence: SRC-01 through SRC-06.
+-- Scenario date: 2030-02-01.
+-- Scope: fictional ExampleVPN, account state, device setup, resource access and overseas applications.
+-- Out: real enterprise corpus, active Wiki modification, live operations, publication and unsupported future rules.
+-- Source admission: human-approved; knowledge pages: draft and pending human content review.
++- Active updated snapshot: SRC-01 through SRC-07; scenario date 2030-03-02.
++- Initial baseline: SRC-01 through SRC-06 at 2030-02-01, retained separately in baseline-v1.
++- Historical events use policy effective at the event date. Unknown event_date in a case uses the explicitly supplied phase date; a genuinely unknown date must be clarified.
++- Source admission is approved; compiled content and answers remain draft pending human review.
++- Synthetic public teaching data only. No production access, real enterprise data, retrieval ACL enforcement or actual recovery operation.
+ 
+-## Key questions
++## Key Questions
+ 
+-- 鎖定、到期與代碼不明如何分流？
+-- 裝置／帳戶註冊與資源權限的邊界是什麼？
+-- 海外申請缺資料或未核准時如何停止推論？
++- Which first action applies to confirmed account lock after evaluating all qualifications and time?
++- Which password-expiry, resource and overseas procedures remain unchanged?
++- Which information must be clarified and where is the evidence boundary?
+ 
+-## Related
++## Related Pages
+ 
+-- [Catalog](../wiki/index.md)
++- [Knowledge index](../wiki/index.md)
++- [Conditional source summary](../wiki/sources/account-recovery-update-v2.md)
+--- baseline-v1/wiki/concepts/account-state-and-recovery.md
++++ updated-v2/wiki/concepts/account-state-and-recovery.md
+@@ -1,7 +1,7 @@
+ ---
+ type: concept
+-title: Account State and Baseline Recovery
+-description: Account State and Baseline Recovery
++title: Account State and Conditional Recovery
++description: Scoped account recovery with retained baseline and expiry rules.
+ sources:
+ - id: SRC-01
+   resource: ../sources/vpn-common-qa.md
+@@ -12,12 +12,18 @@
+ - id: SRC-03
+   resource: ../sources/account-recovery-v1.md
+   title: SRC-03
++- id: SRC-04
++  resource: ../sources/managed-laptop-remote-access.md
++  title: SRC-04
++- id: SRC-07
++  resource: ../sources/account-recovery-update-v2.md
++  title: SRC-07
+ generated:
+-  by: codex/in-session
+-  at: '2026-10-11T03:51:34.995084+00:00'
++  by: codex-cli/gpt-6.1-sol+maintainer-review
++  at: '2026-10-11T04:09:29.016237+00:00'
+ status: draft
+ synthetic: true
+-knowledge_as_of: '2030-02-01'
++knowledge_as_of: '2030-03-02'
+ classification: public
+ owner: process:synthetic-enterprise-demo
+ access_scope: public
+@@ -28,26 +34,40 @@
+ 
+ # 帳戶狀態與基準復原
+ 
+-> 合成教學知識草稿；依情境日期 2030-02-01 的六份來源整理，尚未人工內容驗證或發布。
++> 合成教學知識草稿；保留 2030-02-01 的六份來源基準，另納入 SRC-07，情境日期為 2030-03-02；待人工內容審查。
+ 
+ ## 狀態分流
+ 
+ - DEMO-101 可能與密碼錯誤、帳戶鎖定、密碼到期或網路有關；代碼本身不是診斷。先詢問明確的鎖定／到期提示與非機密錯訊。[^SRC-01][^SRC-02]
+-- 已確認鎖定：提交 ExampleDesk 復原請求，附發生時間與非機密錯訊；裝置管理與復原註冊不清楚時可填未知。服務台檢視不代表已解鎖，也不保證直接解除。[^SRC-03]
++- 已確認鎖定：依發生日期與完整資格選擇第一步；僅 SRC-07 明示的條件改用自助入口，其餘保留服務台基準。[^SRC-03][^SRC-07]
+ - 已確認到期：使用公司管理筆電的獨立改密碼流程；公司網路與操作可用是前提。解鎖不會重設或延長到期密碼。[^SRC-02]
+ - 密碼錯誤或狀態未明：記錄線索並釐清，不擅自選擇鎖定分支。[^SRC-03]
+ 
++## 已確認鎖定的日期與資格
++
++2030-03-01 前的事件依當時基準處理；SRC-03 自 2030-01-10 起適用於全職員工與承包人員的已確認鎖定情境。自 2030-03-01 起，只有全職員工、正在使用公司管理筆電、已註冊自助帳戶復原三項都確認符合，第一步才改為前往虛構入口 <https://support.example.com/account-recovery> 嘗試自助復原。入口僅供教學，不能執行真實交易，也不是已完成復原的證據；完成後仍須由使用者確認結果。[^SRC-03][^SRC-07]
++
++已確認為承包人員、裝置不受公司管理或尚未註冊自助復原者，沿用 ExampleDesk 服務台路徑；自助失敗或結果不明者轉由 Example IT Service Desk 處理。任一資格或發生日期未知時，先詢問缺漏項目再決定分支；資訊矛盾或無法確認時交服務台釐清，不承諾適用自助流程。[^SRC-07]
++
++裝置受管理或完成裝置註冊，不代表使用者已註冊自助帳戶復原，必須分開確認。[^SRC-04]
++
++服務台請求仍附識別與聯絡資訊、發生時間、非機密錯訊、裝置管理狀態、自助復原註冊狀態與已確認的帳戶狀態；不清楚的狀態可填未知。服務台檢視不代表已解鎖，不保證直接解除或特定處理時間。[^SRC-03][^SRC-07]
++
+ ## 證據邊界
+ 
+-本快照僅記錄服務台基準流程；不得從使用者自稱已註冊某服務推導出未收錄的處理規則。請求不得包含密碼、驗證碼或復原連結。[^SRC-03]
++SRC-03 的來源摘要保留基準主張，SRC-07 只局部變更 SRC-01 與 SRC-03 的已確認鎖定第一步，不使所有舊文件失效。密碼到期、DEMO-202、DEMO-303、資源限制與海外核准流程不變。請求不得包含密碼、驗證碼、復原連結或其他登入秘密；文件未描述的例外交由服務台文件負責人確認，不自行擴大規則。[^SRC-03][^SRC-07]
+ 
+ ## Related Pages
+ 
+ - [鎖定問答](../queries/account-locked.md)
+ - [到期問答](../queries/password-expired.md)
+ - [DEMO-101 分流](../queries/demo-101.md)
++- [裝置與帳戶註冊的界線](device-and-account-enrollment.md)
+ - [ExampleDesk](../entities/exampledesk.md)
++- [條件式更新來源](../sources/account-recovery-update-v2.md)
+ 
+ [^SRC-01]: [SRC-01](../sources/vpn-common-qa.md)
+ [^SRC-02]: [SRC-02](../sources/examplevpn-error-reference.md)
+ [^SRC-03]: [SRC-03](../sources/account-recovery-v1.md)
++[^SRC-04]: [SRC-04](../sources/managed-laptop-remote-access.md)
++[^SRC-07]: [SRC-07](../sources/account-recovery-update-v2.md)
+--- baseline-v1/wiki/entities/exampledesk.md
++++ updated-v2/wiki/entities/exampledesk.md
+@@ -12,12 +12,15 @@
+ - id: SRC-06
+   resource: ../sources/overseas-access-request.md
+   title: SRC-06
++- id: SRC-07
++  resource: ../sources/account-recovery-update-v2.md
++  title: SRC-07
+ generated:
+-  by: codex/in-session
+-  at: '2026-10-11T03:51:34.995084+00:00'
++  by: codex-cli/gpt-6.1-sol+maintainer-review
++  at: '2026-10-11T04:09:29.016237+00:00'
+ status: draft
+ synthetic: true
+-knowledge_as_of: '2030-02-01'
++knowledge_as_of: '2030-03-02'
+ classification: public
+ owner: process:synthetic-enterprise-demo
+ access_scope: public
+@@ -28,9 +31,11 @@
+ 
+ # ExampleDesk
+ 
+-> 合成教學知識草稿；依情境日期 2030-02-01 的六份來源整理，尚未人工內容驗證或發布。
++> 合成教學知識草稿；保留 2030-02-01 的六份來源基準，另納入 SRC-07，情境日期為 2030-03-02；待人工內容審查。
+ 
+ ExampleDesk 是虛構服務台的請求入口。基準帳戶鎖定請求交由服務台檢視，應提供非機密錯訊與必要狀態；提交請求不代表已解除鎖定。[^SRC-03]
++
++自 2030-03-01 起，已確認鎖定且同時符合全職員工、正在使用公司管理筆電及已註冊自助帳戶復原者，第一步改為嘗試 SRC-07 的虛構自助入口。已確認不符合者仍走 ExampleDesk；自助失敗或結果不明者轉服務台。任一資格或發生日期未知時先詢問缺漏資訊，矛盾或無法確認時交服務台釐清；生效日前的事件保留當時基準。[^SRC-07]
+ 
+ HQ Support 在公司網路的 TeamShare 申請也透過此入口，但不能覆蓋 Branch Support 遠端限制，更不表示已核准。[^SRC-05]
+ 
+@@ -39,9 +44,11 @@
+ ## Related Pages
+ 
+ - [鎖定問答](../queries/account-locked.md)
++- [條件式更新來源](../sources/account-recovery-update-v2.md)
+ - [TeamShare 問答](../queries/teamshare-access.md)
+ - [海外申請](../queries/overseas-request.md)
+ 
+ [^SRC-03]: [SRC-03](../sources/account-recovery-v1.md)
+ [^SRC-05]: [SRC-05](../sources/shared-resource-access-policy.md)
+ [^SRC-06]: [SRC-06](../sources/overseas-access-request.md)
++[^SRC-07]: [SRC-07](../sources/account-recovery-update-v2.md)
+--- baseline-v1/wiki/index.md
++++ updated-v2/wiki/index.md
+@@ -6,6 +6,10 @@
+ ## Overview
+ 
+ 這是六份合成來源的基準知識草稿，情境日期為 2030-02-01。所有頁面待人工內容審查；不是正式發布或問答準確率結果。
++
++目前適用答案草稿另納入 SRC-07，情境日期為 2030-03-02。自 2030-03-01 起，只有已確認鎖定且同時符合全職員工、正在使用公司管理筆電及已註冊自助帳戶復原者，第一步改為嘗試虛構自助入口；其他條件、歷史日期與服務台備援詳見[鎖定問答](queries/account-locked.md)。這是局部更新。[^SRC-07]
++
++既有來源摘要保留各自封存的基準主張；目前適用的鎖定回答請參閱更新後的[帳戶狀態](concepts/account-state-and-recovery.md)與[鎖定問答](queries/account-locked.md)。本次內容仍為合成草稿，待人工內容審查。
+ 
+ - [操作紀錄](log.md)
+ - [範圍](../ops/purpose.md)
+@@ -32,6 +36,7 @@
+ - [managed-laptop-remote-access](sources/managed-laptop-remote-access.md)
+ - [shared-resource-access-policy](sources/shared-resource-access-policy.md)
+ - [overseas-access-request](sources/overseas-access-request.md)
++- [account-recovery-update-v2](sources/account-recovery-update-v2.md)
+ 
+ ## Queries
+ 
+@@ -45,3 +50,5 @@
+ ## FAQ
+ 
+ 本輪未建立額外 FAQ 題組。
++
++[^SRC-07]: [SRC-07](sources/account-recovery-update-v2.md)
+--- baseline-v1/wiki/queries/account-locked.md
++++ updated-v2/wiki/queries/account-locked.md
+@@ -1,17 +1,23 @@
+ ---
+ type: query
+-title: Confirmed Account Lock Baseline Answer
+-description: Confirmed Account Lock Baseline Answer
++title: Conditional Account Lock Recovery
++description: Time and eligibility conditions for account lock recovery.
+ sources:
+ - id: SRC-03
+   resource: ../sources/account-recovery-v1.md
+   title: SRC-03
++- id: SRC-04
++  resource: ../sources/managed-laptop-remote-access.md
++  title: SRC-04
++- id: SRC-07
++  resource: ../sources/account-recovery-update-v2.md
++  title: SRC-07
+ generated:
+-  by: codex/in-session
+-  at: '2026-10-11T03:51:34.995084+00:00'
++  by: codex-cli/gpt-6.1-sol+maintainer-review
++  at: '2026-10-11T04:09:29.016237+00:00'
+ status: draft
+ synthetic: true
+-knowledge_as_of: '2030-02-01'
++knowledge_as_of: '2030-03-02'
+ classification: public
+ owner: process:synthetic-enterprise-demo
+ access_scope: public
+@@ -22,27 +28,40 @@
+ 
+ # 帳戶已確認鎖定時怎麼處理？
+ 
+-> 合成教學知識草稿；依情境日期 2030-02-01 的六份來源整理，尚未人工內容驗證或發布。
++> 合成教學知識草稿；保留 2030-02-01 的六份來源基準，另納入 SRC-07，情境日期為 2030-03-02；待人工內容審查。
+ 
+ ## Question
+ 
+-帳戶已明確顯示鎖定，應採用哪個流程？即使使用者是全職員工、使用公司管理筆電，或自稱已註冊某種復原服務，也只按此快照已收錄的基準處理。
++帳戶已明確顯示鎖定，依發生日期、身分類型、裝置管理狀態與自助帳戶復原註冊狀態，應採用哪個第一步？
+ 
+ ## Answer
+ 
+-請透過 ExampleDesk 提交帳戶復原請求，由 Example IT Service Desk 檢視。附上識別與聯絡資訊、非機密錯訊、發生時間、裝置管理狀態、復原註冊狀態及已確認的帳戶狀態；不清楚的狀態填未知。請求中不得包含密碼、驗證碼或復原連結。[^SRC-03]
++先確認發生日期，以及使用者是否為全職員工、是否正在使用公司管理筆電、是否已註冊自助帳戶復原。任一項未知時先詢問缺漏項目，再決定分支；資訊矛盾或無法確認時交由服務台釐清，不承諾適用自助復原。[^SRC-07] 裝置受管理或已完成裝置註冊，不能證明使用者已註冊自助帳戶復原。[^SRC-04]
+ 
+-目前尚未替您解鎖，服務台收到請求也不保證直接解除鎖定。若問題實際是密碼到期，應使用另頁的密碼更新流程。[^SRC-03]
++- 2030-01-10 至 2030-02-28 發生的已確認鎖定事件，仍採下述 ExampleDesk 基準流程。[^SRC-03][^SRC-07]
++- 自 2030-03-01 起，在本次情境日期範圍內，三項資格都確認符合者，第一步前往虛構入口 <https://support.example.com/account-recovery> 嘗試自助復原。此入口僅供教學，不能執行真實交易，也不能證明已完成復原；完成後仍須由使用者確認結果。若流程失敗或結果不明，轉由 Example IT Service Desk 處理。[^SRC-07]
++- 已確認為承包人員、裝置不受公司管理或尚未註冊自助復原者，沿用下述 ExampleDesk 基準流程。資格或日期未知時仍先釐清，不推定符合自助條件。[^SRC-07]
++
++服務台基準流程：透過 ExampleDesk 提交帳戶復原請求，由 Example IT Service Desk 檢視。附上識別與聯絡資訊、非機密錯訊、發生時間、裝置管理狀態、復原註冊狀態及已確認的帳戶狀態；不清楚的狀態填未知。請求中不得包含密碼、驗證碼、復原連結或其他登入秘密。[^SRC-03][^SRC-07]
++
++本文僅整理適用流程。服務台收到請求不代表已解除鎖定，也不保證直接解除或特定處理時間。若問題實際是密碼到期，仍走另頁的獨立密碼更新流程，不能以鎖定復原替代。[^SRC-03][^SRC-07]
+ 
+ ## Applicability
+ 
+-本基準適用於全職員工與承包人員的已確認鎖定情境。未確認鎖定時先釐清；本快照僅支持情境日期 2030-02-01 的既有規則。例如 2030-01-20 的已確認鎖定事件位於此基準生效期間，仍採服務台流程；早於 2030-01-10 或晚於本快照日期的事件，資料不足時不自行推論適用政策。[^SRC-03]
++必須先確認帳戶鎖定；DEMO-101 或資格資料本身不能替代鎖定確認。SRC-03 的基準自 2030-01-10 起適用於全職員工與承包人員；SRC-07 自 2030-03-01 起只改變完整符合資格者的第一步，其餘服務台程序保留。[^SRC-03][^SRC-07]
++
++例如 2030-01-20 的已確認鎖定事件位於基準生效期間，仍採服務台流程，不因現在符合自助條件而改判。[^SRC-03][^SRC-07] 本草稿整理至情境日期 2030-03-02；早於 2030-01-10 或晚於本次情境日期的事件，資料不足時不自行推論適用政策。文件未描述的例外，記錄後交由 Example IT Service Desk 的文件負責人確認。[^SRC-07]
+ 
+ ## Related Pages
+ 
+ - [帳戶狀態](../concepts/account-state-and-recovery.md)
++- [裝置與帳戶註冊的界線](../concepts/device-and-account-enrollment.md)
+ - [DEMO-101](demo-101.md)
+ - [密碼到期](password-expired.md)
+ - [ExampleDesk](../entities/exampledesk.md)
++- [基準來源摘要](../sources/account-recovery-v1.md)
++- [條件式更新來源](../sources/account-recovery-update-v2.md)
+ 
+ [^SRC-03]: [SRC-03](../sources/account-recovery-v1.md)
++[^SRC-04]: [SRC-04](../sources/managed-laptop-remote-access.md)
++[^SRC-07]: [SRC-07](../sources/account-recovery-update-v2.md)
+--- baseline-v1/wiki/sources/account-recovery-update-v2.md
++++ updated-v2/wiki/sources/account-recovery-update-v2.md
+@@ -0,0 +1,71 @@
++---
++type: source
++title: Conditional Account Recovery Update
++description: Scoped recovery first action effective 2030-03-01.
++archive_slug: account-recovery-update-v2
++sourceId: SRC-07
++sources:
++- id: archive
++  resource: ../../raw/sources/account-recovery-update-v2.md
++  title: Conditional Account Recovery Update
++analysis_receipt:
++  version: '1'
++  sha256: ae1068d1a9918d5962fe6e1d0f08b8e70b5eeccb57a92e2b6c941f01c83c8d56
++  source_sha256: 08c4c942fb46689528c55bcda5dcd890d225682f2149a0595ee7e9e58f41d53a
++  generated_by: codex/in-session
++  generated_at: '2026-10-11T04:03:49.486708+00:00'
++generated:
++  by: codex-cli/gpt-6.1-sol+maintainer-review
++  at: '2026-10-11T04:09:29.016237+00:00'
++status: draft
++synthetic: true
++knowledge_as_of: '2030-03-02'
++classification: public
++owner: process:synthetic-enterprise-demo
++access_scope: public
++contains_pii: false
++retention: permanent
++redaction: none
++---
++
++# 帳戶復原條件式更新
++
++> 合成教學來源摘要草稿；情境日期為 2030-03-02，待人工內容審查。
++
++## Summary
++
++- SRC-07 自 2030-03-01 起，只變更已確認帳戶鎖定時的第一步。必須同時確認使用者為全職員工、正在使用公司管理筆電，以及已註冊自助帳戶復原，才先嘗試虛構自助入口。[^archive]
++- 不符合者保留 ExampleDesk 服務台路徑；資格或日期未知先詢問，矛盾或無法確認時交服務台釐清。自助失敗或結果不明者轉服務台。[^archive]
++- 這是有明確條件與生效日期的局部更新，不使所有舊文件失效。[^archive]
++
++## Key Concepts
++
++- [帳戶狀態與基準復原](../concepts/account-state-and-recovery.md)
++- [裝置與帳戶註冊的界線](../concepts/device-and-account-enrollment.md)
++- [資源存取邊界](../concepts/resource-access-boundaries.md)
++- [海外核准流程](../concepts/overseas-approval.md)
++- [已確認鎖定問答](../queries/account-locked.md)
++- [DEMO-101 分流](../queries/demo-101.md)
++- [密碼到期問答](../queries/password-expired.md)
++
++## Entities
++
++- [ExampleDesk](../entities/exampledesk.md)：保留不符合資格者的請求入口，並支援自助失敗、結果不明或資訊無法確認的情境。[^archive]
++- [ExampleVPN](../entities/examplevpn.md)：相關登入問題仍須區分已確認鎖定、到期與其他原因；更新不變更其餘診斷程序。[^archive]
++
++## Notable Claims
++
++- 三項資格都確認符合，且事件自 2030-03-01 起發生時，第一步前往虛構入口 <https://support.example.com/account-recovery> 嘗試自助復原。連結僅供教學，沒有實際服務或交易，也不是已完成復原的證據；完成後仍須由使用者確認結果。[^archive]
++- 已確認為承包人員、不受公司管理的裝置或尚未註冊自助復原者，沿用 [SRC-03 基準](account-recovery-v1.md) 的 ExampleDesk 路徑；自助失敗或結果不明者轉由 Example IT Service Desk 處理。[^archive]
++- 任一資格或情境日期未知，先詢問身分類型、裝置管理狀態、自助復原註冊狀態或發生日期中的缺漏項目。不得推定資格；資訊矛盾或無法確認時由服務台釐清。[^archive]
++- 取代範圍僅為 [SRC-01](vpn-common-qa.md) 的 DEMO-101 已確認鎖定服務台第一步，以及 [SRC-03](account-recovery-v1.md) 的已確認鎖定基準入口。其他原因、診斷方式與其餘使用者的服務台路徑保留；不得蒐集登入秘密，也不保證服務台直接解除鎖定。[^archive]
++- [SRC-02](examplevpn-error-reference.md) 的密碼到期程序、DEMO-202 網路診斷、DEMO-303 裝置註冊或授權檢查、[SRC-05](shared-resource-access-policy.md) 資源規則及 [SRC-06](overseas-access-request.md) 海外核准流程不變。到期密碼仍依公司網路與 Ctrl+Alt+Delete 的虛構程序處理，不能以鎖定復原替代。[^archive]
++- 2030-03-01 前發生的情境依當時基準處理；自生效日起才套用完整資格條件。文件未描述的例外須記錄並交由服務台文件負責人確認，不自行擴大範圍。[^archive]
++
++## Limitations / Gaps
++
++本頁僅摘要所提供的合成來源，待人工內容審查；不代表來源准入、來源核實或人工內容核可。來源沒有提供資格無法確認時可承諾自助復原的依據，也沒有提供未描述例外的處理規則；這些情況須交服務台釐清。[^archive]
++
++入口網址是虛構佔位，不能據此主張實際復原、交易或啟用。本摘要沒有復原、正式發布或回歸成功的主張。既有來源封存與基準摘要保留，適用答案另見相關概念與問答。
++
++[^archive]: [原始封存](../../raw/sources/account-recovery-update-v2.md)

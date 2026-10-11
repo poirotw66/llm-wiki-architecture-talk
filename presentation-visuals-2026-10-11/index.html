@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071210">
+  <title>LLM Wiki｜逐頁主視覺預覽</title>
+  <style>
+    :root { color-scheme: light; --ink: #0c1512; --muted: #536660; --line: #c2d0cb; --paper: #f2f7f5; --accent: #0a7a5f; --dark: #071210; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: #e4ebe8; font-family: "Plus Jakarta Sans", "PingFang TC", "Noto Sans TC", sans-serif; }
+    header { padding: clamp(2rem, 6vw, 5rem); color: var(--paper); background: radial-gradient(ellipse at 85% 20%, #174e3e, transparent 40%), var(--dark); }
+    header p { max-width: 58rem; color: #bfd2cb; line-height: 1.7; }
+    h1 { margin: 0; font-size: clamp(2rem, 5vw, 4rem); letter-spacing: -.04em; }
+    main { max-width: 1440px; margin: auto; padding: 2rem clamp(1rem, 4vw, 3rem) 5rem; }
+    h2 { margin: 2rem 0 1rem; font-size: 1.35rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 1rem; }
+    figure { margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); box-shadow: 0 10px 28px -16px #07121055; }
+    figure a { display: block; background: var(--dark); }
+    figure img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+    figcaption { padding: .85rem 1rem 1rem; }
+    figcaption small { color: var(--accent); font: 700 .72rem ui-monospace, monospace; letter-spacing: .1em; }
+    figcaption strong { display: block; margin-top: .35rem; font-size: 1rem; }
+    footer { padding: 1rem 0; color: var(--muted); font-size: .9rem; }
+    @media (prefers-reduced-motion: no-preference) { figure img { transition: transform .35s ease; } figure:hover img { transform: scale(1.015); } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>LLM Wiki｜逐頁主視覺</h1>
+    <p>依 30 分鐘故事線生成的 20 張 16:9 主視覺。全組沿用森林綠、翡翠綠與薄荷光的編輯式風格；每張圖保留留白，供原投影片的可編輯標題、數據與講稿排版。</p>
+  </header>
+  <main>
+    <h2>主線｜S01–S15</h2>
+    <div class="grid">
+      <figure><a href="S01.png"><img src="S01.png" alt="深綠知識檔案與光線連結來源"></a><figcaption><small>S01</small><strong>LLM Wiki：企業內部知識問答系統的架構演進</strong></figcaption></figure>
+      <figure><a href="S02.png"><img src="S02.png" alt="員工面對服務台與自助復原兩條路徑"></a><figcaption><small>S02</small><strong>帳戶鎖定後，第一步該走哪裡？</strong></figcaption></figure>
+      <figure><a href="S03.png"><img src="S03.png" alt="兩條檢索路徑通往共同來源檔案"></a><figcaption><small>S03</small><strong>先前的 Retrieval 比較</strong></figcaption></figure>
+      <figure><a href="S04.png"><img src="S04.png" alt="多份來源經過條件判斷後匯整成知識答案"></a><figcaption><small>S04</small><strong>找回來源之後的判斷</strong></figcaption></figure>
+      <figure><a href="S05.png"><img src="S05.png" alt="多個查詢重複穿過政策判斷層"></a><figcaption><small>S05</small><strong>Query Time 的知識整合</strong></figcaption></figure>
+      <figure><a href="S06.png"><img src="S06.png" alt="六份來源形成基準知識快照"></a><figcaption><small>S06</small><strong>六份來源先形成可檢查的基準</strong></figcaption></figure>
+      <figure><a href="S07.png"><img src="S07.png" alt="新增政策只替換單一條件分支"></a><figcaption><small>S07</small><strong>SRC-07 只替換一個適用分支</strong></figcaption></figure>
+      <figure><a href="S08.png"><img src="S08.png" alt="提案經過人工式檢視並修正範圍遺漏"></a><figcaption><small>S08</small><strong>模型提案仍需要審查與修正</strong></figcaption></figure>
+      <figure><a href="S09.png"><img src="S09.png" alt="一份來源連結四個受影響頁面，無關頁面維持不變"></a><figcaption><small>S09</small><strong>變更沿著知識頁傳遞</strong></figcaption></figure>
+      <figure><a href="S10.png"><img src="S10.png" alt="同一使用者情境分別通往服務台與自助復原"></a><figcaption><small>S10</small><strong>同一題的第一步確實改變</strong></figcaption></figure>
+      <figure><a href="S11.png"><img src="S11.png" alt="驗證流程停在未完成的回歸關卡"></a><figcaption><small>S11</small><strong>草稿通過哪些關卡，停在哪裡？</strong></figcaption></figure>
+      <figure><a href="S12.png"><img src="S12.png" alt="引用內容與答案正文之間仍有缺漏待審查"></a><figcaption><small>S12</small><strong>結構通過，回答仍有缺漏</strong></figcaption></figure>
+      <figure><a href="S13.png"><img src="S13.png" alt="十題回歸有未解項目並保留其他路徑"></a><figcaption><small>S13</small><strong>十題回歸的實際結果</strong></figcaption></figure>
+      <figure><a href="S14.png"><img src="S14.png" alt="直接檢索與知識編譯架構的維護取捨"></a><figcaption><small>S14</small><strong>Knowledge Compilation 的取捨</strong></figcaption></figure>
+      <figure><a href="S15.png"><img src="S15.png" alt="來源整合、回歸驗證與人工核可的草稿流程"></a><figcaption><small>S15</small><strong>企業知識的更新流程</strong></figcaption></figure>
+    </div>
+    <h2>問答附錄｜A01–A05</h2>
+    <div class="grid">
+      <figure><a href="A01.png"><img src="A01.png" alt="不同證據資料分開保存並可追溯"></a><figcaption><small>A01</small><strong>證據索引</strong></figcaption></figure>
+      <figure><a href="A02.png"><img src="A02.png" alt="七份來源中只有新增政策影響單一分支"></a><figcaption><small>A02</small><strong>七份合成來源與適用範圍</strong></figcaption></figure>
+      <figure><a href="A03.png"><img src="A03.png" alt="十題回歸中多數完成，兩題仍待處理"></a><figcaption><small>A03</small><strong>十題回歸結果</strong></figcaption></figure>
+      <figure><a href="A04.png"><img src="A04.png" alt="有限樣本與缺少檢索對照的實驗範圍"></a><figcaption><small>A04</small><strong>實驗方法與比較限制</strong></figcaption></figure>
+      <figure><a href="A05.png"><img src="A05.png" alt="草稿仍待人工核可，發布與服務驗證未完成"></a><figcaption><small>A05</small><strong>草稿、發布與 Serving 的邊界</strong></figcaption></figure>
+    </div>
+    <footer>所有文字、表格、數字和證據請以原簡報與逐頁講稿為準；生圖內容作為視覺背景使用。</footer>
+  </main>
+</body>
+</html>

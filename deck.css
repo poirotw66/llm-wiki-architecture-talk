@@ -247,7 +247,7 @@ h3 { margin: .25rem 0 .75rem; font-size: clamp(1.12rem, 1.4vw, 1.45rem); line-he
   overflow: hidden;
   background:
     linear-gradient(145deg, rgba(7, 18, 16, .15), rgba(10, 122, 95, .28)),
-    url("assets/knowledge-order.png") center / cover no-repeat;
+    url("presentation-visuals-2026-10-11/S01.png") center / cover no-repeat;
   box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, .25);
 }
 #s01 .cover-art::before {
@@ -558,6 +558,31 @@ tbody tr:last-child td { border-bottom-color: var(--ink); }
 
 /* === Visual storytelling · taste-skill polish === */
 .visual-slide .slide-inner { position: relative; }
+.slide-inner { position: relative; }
+.generated-slide-art {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  right: 0;
+  width: min(42%, 32rem);
+  max-height: 64%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: right center;
+  transform: translateY(-50%);
+  border-radius: var(--radius);
+  opacity: .16;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+.dark .generated-slide-art {
+  opacity: .24;
+  mix-blend-mode: screen;
+}
+.slide-inner > :not(.generated-slide-art) {
+  position: relative;
+  z-index: 1;
+}
 .eyebrow {
   color: var(--accent);
   font: 700 .74rem/1 var(--mono);
@@ -1431,6 +1456,69 @@ tbody tr:last-child td { border-bottom-color: var(--ink); }
   .policy-band, .evidence-pin { position: static; }
   .release-pipeline { grid-template-columns: 1fr 1fr; }
   .impact-graph { min-height: 32rem; }
+}
+
+/* Executed experiment evidence uses the existing deck typography and palette. */
+.presentation .notes .reading-only { display: block; }
+.proposal-correction, .impact-retained, .answer-fallback {
+  margin: .65rem 0;
+  line-height: 1.5;
+}
+.graph-node small { display: block; margin-top: .35rem; font-family: var(--sans); }
+.answer-comparison {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+  margin: .8rem 0;
+}
+.answer-comparison article { min-width: 0; padding: 1rem 0; border-top: 3px solid var(--ink); }
+.answer-comparison article.updated { border-color: var(--accent); }
+.answer-comparison h3 { font-size: 1.5rem; margin: .8rem 0; }
+.answer-comparison blockquote {
+  margin: 0;
+  font-size: 1.2rem;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+.answer-comparison article > p { font: 700 .85rem var(--mono); color: var(--muted); }
+.pipe-step.needs-work { box-shadow: inset 0 3px 0 #9b4c21, var(--shadow-soft); }
+.pipe-step.needs-work span { color: #9b4c21; }
+.pipe-step.pending { border: 1px dashed var(--line); box-shadow: none; }
+.regression-score {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  gap: 2rem;
+  margin: .5rem 0 1rem;
+}
+.regression-score span { display: block; color: #a8beb6; }
+.regression-score strong { display: block; font: 800 clamp(2.8rem, 5vw, 4.5rem)/1.15 var(--display); color: var(--accent-light); }
+.regression-score p { color: #a8beb6; line-height: 1.6; }
+#s13 .test-card { min-height: 10rem; }
+.compact-table { font-size: 1.05rem; }
+.compact-table th, .compact-table td { padding: .5rem .65rem; }
+.result-pass { font-family: var(--mono); color: var(--accent); }
+.result-fail { font-family: var(--mono); color: #9b4c21; font-weight: 800; }
+#s09 .graph-node.n2 { left: 31%; }
+#s09 .graph-node.n3 { right: 4%; }
+@media (max-width: 980px) {
+  .answer-comparison { grid-template-columns: 1fr; gap: 1rem; }
+  .regression-score { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .regression-score p { grid-column: 1 / -1; }
+  #s07 .policy-band { flex-wrap: wrap; }
+  #s09 .impact-graph { display: grid; gap: .7rem; min-height: auto; }
+  #s09 .impact-graph svg { display: none; }
+  #s09 .graph-center, #s09 .graph-node {
+    position: static;
+    width: 100%;
+    translate: none;
+  }
+  #s09 .graph-node { overflow-wrap: anywhere; }
+  #s14 .meter-track { display: grid; gap: .65rem; height: auto; margin: 0; border: 0; }
+  #s14 .marker { position: static; transform: none; text-align: left; }
+  #s14 .marker::after { display: none; }
+  #s14 .meter-zones { grid-template-columns: 1fr; }
+  #s14 .boundary-callout { flex-direction: column; }
 }
 
 @media (prefers-reduced-motion: no-preference) {

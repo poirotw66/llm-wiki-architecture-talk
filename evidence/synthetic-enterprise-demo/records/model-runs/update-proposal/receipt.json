@@ -1,0 +1,49 @@
+{
+  "started_at": "2026-10-11T04:04:31.996627+00:00",
+  "finished_at": "2026-10-11T04:07:56.952321+00:00",
+  "elapsed_seconds": 204.956,
+  "argv": [
+    "codex",
+    "exec",
+    "--ignore-user-config",
+    "--ignore-rules",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--sandbox",
+    "read-only",
+    "--json",
+    "--color",
+    "never",
+    "-c",
+    "model=\"gpt-6.1-sol\"",
+    "-c",
+    "model_reasoning_effort=\"high\"",
+    "--output-schema",
+    "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/model-runs/update-proposal/response-schema.json",
+    "--output-last-message",
+    "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/model-runs/update-proposal/response.json",
+    "-"
+  ],
+  "cwd_mode": "empty-neutral-temporary-directory",
+  "requested_model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.1",
+  "exit_code": 0,
+  "prompt_sha256": "24a6e4405fa0abb660faaeeb394334cd9981ed4073c86e67bf8e233d8ea76c96",
+  "schema_sha256": "e9c12cf7722592feed349c3c616c2b0df02930293f4d628d85662a6edf3b8dfa",
+  "response_sha256": "862f96d0f4d9ce82b1383f616a0d53c1e3ebc73a8443b888d968d67d9195397d",
+  "event_usage": [
+    {
+      "input_tokens": 36963,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 11493,
+      "reasoning_output_tokens": 2412
+    }
+  ],
+  "tool_item_count": 0,
+  "tool_item_types": [],
+  "event_parse_errors": [],
+  "cost_usd": null,
+  "exact_serving_snapshot": null
+}

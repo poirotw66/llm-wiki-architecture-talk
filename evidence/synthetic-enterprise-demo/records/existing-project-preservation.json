@@ -1,0 +1,21 @@
+{
+  "checked_at": "2026-10-11T03:57:32.584848+00:00",
+  "status": "PASS",
+  "before": {
+    "head": "0c02fd346e9711d8b556cc2b94c841a2185ac77e",
+    "git_status_sha256": "d55086f1c58065266e796d14cfbbb494e502c4538ef78c8df24941dc7d3f7e02",
+    "tracked_file_count": 78,
+    "tracked_content_manifest_sha256": "4cd29f8301eaf06976d6ec4eff3fb9de2686c4410a131a31f5ffe4927c44dc93"
+  },
+  "after": {
+    "head": "0c02fd346e9711d8b556cc2b94c841a2185ac77e",
+    "git_status_sha256": "d55086f1c58065266e796d14cfbbb494e502c4538ef78c8df24941dc7d3f7e02",
+    "tracked_file_count": 78,
+    "tracked_content_manifest_sha256": "4cd29f8301eaf06976d6ec4eff3fb9de2686c4410a131a31f5ffe4927c44dc93"
+  },
+  "tracked_content_unchanged": true,
+  "git_status_unchanged": true,
+  "head_unchanged": true,
+  "scope": "All tracked regular files plus Git status; untracked contents and ignored runtime files were not hashed.",
+  "privacy": "Existing enterprise filenames and per-file digests omitted from this fixture."
+}

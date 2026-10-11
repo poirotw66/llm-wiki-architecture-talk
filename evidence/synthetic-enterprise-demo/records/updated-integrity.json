@@ -1,0 +1,99 @@
+{
+  "checked_at": "2026-10-11T04:11:18.479635+00:00",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "frozen_contract",
+      "status": "PASS",
+      "detail": "The scoring contract has not been modified."
+    },
+    {
+      "name": "frozen_sources",
+      "status": "PASS",
+      "detail": "All seven synthetic input bytes match frozen contract hashes."
+    },
+    {
+      "name": "retained_baseline",
+      "status": "PASS",
+      "detail": "All original baseline artifacts unchanged except the explicitly appended operation log."
+    },
+    {
+      "name": "baseline_log_append",
+      "status": "PASS",
+      "detail": "Baseline runtime log was appended; knowledge request excludes logs."
+    },
+    {
+      "name": "archive_lineage_bytes",
+      "status": "PASS",
+      "detail": "Seven original/canonical pairs match approved source digests; baseline archives retain bytes."
+    },
+    {
+      "name": "updated_claim_quotes",
+      "status": "PASS",
+      "detail": "17 baseline plus six scoped update claims have exact original excerpts."
+    },
+    {
+      "name": "governance",
+      "status": "PASS",
+      "detail": "Existing governance helpers accept seven approvals and 14 lineage artifacts."
+    },
+    {
+      "name": "draft_status",
+      "status": "PASS",
+      "detail": "All 19 pages synthetic and draft; no human verified status."
+    },
+    {
+      "name": "unchanged_unrelated_queries",
+      "status": "PASS",
+      "detail": "Password expiry, ambiguity, resources, overseas and unknown-code query pages retain exact baseline bytes."
+    },
+    {
+      "name": "unchanged_original_summaries",
+      "status": "PASS",
+      "detail": "All six initial source summaries remain immutable baseline summaries."
+    },
+    {
+      "name": "new_analysis_receipt",
+      "status": "PASS",
+      "detail": "Private update analysis exists and matches public receipt."
+    },
+    {
+      "name": "baseline-query-fresh-inference",
+      "status": "PASS",
+      "detail": "Actual CLI run returned a response without tools; inputs and outputs saved."
+    },
+    {
+      "name": "update-proposal-fresh-inference",
+      "status": "PASS",
+      "detail": "Actual CLI run returned a response without tools; inputs and outputs saved."
+    },
+    {
+      "name": "baseline-judge-fresh-inference",
+      "status": "PASS",
+      "detail": "Actual CLI run returned a response without tools; inputs and outputs saved."
+    }
+  ],
+  "knowledge_page_digests": {
+    "wiki/concepts/account-state-and-recovery.md": "6633ab98b1f00384e072ec2eae1a774b8271ae1cf0b127f641b05f2a70a9f924",
+    "wiki/concepts/device-and-account-enrollment.md": "f1dff152d3a96d3bec4cb6f396f4defccd0c793cba3aa2c141cec628285bb392",
+    "wiki/concepts/overseas-approval.md": "dc1ea91c1fc2e8676fbdbe9f16ac41649bf6d1a2fa4ab9e728415aba78ae13b6",
+    "wiki/concepts/resource-access-boundaries.md": "e02af911f9ebaa416e98c699aa948fb696a476be2952c4266bc215e6d31a5656",
+    "wiki/entities/exampledesk.md": "c6c5c771aea8c4ae8892d64c1af003844d4d1c631a76fe2053c53db982e87892",
+    "wiki/entities/examplevpn.md": "2e9862e00907fed4a7d9a6265a0b38325da06bbbb3c47b1b977746a90113215b",
+    "wiki/queries/account-locked.md": "b15ddb47ee49790b84aa62d7a7f474d38e630208fb3285e0133baf9aa7a39f76",
+    "wiki/queries/demo-101.md": "0949d4b2604d9c390c3edbe48a6e6abc134c933b589085d7ccd6c137f15f5ebd",
+    "wiki/queries/overseas-request.md": "051ec2460d7603f71ba8b8c9a13cc37e11d165299ec7abb361ca9e9eb06c2318",
+    "wiki/queries/password-expired.md": "4e0c1fec5b4a2650f23ed18b0fe6a245d45e961d9e65dd60524a86c42ec4fad9",
+    "wiki/queries/teamshare-access.md": "109ab10b21043ed492e09ab199798aab256a3f5611f62db4d41dc91dd9372d78",
+    "wiki/queries/unknown-error.md": "571327875e9e643fc7c515ce97bd4968fb2dd3a952d37dcc9e6f63c9c0638e2d",
+    "wiki/sources/account-recovery-update-v2.md": "e2960b1dae92cf08c30d8a57a842c24b3b9c39f2bac8957a7ba2f3b8010bbaa8",
+    "wiki/sources/account-recovery-v1.md": "0dcf07146f1ff99c0078dc1b64892981cbe896aa2d934c0fee6c7638cd2f20cd",
+    "wiki/sources/examplevpn-error-reference.md": "6f58cc6cb95ca8fc88d4d59b4a206d437b06df7686fa44de2066254a79ed56e0",
+    "wiki/sources/managed-laptop-remote-access.md": "9aecd68b207ab196db62e54e977a73a9e0794fddf65b69b143f44ba628bfbbfd",
+    "wiki/sources/overseas-access-request.md": "f85da9c1d8b4ff62bb95fb016e1beed9683370e2f2038c6544c538ff58fa6d57",
+    "wiki/sources/shared-resource-access-policy.md": "f0173aceac951fbe6dc5932f838c4103571559dd3c2c78529a919635aa920533",
+    "wiki/sources/vpn-common-qa.md": "9db203c87326790c136e4ed9a1bc46bf8809e7e79eb3a8d51f01780fde0a8caa"
+  },
+  "human_review": "pending",
+  "answer_evaluation": "separate-runtime-records"
+}

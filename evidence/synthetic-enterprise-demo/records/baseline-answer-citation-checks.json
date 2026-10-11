@@ -1,0 +1,121 @@
+[
+  {
+    "case_id": "SYN-01",
+    "required_sources": [
+      "SRC-03"
+    ],
+    "cited_sources": [
+      "SRC-03"
+    ],
+    "missing_required_sources": [],
+    "non_verbatim_citations": []
+  },
+  {
+    "case_id": "SYN-02",
+    "required_sources": [
+      "SRC-03"
+    ],
+    "cited_sources": [
+      "SRC-03"
+    ],
+    "missing_required_sources": [],
+    "non_verbatim_citations": []
+  },
+  {
+    "case_id": "SYN-03",
+    "required_sources": [
+      "SRC-03"
+    ],
+    "cited_sources": [
+      "SRC-03"
+    ],
+    "missing_required_sources": [],
+    "non_verbatim_citations": []
+  },
+  {
+    "case_id": "SYN-04",
+    "required_sources": [
+      "SRC-03"
+    ],
+    "cited_sources": [
+      "SRC-03"
+    ],
+    "missing_required_sources": [],
+    "non_verbatim_citations": []
+  },
+  {
+    "case_id": "SYN-05",
+    "required_sources": [
+      "SRC-01",
+      "SRC-02"
+    ],
+    "cited_sources": [
+      "SRC-01",
+      "SRC-02"
+    ],
+    "missing_required_sources": [],
+    "non_verbatim_citations": []
+  },
+  {
+    "case_id": "SYN-06",
+    "required_sources": [
+      "SRC-01",
+      "SRC-02"
+    ],
+    "cited_sources": [
+      "SRC-02"
+    ],
+    "missing_required_sources": [
+      "SRC-01"
+    ],
+    "non_verbatim_citations": []
+  },
+  {
+    "case_id": "SYN-07",
+    "required_sources": [
+      "SRC-04",
+      "SRC-05"
+    ],
+    "cited_sources": [
+      "SRC-05"
+    ],
+    "missing_required_sources": [
+      "SRC-04"
+    ],
+    "non_verbatim_citations": []
+  },
+  {
+    "case_id": "SYN-08",
+    "required_sources": [
+      "SRC-05"
+    ],
+    "cited_sources": [
+      "SRC-05"
+    ],
+    "missing_required_sources": [],
+    "non_verbatim_citations": []
+  },
+  {
+    "case_id": "SYN-09",
+    "required_sources": [
+      "SRC-06"
+    ],
+    "cited_sources": [
+      "SRC-06"
+    ],
+    "missing_required_sources": [],
+    "non_verbatim_citations": []
+  },
+  {
+    "case_id": "SYN-10",
+    "required_sources": [
+      "SRC-02"
+    ],
+    "cited_sources": [
+      "SRC-01",
+      "SRC-02"
+    ],
+    "missing_required_sources": [],
+    "non_verbatim_citations": []
+  }
+]

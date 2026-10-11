@@ -1,0 +1,26 @@
+{
+  "source_id": "SRC-07",
+  "source_path": "sources/account-recovery-update-v2.md",
+  "source_sha256": "08c4c942fb46689528c55bcda5dcd890d225682f2149a0595ee7e9e58f41d53a",
+  "approved_by": "human:demo-owner",
+  "approved_at": "2026-10-11T04:03:49.243958+00:00",
+  "authorization": "Direct user instruction: 取得十題實際回答，再執行 SRC-07 更新與回歸",
+  "scope": "Ingest the unchanged SRC-07 from the previously shared frozen contract into the isolated updated snapshot; run regression. No human semantic verification or publication authorized by this receipt.",
+  "governance": {
+    "classification": "public",
+    "owner": "process:synthetic-enterprise-demo",
+    "access_scope": "public",
+    "retention": "permanent",
+    "contains_pii": false,
+    "redaction": "none"
+  },
+  "preflight": {
+    "policy_version": "2",
+    "outcome": "review_ready",
+    "reason_codes": [
+      "human_approval_required"
+    ],
+    "source_sha256": "08c4c942fb46689528c55bcda5dcd890d225682f2149a0595ee7e9e58f41d53a",
+    "findings": []
+  }
+}

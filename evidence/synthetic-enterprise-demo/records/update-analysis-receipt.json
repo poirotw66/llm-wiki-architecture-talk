@@ -1,0 +1,11 @@
+{
+  "source_id": "SRC-07",
+  "archive_slug": "account-recovery-update-v2",
+  "analysis_path": ".llm-wiki/ingest/analyses/account-recovery-update-v2.md",
+  "version": "1",
+  "sha256": "ae1068d1a9918d5962fe6e1d0f08b8e70b5eeccb57a92e2b6c941f01c83c8d56",
+  "source_sha256": "08c4c942fb46689528c55bcda5dcd890d225682f2149a0595ee7e9e58f41d53a",
+  "generated_by": "codex/in-session",
+  "generated_at": "2026-10-11T04:03:49.486708+00:00",
+  "source_kind": "synthetic-teaching"
+}

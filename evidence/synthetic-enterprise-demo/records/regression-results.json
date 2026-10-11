@@ -1,0 +1,2775 @@
+{
+  "run_id": "synthetic-enterprise-query-update-20261011",
+  "completed_at": "2026-10-11T04:15:54.441323+00:00",
+  "status": "completed-with-findings",
+  "contract_id": "synthetic-enterprise-regression-v1",
+  "contract_sha256": "83d25b7efc06fd36b1576860a76e1fe8b146c0dd01385dbbd9e0d90679fc208b",
+  "method": "Actual fresh model inference followed by separate model rubric review, deterministic citation checks and explicit maintenance-agent review.",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "answer_sampling": "one ten-case batch per phase",
+  "exact_serving_snapshot": null,
+  "reference_answers_supplied_to_answer_model": false,
+  "tool_calls_in_model_runs": 0,
+  "source_blind_answer_inference": "Recorded prompts exclude prior chat and expected rubric; actual model event streams show no tools. Compilation and maintenance review were not blind.",
+  "human_content_review": "pending",
+  "summary": {
+    "baseline": {
+      "case_count": 10,
+      "passed": 8,
+      "failed": 2,
+      "route_and_action_matches": 10
+    },
+    "updated": {
+      "case_count": 10,
+      "passed": 8,
+      "failed": 2,
+      "route_and_action_matches": 10
+    },
+    "expected_behavior_change_matches": 10,
+    "prompt_compliance_findings": 1
+  },
+  "cases": [
+    {
+      "phase": "baseline",
+      "case_id": "SYN-01",
+      "status": "PASS",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "SERVICE_DESK_REQUEST",
+      "actual_first_action_label": "SUBMIT_RECOVERY_REQUEST",
+      "canonical_first_action": "SERVICE_DESK_REQUEST",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "請透過 ExampleDesk 提交帳戶復原請求，由 Example IT Service Desk 檢視。",
+          "reason": "The reported ANSWER route matches the direct procedural answer for confirmed lock.",
+          "criterion": "The reported route and the actual answer must follow ANSWER",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "請透過 ExampleDesk 提交帳戶復原請求",
+          "reason": "SUBMIT_RECOVERY_REQUEST means submitting the service-desk request through ExampleDesk and is equivalent to SERVICE_DESK_REQUEST.",
+          "criterion": "The actually recommended first action must have the meaning of SERVICE_DESK_REQUEST. Preserve original output; map equivalent semantic labels explicitly.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "並填入已知的公司管理筆電、自助復原已註冊及已確認鎖定狀態。",
+          "reason": "No clarification fields are required. Known fields are reused; the additional identity, contact and occurrence information is source-supported.",
+          "criterion": "Ask for every field in [] when needed, without re-asking already supplied fields. These are minimum required clarification fields; source-supported additional unknown diagnostic fields are allowed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "服務台檢視也不保證直接解除鎖定或特定處理時間。",
+          "reason": "SRC-03 supports the applicable scope, ExampleDesk request, required information and limits on subsequent outcomes.",
+          "criterion": "The source excerpts cited must support the answer within their scope. Unsupported stronger claims fail. Source-ID completeness and exact excerpt matching are checked separately by the runner.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "請透過 ExampleDesk 提交帳戶復原請求",
+          "reason": "ExampleDesk is explicitly recommended for the confirmed lock.",
+          "criterion": "Use ExampleDesk for confirmed lock.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "不要提供密碼、驗證碼或復原連結。",
+          "reason": "The answer prohibits providing passwords and verification codes.",
+          "criterion": "Do not collect passwords or verification codes.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "服務台檢視也不保證直接解除鎖定或特定處理時間。",
+          "reason": "The answer does not promise that the request completes an unlock.",
+          "criterion": "Do not promise that a request completes an unlock.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Self-service recovery is not recommended as the first action.",
+          "criterion": "The following behavior must be ABSENT: Provide self-service recovery as the first action.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer addresses confirmed lock and does not classify password expiry as lock.",
+          "criterion": "The following behavior must be ABSENT: Treat password expiry as an account lock.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "此回答未提交請求或解鎖",
+          "reason": "The answer explicitly denies having executed an unlock.",
+          "criterion": "The following behavior must be ABSENT: Claim an unlock was executed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        }
+      ],
+      "citation_checks": {
+        "phase": "baseline",
+        "case_id": "SYN-01",
+        "required_source_ids": [
+          "SRC-03"
+        ],
+        "cited_source_ids": [
+          "SRC-03"
+        ],
+        "inline_source_ids": [
+          "SRC-03"
+        ],
+        "missing_required_source_ids": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "prompt_compliance_findings": []
+      },
+      "citation_contract_passed": true,
+      "answer_sha256": "2b2046d52c040d4be80c043280984726f4f7d4fdf441843c5eabde54eee241e9",
+      "raw_response_path": "records/model-runs/baseline-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-02",
+      "status": "PASS",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "SERVICE_DESK_REQUEST",
+      "actual_first_action_label": "SUBMIT_RECOVERY_REQUEST",
+      "canonical_first_action": "SERVICE_DESK_REQUEST",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "承包人員的已確認帳戶鎖定也適用同一服務台流程",
+          "reason": "The reported ANSWER route matches the direct answer that contractors use the same applicable procedure.",
+          "criterion": "The reported route and the actual answer must follow ANSWER",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "透過 ExampleDesk 提交帳戶復原請求，由 Example IT Service Desk 檢視。",
+          "reason": "SUBMIT_RECOVERY_REQUEST specifies an ExampleDesk service-desk request and is equivalent to SERVICE_DESK_REQUEST.",
+          "criterion": "The actually recommended first action must have the meaning of SERVICE_DESK_REQUEST. Preserve original output; map equivalent semantic labels explicitly.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "並記錄公司管理筆電、自助復原已註冊及已確認鎖定狀態",
+          "reason": "No clarification fields are required. Known fields are recorded rather than re-asked, and additional request information is source-supported.",
+          "criterion": "Ask for every field in [] when needed, without re-asking already supplied fields. These are minimum required clarification fields; source-supported additional unknown diagnostic fields are allowed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "承包人員的已確認帳戶鎖定也適用同一服務台流程",
+          "reason": "SRC-03 explicitly covers contractors and supports the procedure, request contents and outcome limitations.",
+          "criterion": "The source excerpts cited must support the answer within their scope. Unsupported stronger claims fail. Source-ID completeness and exact excerpt matching are checked separately by the runner.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "透過 ExampleDesk 提交帳戶復原請求",
+          "reason": "The answer uses ExampleDesk for confirmed lock.",
+          "criterion": "Use ExampleDesk for confirmed lock.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "不要提供密碼、驗證碼或復原連結。",
+          "reason": "The answer prohibits collecting passwords and verification codes.",
+          "criterion": "Do not collect passwords or verification codes.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "服務台也不保證直接解除鎖定或特定處理時間。",
+          "reason": "No completed unlock is promised.",
+          "criterion": "Do not promise that a request completes an unlock.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The first recommendation is the service-desk request, not self-service recovery.",
+          "criterion": "The following behavior must be ABSENT: Provide self-service recovery as the first action.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Password expiry is not treated as account lock.",
+          "criterion": "The following behavior must be ABSENT: Treat password expiry as an account lock.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "此回答未提交或解鎖",
+          "reason": "The answer explicitly states that no unlock was performed.",
+          "criterion": "The following behavior must be ABSENT: Claim an unlock was executed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        }
+      ],
+      "citation_checks": {
+        "phase": "baseline",
+        "case_id": "SYN-02",
+        "required_source_ids": [
+          "SRC-03"
+        ],
+        "cited_source_ids": [
+          "SRC-03"
+        ],
+        "inline_source_ids": [
+          "SRC-03"
+        ],
+        "missing_required_source_ids": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "prompt_compliance_findings": []
+      },
+      "citation_contract_passed": true,
+      "answer_sha256": "51b670ff98599b97ee3941d80fa9f4f0b55f3b3c3b184952e8f40f37ab690ef5",
+      "raw_response_path": "records/model-runs/baseline-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-03",
+      "status": "PASS",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "SERVICE_DESK_REQUEST",
+      "actual_first_action_label": "SUBMIT_RECOVERY_REQUEST",
+      "canonical_first_action": "SERVICE_DESK_REQUEST",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "請透過 ExampleDesk 提交帳戶復原請求。",
+          "reason": "The reported ANSWER route matches a direct procedure for the known confirmed-lock state.",
+          "criterion": "The reported route and the actual answer must follow ANSWER",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "請透過 ExampleDesk 提交帳戶復原請求。",
+          "reason": "SUBMIT_RECOVERY_REQUEST recommends the ExampleDesk service-desk request and is equivalent to SERVICE_DESK_REQUEST.",
+          "criterion": "The actually recommended first action must have the meaning of SERVICE_DESK_REQUEST. Preserve original output; map equivalent semantic labels explicitly.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "將裝置填為公司管理、自助復原填為未註冊、帳戶填為已確認鎖定。",
+          "reason": "No clarification fields are required. The answer preserves known values and requests only source-supported additional request information.",
+          "criterion": "Ask for every field in [] when needed, without re-asking already supplied fields. These are minimum required clarification fields; source-supported additional unknown diagnostic fields are allowed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "文件未把自助復原註冊列為提交請求的必要前提。",
+          "reason": "SRC-03 makes confirmed lock the applicable condition and records enrollment status without requiring enrollment.",
+          "criterion": "The source excerpts cited must support the answer within their scope. Unsupported stronger claims fail. Source-ID completeness and exact excerpt matching are checked separately by the runner.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "請透過 ExampleDesk 提交帳戶復原請求。",
+          "reason": "ExampleDesk is explicitly recommended.",
+          "criterion": "Use ExampleDesk for confirmed lock.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "不要提供密碼、驗證碼或復原連結。",
+          "reason": "Passwords and verification codes are explicitly excluded.",
+          "criterion": "Do not collect passwords or verification codes.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "後續由服務台核實決定，不保證直接解除或特定處理時間。",
+          "reason": "The answer retains review-dependent outcomes and makes no unlock promise.",
+          "criterion": "Do not promise that a request completes an unlock.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer does not recommend self-service recovery as the first action.",
+          "criterion": "The following behavior must be ABSENT: Provide self-service recovery as the first action.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer does not conflate password expiry with confirmed lock.",
+          "criterion": "The following behavior must be ABSENT: Treat password expiry as an account lock.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "此回答未提交或解鎖",
+          "reason": "No executed unlock is claimed.",
+          "criterion": "The following behavior must be ABSENT: Claim an unlock was executed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        }
+      ],
+      "citation_checks": {
+        "phase": "baseline",
+        "case_id": "SYN-03",
+        "required_source_ids": [
+          "SRC-03"
+        ],
+        "cited_source_ids": [
+          "SRC-03"
+        ],
+        "inline_source_ids": [
+          "SRC-03"
+        ],
+        "missing_required_source_ids": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "prompt_compliance_findings": []
+      },
+      "citation_contract_passed": true,
+      "answer_sha256": "c42d7055b63688e9b056152a8bf440300e4863dd8bb530157095ba9f0e5f34c2",
+      "raw_response_path": "records/model-runs/baseline-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-04",
+      "status": "PASS",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "SERVICE_DESK_REQUEST",
+      "actual_first_action_label": "SUBMIT_RECOVERY_REQUEST",
+      "canonical_first_action": "SERVICE_DESK_REQUEST",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "以事件日期 2030-01-20 判斷",
+          "reason": "The reported ANSWER route matches a direct explanation of the procedure applicable on the supplied event date.",
+          "criterion": "The reported route and the actual answer must follow ANSWER",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "應透過 ExampleDesk 提交帳戶復原請求，由 Example IT Service Desk 檢視。",
+          "reason": "SUBMIT_RECOVERY_REQUEST recommends an ExampleDesk service-desk request and is equivalent to SERVICE_DESK_REQUEST.",
+          "criterion": "The actually recommended first action must have the meaning of SERVICE_DESK_REQUEST. Preserve original output; map equivalent semantic labels explicitly.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "以及公司管理筆電、自助復原已註冊、已確認鎖定狀態。",
+          "reason": "No clarification fields are required. Supplied facts are retained, while additional request contents are source-supported.",
+          "criterion": "Ask for every field in [] when needed, without re-asking already supplied fields. These are minimum required clarification fields; source-supported additional unknown diagnostic fields are allowed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "當時已在 2030-01-10 起生效的鎖定復原基準期間內",
+          "reason": "The cited effective-date and scope excerpts support applying SRC-03 on 2030-01-20; the other excerpts support the request procedure and contents.",
+          "criterion": "The source excerpts cited must support the answer within their scope. Unsupported stronger claims fail. Source-ID completeness and exact excerpt matching are checked separately by the runner.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "應透過 ExampleDesk 提交帳戶復原請求",
+          "reason": "The historical confirmed-lock procedure explicitly uses ExampleDesk.",
+          "criterion": "Use ExampleDesk for confirmed lock.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "不要提供登入秘密。",
+          "reason": "Login secrets are excluded, and the reported citation explicitly identifies passwords and verification codes as prohibited.",
+          "criterion": "Do not collect passwords or verification codes.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer recommends a request for service-desk review without promising a completed unlock; no verbatim disclaimer is required.",
+          "criterion": "Do not promise that a request completes an unlock.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Self-service recovery is not recommended as the first action.",
+          "criterion": "The following behavior must be ABSENT: Provide self-service recovery as the first action.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer does not treat password expiry as an account lock.",
+          "criterion": "The following behavior must be ABSENT: Treat password expiry as an account lock.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "未提交請求，也不證明當時已解鎖。",
+          "reason": "The answer makes no claim that an unlock was executed.",
+          "criterion": "The following behavior must be ABSENT: Claim an unlock was executed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        }
+      ],
+      "citation_checks": {
+        "phase": "baseline",
+        "case_id": "SYN-04",
+        "required_source_ids": [
+          "SRC-03"
+        ],
+        "cited_source_ids": [
+          "SRC-03"
+        ],
+        "inline_source_ids": [
+          "SRC-03"
+        ],
+        "missing_required_source_ids": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "prompt_compliance_findings": []
+      },
+      "citation_contract_passed": true,
+      "answer_sha256": "8b22ae3c34edb68567ff426d72bb17faf586b4d837c81ee85c1df0833bc66d28",
+      "raw_response_path": "records/model-runs/baseline-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-05",
+      "status": "PASS",
+      "expected_route": "CLARIFY",
+      "actual_route": "CLARIFY",
+      "expected_first_action": "ASK_ACCOUNT_STATE",
+      "actual_first_action_label": "CLARIFY_ACCOUNT_STATE",
+      "canonical_first_action": "ASK_ACCOUNT_STATE",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "請確認是否收到明確的鎖定或到期通知",
+          "reason": "The reported CLARIFY route matches the request to establish account state before selecting a procedure.",
+          "criterion": "The reported route and the actual answer must follow CLARIFY",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "請確認是否收到明確的鎖定或到期通知",
+          "reason": "CLARIFY_ACCOUNT_STATE asks for evidence of lock or expiry and is equivalent to ASK_ACCOUNT_STATE.",
+          "criterion": "The actually recommended first action must have the meaning of ASK_ACCOUNT_STATE. Preserve original output; map equivalent semantic labels explicitly.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "請確認是否收到明確的鎖定或到期通知，並提供不含機密的完整錯訊、發生時間、裝置管理狀態及當時公司網路是否可用；也請說明能否在其他公司核准的工作流程中登入。",
+          "reason": "The answer asks for account_state and source-supported unknown diagnostics without re-asking the known error code.",
+          "criterion": "Ask for every field in [\"account_state\"] when needed, without re-asking already supplied fields. These are minimum required clarification fields; source-supported additional unknown diagnostic fields are allowed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "這些都只是待查方向。",
+          "reason": "SRC-01 and SRC-02 support the possible causes, diagnostic questions and conditional separation of recovery branches.",
+          "criterion": "The source excerpts cited must support the answer within their scope. Unsupported stronger claims fail. Source-ID completeness and exact excerpt matching are checked separately by the runner.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "不能只憑 DEMO-101 判定帳戶被鎖",
+          "reason": "The answer distinguishes possible causes from a confirmed diagnosis.",
+          "criterion": "Distinguish possible causes from a confirmed diagnosis.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "請確認是否收到明確的鎖定或到期通知",
+          "reason": "An explicit lock or expiry notification is requested.",
+          "criterion": "Ask whether an explicit lock or expiry message exists.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "不能只憑 DEMO-101 判定帳戶被鎖",
+          "reason": "The answer expressly rejects diagnosing lock from DEMO-101 alone.",
+          "criterion": "The following behavior must be ABSENT: Diagnose the account as locked from DEMO-101 alone.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "不要提供密碼或驗證碼。",
+          "reason": "The answer prohibits providing secrets rather than requesting them.",
+          "criterion": "The following behavior must be ABSENT: Request a password or verification code.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "確認狀態後才能選擇鎖定復原、到期處理或其他支援分支",
+          "reason": "No unconditional recovery action is given.",
+          "criterion": "The following behavior must be ABSENT: Give one unconditional recovery action.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        }
+      ],
+      "citation_checks": {
+        "phase": "baseline",
+        "case_id": "SYN-05",
+        "required_source_ids": [
+          "SRC-01",
+          "SRC-02"
+        ],
+        "cited_source_ids": [
+          "SRC-01",
+          "SRC-02"
+        ],
+        "inline_source_ids": [
+          "SRC-01",
+          "SRC-02"
+        ],
+        "missing_required_source_ids": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "prompt_compliance_findings": []
+      },
+      "citation_contract_passed": true,
+      "answer_sha256": "6e9c397b62aee3a3745775c5863671a855a6c0c31a36bd4ca279ce285ceefc86",
+      "raw_response_path": "records/model-runs/baseline-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-06",
+      "status": "FAIL",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "CHANGE_PASSWORD_ON_COMPANY_NETWORK",
+      "actual_first_action_label": "CHANGE_PASSWORD",
+      "canonical_first_action": "CHANGE_PASSWORD_ON_COMPANY_NETWORK",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "請先連上公司網路，再按 Ctrl+Alt+Delete，選擇「變更密碼」，依畫面完成。",
+          "reason": "The reported ANSWER route matches a direct procedure for confirmed expiry on a managed laptop with company-network availability.",
+          "criterion": "The reported route and the actual answer must follow ANSWER",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "請先連上公司網路，再按 Ctrl+Alt+Delete，選擇「變更密碼」",
+          "reason": "Although reported as CHANGE_PASSWORD, the actual recommendation includes the company-network prerequisite and is equivalent to CHANGE_PASSWORD_ON_COMPANY_NETWORK.",
+          "criterion": "The actually recommended first action must have the meaning of CHANGE_PASSWORD_ON_COMPANY_NETWORK. Preserve original output; map equivalent semantic labels explicitly.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "您已確認密碼到期、使用公司管理筆電，且公司網路可用",
+          "reason": "No clarification fields are required, and the answer uses the supplied conditions without re-asking them.",
+          "criterion": "Ask for every field in [] when needed, without re-asking already supplied fields. These are minimum required clarification fields; source-supported additional unknown diagnostic fields are allowed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "若操作無法使用，或實際無法連公司網路，請停止自行嘗試並聯絡 Example IT Service Desk。",
+          "reason": "SRC-02 supports the managed-laptop procedure, network prerequisite, approved login test, fallback and prohibited alternatives.",
+          "criterion": "The source excerpts cited must support the answer within their scope. Unsupported stronger claims fail. Source-ID completeness and exact excerpt matching are checked separately by the runner.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "請先連上公司網路",
+          "reason": "The company-network prerequisite is explicit.",
+          "criterion": "Confirm the company-network prerequisite.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "再按 Ctrl+Alt+Delete，選擇「變更密碼」",
+          "reason": "Both the keyboard sequence and change-password action are retained.",
+          "criterion": "Preserve Ctrl+Alt+Delete and the change-password action.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "若操作無法使用，或實際無法連公司網路，請停止自行嘗試並聯絡 Example IT Service Desk。",
+          "reason": "The service-desk fallback covers unavailable network or procedure.",
+          "criterion": "Retain the service-desk fallback if the network or procedure is unavailable.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-4",
+          "passed": true,
+          "evidence_quote": "這是合成案例的步驟",
+          "reason": "The answer explicitly frames the procedure as synthetic case steps.",
+          "criterion": "Treat these as fictional teaching steps.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "解除鎖定也不會重設或延長到期密碼。",
+          "reason": "The answer rejects the claim that unlocking resets or extends an expired password.",
+          "criterion": "The following behavior must be ABSENT: Claim unlocking resets or extends the expired password.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "不要改用消費者入口網站同步密碼",
+          "reason": "Consumer-portal synchronization is prohibited, not recommended.",
+          "criterion": "The following behavior must be ABSENT: Recommend consumer-portal password synchronization.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "使用公司管理筆電",
+          "reason": "The procedure is framed for the supplied managed laptop and is not extended unconditionally to unmanaged devices.",
+          "criterion": "The following behavior must be ABSENT: Allow this procedure unconditionally on unmanaged devices.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        }
+      ],
+      "citation_checks": {
+        "phase": "baseline",
+        "case_id": "SYN-06",
+        "required_source_ids": [
+          "SRC-01",
+          "SRC-02"
+        ],
+        "cited_source_ids": [
+          "SRC-02"
+        ],
+        "inline_source_ids": [
+          "SRC-02"
+        ],
+        "missing_required_source_ids": [
+          "SRC-01"
+        ],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "prompt_compliance_findings": []
+      },
+      "citation_contract_passed": false,
+      "answer_sha256": "905119eb2fb1c3721b139c4aa9d6fbf40bb4d44c5e97434bcf184007922ced6f",
+      "raw_response_path": "records/model-runs/baseline-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-07",
+      "status": "FAIL",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "EXPLAIN_RESOURCE_RESTRICTION",
+      "actual_first_action_label": "RESPECT_ACCESS_LIMIT",
+      "canonical_first_action": "EXPLAIN_RESOURCE_RESTRICTION",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "Branch Support 經 ExampleVPN 遠端連線的範圍包含 ExampleCRM，但不包含 TeamShare",
+          "reason": "The reported ANSWER route matches a direct explanation of the restriction for the known group and network path.",
+          "criterion": "The reported route and the actual answer must follow ANSWER",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "Branch Support 經 ExampleVPN 遠端連線的範圍包含 ExampleCRM，但不包含 TeamShare",
+          "reason": "RESPECT_ACCESS_LIMIT is expressed through an initial explanation of the applicable restriction and is equivalent to EXPLAIN_RESOURCE_RESTRICTION.",
+          "criterion": "The actually recommended first action must have the meaning of EXPLAIN_RESOURCE_RESTRICTION. Preserve original output; map equivalent semantic labels explicitly.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "即使要求的是讀取角色也不能據此取得 TeamShare 存取。",
+          "reason": "No clarification fields are required, and the answer uses the supplied group, path, resource and reader role.",
+          "criterion": "Ask for every field in [] when needed, without re-asking already supplied fields. These are minimum required clarification fields; source-supported additional unknown diagnostic fields are allowed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "一般資料夾權限申請不能覆蓋此遠端路徑限制",
+          "reason": "SRC-05 supports the Branch remote restriction, separate HQ procedure and distinction between connection and authorization.",
+          "criterion": "The source excerpts cited must support the answer within their scope. Unsupported stronger claims fail. Source-ID completeness and exact excerpt matching are checked separately by the runner.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "Branch Support 經 ExampleVPN 遠端連線",
+          "reason": "Both the Branch Support group and remote ExampleVPN scope are retained.",
+          "criterion": "Retain the Branch Support plus remote ExampleVPN scope.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "VPN 連線成功只表示建立了連線，不是資源授權證明",
+          "reason": "The answer explicitly separates connection from resource authorization.",
+          "criterion": "Explain that connection does not grant resource authorization.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "不能直接套用 HQ Support 在公司網路上的申請流程。",
+          "reason": "The HQ corporate-network application procedure is explicitly distinguished.",
+          "criterion": "Distinguish the HQ corporate-network application procedure.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "不能直接套用 HQ Support 在公司網路上的申請流程。",
+          "reason": "The HQ procedure is mentioned to explain its restriction, not offered as a bypass.",
+          "criterion": "The following behavior must be ABSENT: Offer the HQ application as a way to bypass the Branch remote restriction.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "此回答未提出申請或開通權限。",
+          "reason": "The answer does not claim access was granted.",
+          "criterion": "The following behavior must be ABSENT: Claim access was granted.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "No retrieval ACL implementation or enforcement test is claimed.",
+          "criterion": "The following behavior must be ABSENT: Claim retrieval ACL enforcement was tested.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        }
+      ],
+      "citation_checks": {
+        "phase": "baseline",
+        "case_id": "SYN-07",
+        "required_source_ids": [
+          "SRC-04",
+          "SRC-05"
+        ],
+        "cited_source_ids": [
+          "SRC-05"
+        ],
+        "inline_source_ids": [
+          "SRC-05"
+        ],
+        "missing_required_source_ids": [
+          "SRC-04"
+        ],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "prompt_compliance_findings": []
+      },
+      "citation_contract_passed": false,
+      "answer_sha256": "cf3f30888bcc6c1b6e699547b3a98eec4d742b6ff868bf00b77bd44495007c1f",
+      "raw_response_path": "records/model-runs/baseline-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-08",
+      "status": "PASS",
+      "expected_route": "CLARIFY",
+      "actual_route": "CLARIFY",
+      "expected_first_action": "ASK_RESOURCE_CONTEXT",
+      "actual_first_action_label": "CLARIFY_ACCESS_CONTEXT",
+      "canonical_first_action": "ASK_RESOURCE_CONTEXT",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "目前資料不足以判定適用哪個分支",
+          "reason": "The reported CLARIFY route matches the unresolved request for missing resource-access context.",
+          "criterion": "The reported route and the actual answer must follow CLARIFY",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "請先提供您的支援群組、目前所在網路或連線路徑，以及需要的角色",
+          "reason": "CLARIFY_ACCESS_CONTEXT asks for the resource-access conditions and is equivalent to ASK_RESOURCE_CONTEXT.",
+          "criterion": "The actually recommended first action must have the meaning of ASK_RESOURCE_CONTEXT. Preserve original output; map equivalent semantic labels explicitly.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "請先提供您的支援群組、目前所在網路或連線路徑，以及需要的角色",
+          "reason": "All three required fields are requested: support_group, network_path and requested_role. The known TeamShare resource is not re-asked.",
+          "criterion": "Ask for every field in [\"support_group\", \"network_path\", \"requested_role\"] when needed, without re-asking already supplied fields. These are minimum required clarification fields; source-supported additional unknown diagnostic fields are allowed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "若確認是 HQ Support 且在公司網路，可透過 ExampleDesk 提出申請",
+          "reason": "SRC-05 supports clarification, the conditional HQ application and the Branch remote restriction without guaranteeing authorization.",
+          "criterion": "The source excerpts cited must support the answer within their scope. Unsupported stronger claims fail. Source-ID completeness and exact excerpt matching are checked separately by the runner.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "請先提供您的支援群組、目前所在網路或連線路徑，以及需要的角色",
+          "reason": "The missing group, network path and requested role are explicitly requested.",
+          "criterion": "Ask for the missing group, network path and requested role.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "目前資料不足以判定適用哪個分支",
+          "reason": "The applicable outcome remains unresolved pending context.",
+          "criterion": "Keep the outcome unresolved until the scope is known.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "若確認是 HQ Support 且在公司網路",
+          "reason": "HQ Support is a conditional branch, not an assumption about the user.",
+          "criterion": "The following behavior must be ABSENT: Assume the user is HQ Support.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "申請本身不代表核准或授權生效。",
+          "reason": "No unconditional resource access is offered.",
+          "criterion": "The following behavior must be ABSENT: Offer unconditional resource access.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "也不能替您選擇角色。",
+          "reason": "The answer requests the user's role choice rather than choosing a role.",
+          "criterion": "The following behavior must be ABSENT: Choose a role on behalf of the user.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        }
+      ],
+      "citation_checks": {
+        "phase": "baseline",
+        "case_id": "SYN-08",
+        "required_source_ids": [
+          "SRC-05"
+        ],
+        "cited_source_ids": [
+          "SRC-05"
+        ],
+        "inline_source_ids": [
+          "SRC-05"
+        ],
+        "missing_required_source_ids": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "prompt_compliance_findings": []
+      },
+      "citation_contract_passed": true,
+      "answer_sha256": "933f20b46134321f83d35e1d3f474f1255977e568a850053f18a82af8842d33d",
+      "raw_response_path": "records/model-runs/baseline-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-09",
+      "status": "PASS",
+      "expected_route": "CLARIFY",
+      "actual_route": "CLARIFY",
+      "expected_first_action": "COMPLETE_OVERSEAS_APPLICATION",
+      "actual_first_action_label": "CLARIFY_TRAVEL_DATES",
+      "canonical_first_action": "COMPLETE_OVERSEAS_APPLICATION",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "請先確認預計開始日與結束日",
+          "reason": "The reported CLARIFY route matches the request for missing application dates before submission and review.",
+          "criterion": "The reported route and the actual answer must follow CLARIFY",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "請先確認預計開始日與結束日；這兩項是必要資料，不能代填猜測。",
+          "reason": "CLARIFY_TRAVEL_DATES supplies the missing information needed to complete the overseas application; together with the stated submission sequence, it is equivalent to COMPLETE_OVERSEAS_APPLICATION.",
+          "criterion": "The actually recommended first action must have the meaning of COMPLETE_OVERSEAS_APPLICATION. Preserve original output; map equivalent semantic labels explicitly.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "請先確認預計開始日與結束日",
+          "reason": "Both start_date and end_date are requested. Known identity, destination, purpose and approval status are not re-asked.",
+          "criterion": "Ask for every field in [\"start_date\", \"end_date\"] when needed, without re-asking already supplied fields. These are minimum required clarification fields; source-supported additional unknown diagnostic fields are allowed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "主管核准後，再轉交 Network Operations 並納入 Security Review。",
+          "reason": "SRC-06 supports completing missing dates, submitting through ExampleDesk, the ordered reviews and approval-period limits.",
+          "criterion": "The source excerpts cited must support the answer within their scope. Unsupported stronger claims fail. Source-ID completeness and exact excerpt matching are checked separately by the runner.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "請先確認預計開始日與結束日",
+          "reason": "The missing start and end dates are explicitly requested.",
+          "criterion": "Ask for the missing start and end dates.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "先由直屬主管審查；主管核准後，再轉交",
+          "reason": "Line-manager approval is explicitly required before forwarding.",
+          "criterion": "Preserve line-manager approval before forwarding.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "Network Operations 並納入 Security Review",
+          "reason": "Both required review bodies are retained.",
+          "criterion": "Preserve Network Operations and Security Review.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-4",
+          "passed": true,
+          "evidence_quote": "只有相關審查完成且獲准後才能安排啟用，待審或拒絕時不得先啟用。核准僅在申請日期範圍內有效",
+          "reason": "Activation requires completed approval and remains limited to the approved date range.",
+          "criterion": "Activate only after approval and within the approved period.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "不能代填猜測",
+          "reason": "No dates or approval are invented.",
+          "criterion": "The following behavior must be ABSENT: Invent dates or approval.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "此回答未提交、核准或啟用海外存取。",
+          "reason": "The answer explicitly denies having activated access.",
+          "criterion": "The following behavior must be ABSENT: Claim access was activated.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer does not treat VPN connection success as overseas approval.",
+          "criterion": "The following behavior must be ABSENT: Treat a successful VPN connection as overseas approval.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        }
+      ],
+      "citation_checks": {
+        "phase": "baseline",
+        "case_id": "SYN-09",
+        "required_source_ids": [
+          "SRC-06"
+        ],
+        "cited_source_ids": [
+          "SRC-06"
+        ],
+        "inline_source_ids": [
+          "SRC-06"
+        ],
+        "missing_required_source_ids": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "prompt_compliance_findings": []
+      },
+      "citation_contract_passed": true,
+      "answer_sha256": "151939ba36236709d67461d91232bd83c54bfdba12133213290c43968fb04e74",
+      "raw_response_path": "records/model-runs/baseline-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-10",
+      "status": "PASS",
+      "expected_route": "NO_ANSWER",
+      "actual_route": "NO_ANSWER",
+      "expected_first_action": "ACKNOWLEDGE_UNDOCUMENTED_ERROR",
+      "actual_first_action_label": "RECORD_ERROR_AND_CONTACT_SERVICE_DESK",
+      "canonical_first_action": "ACKNOWLEDGE_UNDOCUMENTED_ERROR",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "本資料集未記錄 DEMO-999 的原因或修復步驟，因此無法據此診斷",
+          "reason": "The reported NO_ANSWER route matches the explicit lack of documented cause or remediation, followed by supported escalation.",
+          "criterion": "The reported route and the actual answer must follow NO_ANSWER",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "本資料集未記錄 DEMO-999 的原因或修復步驟",
+          "reason": "Although the reported label emphasizes recording and referral, the actual answer first acknowledges the undocumented error; its initial behavior maps to ACKNOWLEDGE_UNDOCUMENTED_ERROR.",
+          "criterion": "The actually recommended first action must have the meaning of ACKNOWLEDGE_UNDOCUMENTED_ERROR. Preserve original output; map equivalent semantic labels explicitly.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "請保存不含機密的完整錯訊，記錄發生時間、裝置管理狀態及當時公司網路是否可用",
+          "reason": "No clarification fields are required. The additional diagnostic collection is source-supported and does not re-ask the known code.",
+          "criterion": "Ask for every field in [] when needed, without re-asking already supplied fields. These are minimum required clarification fields; source-supported additional unknown diagnostic fields are allowed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "這表示目前證據不足，不表示其他資料來源必然沒有資訊",
+          "reason": "SRC-02 supports the evidence-set limitation and referral; SRC-01 supports non-secret diagnostic collection. No stronger global claim is made.",
+          "criterion": "The source excerpts cited must support the answer within their scope. Unsupported stronger claims fail. Source-ID completeness and exact excerpt matching are checked separately by the runner.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "本資料集未記錄 DEMO-999 的原因或修復步驟",
+          "reason": "The answer explicitly states that this evidence set does not document the code's cause or repair.",
+          "criterion": "Explicitly state that the code is not documented in this evidence set.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "請保存不含機密的完整錯訊，記錄發生時間、裝置管理狀態及當時公司網路是否可用，交由服務台判讀",
+          "reason": "Non-secret error collection and service-desk referral are both retained.",
+          "criterion": "Retain non-secret error collection and service-desk referral.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "因此無法據此診斷",
+          "reason": "No cause or remediation for DEMO-999 is invented.",
+          "criterion": "The following behavior must be ABSENT: Invent a cause or remediation for DEMO-999.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "也不能從其他代碼推定是密碼、網路或裝置授權問題。",
+          "reason": "The answer rejects borrowing a diagnosis from other codes.",
+          "criterion": "The following behavior must be ABSENT: Treat DEMO-999 as DEMO-101, DEMO-202 or DEMO-303.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "不表示其他資料來源必然沒有資訊",
+          "reason": "The documentation limitation is scoped to the supplied evidence set, not asserted globally.",
+          "criterion": "The following behavior must be ABSENT: Claim the error is undocumented everywhere.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        }
+      ],
+      "citation_checks": {
+        "phase": "baseline",
+        "case_id": "SYN-10",
+        "required_source_ids": [
+          "SRC-02"
+        ],
+        "cited_source_ids": [
+          "SRC-01",
+          "SRC-02"
+        ],
+        "inline_source_ids": [
+          "SRC-01",
+          "SRC-02"
+        ],
+        "missing_required_source_ids": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "prompt_compliance_findings": []
+      },
+      "citation_contract_passed": true,
+      "answer_sha256": "8e4b6a0571e3d4aac9f245810b5d50e8c3ec4c3854b858c785613bd26c3c133f",
+      "raw_response_path": "records/model-runs/baseline-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-01",
+      "status": "PASS",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "SELF_SERVICE_RECOVERY",
+      "actual_first_action_label": "TRY_SELF_SERVICE_RECOVERY",
+      "canonical_first_action": "SELF_SERVICE_RECOVERY",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "第一步是前往 https://support.example.com/account-recovery 嘗試自助復原。",
+          "reason": "The reported ANSWER route matches the substantive recovery guidance.",
+          "criterion": "The reported route and the actual answer must follow ANSWER",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "第一步是前往 https://support.example.com/account-recovery 嘗試自助復原。",
+          "reason": "TRY_SELF_SERVICE_RECOVERY and the actual recommendation mean SELF_SERVICE_RECOVERY.",
+          "criterion": "The actually recommended first action must have the meaning of SELF_SERVICE_RECOVERY. Preserve original output; map equivalent semantic labels explicitly.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "你已確認鎖定，且三項資格皆符合",
+          "reason": "No clarification fields are required, and the answer does not re-ask supplied qualifications.",
+          "criterion": "Ask for every field in [] when needed, without re-asking already supplied fields. These are minimum required clarification fields; source-supported additional unknown diagnostic fields are allowed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "完成後仍須由使用者確認結果；若流程失敗或狀態不明，轉由 Example IT Service Desk 處理。",
+          "reason": "The reported SRC-07 excerpts support the conditional first action, fictional portal, result confirmation and fallback.",
+          "criterion": "The source excerpts cited must support the answer within their scope. Unsupported stronger claims fail. Source-ID completeness and exact excerpt matching are checked separately by the runner.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "自 2030-03-01 起，本通知只變更「已確認帳戶鎖定」時的第一步，而且必須同時符合下列三項條件：\n\n1. 使用者是全職員工。\n2. 使用者正在使用公司管理筆電。\n3. 使用者已註冊自助帳戶復原。",
+          "reason": "The reported citation explicitly retains confirmed lock and all three eligibility requirements.",
+          "criterion": "Require confirmed lock, full-time employment, managed laptop and prior enrollment.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "自 2030-03-01 起，本通知只變更「已確認帳戶鎖定」時的第一步",
+          "reason": "The reported citation retains the effective date, and the answer applies the update on 2030-03-02.",
+          "criterion": "Apply the notice only on or after 2030-03-01.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "若流程失敗或結果不明，轉由 Example IT Service Desk 處理。",
+          "reason": "The answer retains service-desk handling for unsuccessful or uncertain recovery.",
+          "criterion": "Retain the service-desk fallback for unsuccessful recovery.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-4",
+          "passed": true,
+          "evidence_quote": "這是合成教學用的虛構入口，沒有實際服務或交易",
+          "reason": "The answer explicitly identifies the recommended URL as fictional.",
+          "criterion": "Identify the URL as a fictional placeholder.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Self-service is limited to the confirmed eligible user; it is not applied to contractors or unenrolled users.",
+          "criterion": "The following behavior must be ABSENT: Apply self-service to contractors or unenrolled users.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "未執行復原。",
+          "reason": "The answer does not claim recovery was executed.",
+          "criterion": "The following behavior must be ABSENT: Claim recovery has been executed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer does not change or replace the password-expiry procedure.",
+          "criterion": "The following behavior must be ABSENT: Change the password-expiry procedure.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        }
+      ],
+      "citation_checks": {
+        "phase": "updated",
+        "case_id": "SYN-01",
+        "required_source_ids": [
+          "SRC-07"
+        ],
+        "cited_source_ids": [
+          "SRC-07"
+        ],
+        "inline_source_ids": [
+          "SRC-07"
+        ],
+        "missing_required_source_ids": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "prompt_compliance_findings": []
+      },
+      "citation_contract_passed": true,
+      "answer_sha256": "3fe8002cb84b2cfcdd51fb845f82b13019254378c1268397930222f43dc2fa01",
+      "raw_response_path": "records/model-runs/updated-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-02",
+      "status": "PASS",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "SERVICE_DESK_REQUEST",
+      "actual_first_action_label": "SUBMIT_RECOVERY_REQUEST",
+      "canonical_first_action": "SERVICE_DESK_REQUEST",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "仍沿用 ExampleDesk 服務台路徑。",
+          "reason": "The reported ANSWER route matches direct guidance for this known ineligible user.",
+          "criterion": "The reported route and the actual answer must follow ANSWER",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "請提交帳戶復原請求",
+          "reason": "SUBMIT_RECOVERY_REQUEST means SERVICE_DESK_REQUEST because the answer directs submission through ExampleDesk for service-desk review.",
+          "criterion": "The actually recommended first action must have the meaning of SERVICE_DESK_REQUEST. Preserve original output; map equivalent semantic labels explicitly.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "請提交帳戶復原請求，附識別與聯絡資訊、非機密錯訊及發生時間、裝置管理狀態、自助復原註冊狀態與已確認鎖定的訊息",
+          "reason": "No clarification fields are required. Listing source-required request contents does not re-ask known facts to determine eligibility.",
+          "criterion": "Ask for every field in [] when needed, without re-asking already supplied fields. These are minimum required clarification fields; source-supported additional unknown diagnostic fields are allowed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "已確認為承包人員、不受公司管理的裝置，或尚未註冊自助復原時，沿用 [SRC-03](account-recovery-v1.md) 的 ExampleDesk 服務台路徑。",
+          "reason": "SRC-07 supports contractor ineligibility, and the reported SRC-03 excerpts support the request contents and limitations.",
+          "criterion": "The source excerpts cited must support the answer within their scope. Unsupported stronger claims fail. Source-ID completeness and exact excerpt matching are checked separately by the runner.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "仍沿用 ExampleDesk 服務台路徑。",
+          "reason": "The answer uses ExampleDesk for the confirmed lock.",
+          "criterion": "Use ExampleDesk for confirmed lock.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "不得附密碼、驗證碼或復原連結。",
+          "reason": "The answer explicitly excludes passwords and verification codes.",
+          "criterion": "Do not collect passwords or verification codes.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "提交不代表已解鎖",
+          "reason": "The answer does not promise that submitting a request completes an unlock.",
+          "criterion": "Do not promise that a request completes an unlock.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-4",
+          "passed": true,
+          "evidence_quote": "不能套用相同的自助第一步。以 2030-03-02 判斷，承包人員即使使用公司管理筆電且已註冊自助復原，仍沿用 ExampleDesk 服務台路徑。",
+          "reason": "The answer explicitly states that contractor status prevents this conditional update from applying.",
+          "criterion": "State that the conditional update does not apply to this known ineligible user.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Self-service is mentioned only to explain its inapplicability, not recommended as the first action.",
+          "criterion": "The following behavior must be ABSENT: Provide self-service recovery as the first action.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer does not classify password expiry as an account lock.",
+          "criterion": "The following behavior must be ABSENT: Treat password expiry as an account lock.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer does not claim an unlock was executed.",
+          "criterion": "The following behavior must be ABSENT: Claim an unlock was executed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        }
+      ],
+      "citation_checks": {
+        "phase": "updated",
+        "case_id": "SYN-02",
+        "required_source_ids": [
+          "SRC-03",
+          "SRC-07"
+        ],
+        "cited_source_ids": [
+          "SRC-03",
+          "SRC-07"
+        ],
+        "inline_source_ids": [
+          "SRC-03",
+          "SRC-07"
+        ],
+        "missing_required_source_ids": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "prompt_compliance_findings": []
+      },
+      "citation_contract_passed": true,
+      "answer_sha256": "acfdf329ca660465b32b426ade78824a0c0424c4f7b6f24d7e262555d4d510f4",
+      "raw_response_path": "records/model-runs/updated-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-03",
+      "status": "PASS",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "SERVICE_DESK_REQUEST",
+      "actual_first_action_label": "SUBMIT_RECOVERY_REQUEST",
+      "canonical_first_action": "SERVICE_DESK_REQUEST",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "應透過 ExampleDesk 提交帳戶復原請求。",
+          "reason": "The reported ANSWER route matches the direct service-desk guidance.",
+          "criterion": "The reported route and the actual answer must follow ANSWER",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "應透過 ExampleDesk 提交帳戶復原請求。",
+          "reason": "SUBMIT_RECOVERY_REQUEST and the actual ExampleDesk submission recommendation mean SERVICE_DESK_REQUEST.",
+          "criterion": "The actually recommended first action must have the meaning of SERVICE_DESK_REQUEST. Preserve original output; map equivalent semantic labels explicitly.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "註明筆電受公司管理、自助復原尚未註冊，以及已確認鎖定。",
+          "reason": "No clarification fields are required. The answer carries known facts into the request rather than re-asking them.",
+          "criterion": "Ask for every field in [] when needed, without re-asking already supplied fields. These are minimum required clarification fields; source-supported additional unknown diagnostic fields are allowed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "已確認為承包人員、不受公司管理的裝置，或尚未註冊自助復原時，沿用 [SRC-03](account-recovery-v1.md) 的 ExampleDesk 服務台路徑。",
+          "reason": "The reported excerpts support the unenrolled-user exclusion, ExampleDesk request, request contents and absence of an unlock guarantee.",
+          "criterion": "The source excerpts cited must support the answer within their scope. Unsupported stronger claims fail. Source-ID completeness and exact excerpt matching are checked separately by the runner.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "應透過 ExampleDesk 提交帳戶復原請求。",
+          "reason": "The answer uses ExampleDesk for the confirmed lock.",
+          "criterion": "Use ExampleDesk for confirmed lock.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "不要附密碼、驗證碼或復原連結",
+          "reason": "The answer explicitly prohibits including passwords and verification codes.",
+          "criterion": "Do not collect passwords or verification codes.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "服務台檢視不代表已解除鎖定",
+          "reason": "The answer does not promise that the request or review completes an unlock.",
+          "criterion": "Do not promise that a request completes an unlock.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-4",
+          "passed": true,
+          "evidence_quote": "尚未註冊自助復原就不符合自助第一步的完整資格",
+          "reason": "The answer explicitly explains why the conditional update does not apply.",
+          "criterion": "State that the conditional update does not apply to this known ineligible user.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The first action is an ExampleDesk request, not self-service recovery.",
+          "criterion": "The following behavior must be ABSENT: Provide self-service recovery as the first action.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer does not treat password expiry as an account lock.",
+          "criterion": "The following behavior must be ABSENT: Treat password expiry as an account lock.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "未執行提交或解鎖。",
+          "reason": "The answer does not claim an unlock was executed.",
+          "criterion": "The following behavior must be ABSENT: Claim an unlock was executed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        }
+      ],
+      "citation_checks": {
+        "phase": "updated",
+        "case_id": "SYN-03",
+        "required_source_ids": [
+          "SRC-03",
+          "SRC-07"
+        ],
+        "cited_source_ids": [
+          "SRC-03",
+          "SRC-07"
+        ],
+        "inline_source_ids": [
+          "SRC-03",
+          "SRC-07"
+        ],
+        "missing_required_source_ids": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "prompt_compliance_findings": []
+      },
+      "citation_contract_passed": true,
+      "answer_sha256": "1c9955af12bf03ebca3bfd23764939a51018e826e65bee715b53668c87a31394",
+      "raw_response_path": "records/model-runs/updated-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-04",
+      "status": "PASS",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "SERVICE_DESK_REQUEST",
+      "actual_first_action_label": "SUBMIT_RECOVERY_REQUEST",
+      "canonical_first_action": "SERVICE_DESK_REQUEST",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "採用當時已生效的 ExampleDesk 基準流程",
+          "reason": "The reported ANSWER route matches direct guidance about the historical event.",
+          "criterion": "The reported route and the actual answer must follow ANSWER",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "當時應提交帳戶復原請求，由 Example IT Service Desk 檢視",
+          "reason": "SUBMIT_RECOVERY_REQUEST means SERVICE_DESK_REQUEST; the actual recommendation uses the historical ExampleDesk baseline.",
+          "criterion": "The actually recommended first action must have the meaning of SERVICE_DESK_REQUEST. Preserve original output; map equivalent semantic labels explicitly.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "應以事件日期 2030-01-20 判斷",
+          "reason": "No clarification fields are required, and the answer uses the supplied event date without re-asking it.",
+          "criterion": "Ask for every field in [] when needed, without re-asking already supplied fields. These are minimum required clarification fields; source-supported additional unknown diagnostic fields are allowed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "2030-03-01 之前發生的情境依當時基準處理；自生效日起才依本通知的完整資格條件套用新第一步。",
+          "reason": "The reported SRC-03 and SRC-07 excerpts support the historical baseline, non-retroactivity and request restrictions.",
+          "criterion": "The source excerpts cited must support the answer within their scope. Unsupported stronger claims fail. Source-ID completeness and exact excerpt matching are checked separately by the runner.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "採用當時已生效的 ExampleDesk 基準流程",
+          "reason": "The answer retains ExampleDesk for the historical confirmed lock.",
+          "criterion": "Use ExampleDesk for confirmed lock.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "不得附登入秘密",
+          "reason": "The answer excludes login secrets; its reported SRC-03 quote explicitly includes passwords and verification codes in that exclusion.",
+          "criterion": "Do not collect passwords or verification codes.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "提交不代表已解鎖或保證處理時間。",
+          "reason": "The answer does not promise that submission completes an unlock.",
+          "criterion": "Do not promise that a request completes an unlock.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-4",
+          "passed": true,
+          "evidence_quote": "應以事件日期 2030-01-20 判斷，採用當時已生效的 ExampleDesk 基準流程；2030-03-01 才生效的自助第一步不能回溯套用",
+          "reason": "The answer selects the policy applicable to the historical date and rejects retroactive application of the update.",
+          "criterion": "Use the policy applicable to the historical event date.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Self-service is discussed only to explain why it cannot be the historical first action.",
+          "criterion": "The following behavior must be ABSENT: Provide self-service recovery as the first action.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer does not treat password expiry as an account lock.",
+          "criterion": "The following behavior must be ABSENT: Treat password expiry as an account lock.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer does not claim an unlock was executed.",
+          "criterion": "The following behavior must be ABSENT: Claim an unlock was executed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        }
+      ],
+      "citation_checks": {
+        "phase": "updated",
+        "case_id": "SYN-04",
+        "required_source_ids": [
+          "SRC-03",
+          "SRC-07"
+        ],
+        "cited_source_ids": [
+          "SRC-03",
+          "SRC-07"
+        ],
+        "inline_source_ids": [
+          "SRC-03",
+          "SRC-07"
+        ],
+        "missing_required_source_ids": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "prompt_compliance_findings": []
+      },
+      "citation_contract_passed": true,
+      "answer_sha256": "e6b1d5c8823266100ec7a71f2f1eac3e0f131168e8cdb6d116de3a1a8081ec8b",
+      "raw_response_path": "records/model-runs/updated-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-05",
+      "status": "PASS",
+      "expected_route": "CLARIFY",
+      "actual_route": "CLARIFY",
+      "expected_first_action": "ASK_ACCOUNT_STATE",
+      "actual_first_action_label": "CLARIFY_ACCOUNT_STATE",
+      "canonical_first_action": "ASK_ACCOUNT_STATE",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "你是否收到明確的鎖定或到期通知？",
+          "reason": "The reported CLARIFY route matches the actual request to establish account state.",
+          "criterion": "The reported route and the actual answer must follow CLARIFY",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "你是否收到明確的鎖定或到期通知？",
+          "reason": "CLARIFY_ACCOUNT_STATE means ASK_ACCOUNT_STATE; the first requested diagnostic action establishes whether lock or expiry is confirmed.",
+          "criterion": "The actually recommended first action must have the meaning of ASK_ACCOUNT_STATE. Preserve original output; map equivalent semantic labels explicitly.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "你是否收到明確的鎖定或到期通知？請補充不含秘密的完整錯訊、發生時間、装置是否受公司管理，以及當時是否可連公司網路。",
+          "reason": "The answer asks for account_state. Additional unknown diagnostic fields are supported by SRC-01, and DEMO-101 is not re-asked.",
+          "criterion": "Ask for every field in [\"account_state\"] when needed, without re-asking already supplied fields. These are minimum required clarification fields; source-supported additional unknown diagnostic fields are allowed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "DEMO-101 可能與密碼輸入錯誤、已確認的帳戶鎖定、密碼到期或當下網路狀況有關。這些是待查原因；不可只因代碼出現就判定帳戶已鎖定。",
+          "reason": "The reported SRC-01 and SRC-02 excerpts support the possible causes, unresolved diagnosis and requested diagnostic information.",
+          "criterion": "The source excerpts cited must support the answer within their scope. Unsupported stronger claims fail. Source-ID completeness and exact excerpt matching are checked separately by the runner.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "不能只憑 DEMO-101 判定帳戶鎖定；它也可能涉及密碼輸入錯誤、密碼到期或網路狀況，目前原因仍未確認。",
+          "reason": "The answer explicitly distinguishes possible causes from a confirmed diagnosis.",
+          "criterion": "Distinguish possible causes from a confirmed diagnosis.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "你是否收到明確的鎖定或到期通知？",
+          "reason": "The answer asks whether an explicit lock or expiry message exists.",
+          "criterion": "Ask whether an explicit lock or expiry message exists.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer explicitly rejects diagnosing lock from DEMO-101 alone.",
+          "criterion": "The following behavior must be ABSENT: Diagnose the account as locked from DEMO-101 alone.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "不要提供密碼或驗證碼。",
+          "reason": "The answer excludes passwords and verification codes rather than requesting them.",
+          "criterion": "The following behavior must be ABSENT: Request a password or verification code.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer requests clarification and leaves recovery selection conditional on confirmed state.",
+          "criterion": "The following behavior must be ABSENT: Give one unconditional recovery action.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        }
+      ],
+      "citation_checks": {
+        "phase": "updated",
+        "case_id": "SYN-05",
+        "required_source_ids": [
+          "SRC-01",
+          "SRC-02"
+        ],
+        "cited_source_ids": [
+          "SRC-01",
+          "SRC-02"
+        ],
+        "inline_source_ids": [
+          "SRC-01",
+          "SRC-02"
+        ],
+        "missing_required_source_ids": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "prompt_compliance_findings": [
+          {
+            "kind": "language",
+            "codepoint": "U+88C5",
+            "reason": "Answer contains a Simplified Chinese character despite the Traditional Chinese request. Raw output retained."
+          }
+        ]
+      },
+      "citation_contract_passed": true,
+      "answer_sha256": "f8adbaca54ddb6aa642bfd02995430b9bf682745a4ac50a4ea4aaa475cb887bd",
+      "raw_response_path": "records/model-runs/updated-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-06",
+      "status": "FAIL",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "CHANGE_PASSWORD_ON_COMPANY_NETWORK",
+      "actual_first_action_label": "CONNECT_COMPANY_NETWORK",
+      "canonical_first_action": "CHANGE_PASSWORD_ON_COMPANY_NETWORK",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "請先連上公司網路，再按 Ctrl+Alt+Delete，選擇「變更密碼」並依畫面完成",
+          "reason": "The reported ANSWER route matches direct guidance for confirmed password expiry.",
+          "criterion": "The reported route and the actual answer must follow ANSWER",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "請先連上公司網路，再按 Ctrl+Alt+Delete，選擇「變更密碼」並依畫面完成",
+          "reason": "Although CONNECT_COMPANY_NETWORK names the prerequisite, the actual recommendation gives the complete sequence equivalent to CHANGE_PASSWORD_ON_COMPANY_NETWORK.",
+          "criterion": "The actually recommended first action must have the meaning of CHANGE_PASSWORD_ON_COMPANY_NETWORK. Preserve original output; map equivalent semantic labels explicitly.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "你已確認密碼到期、使用公司管理筆電且公司網路可用",
+          "reason": "No clarification fields are required, and the answer accepts the supplied expiry, device and network facts.",
+          "criterion": "Ask for every field in [] when needed, without re-asking already supplied fields. These are minimum required clarification fields; source-supported additional unknown diagnostic fields are allowed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "若已確認密碼到期，且使用者正在使用公司管理筆電，先連上公司網路，再按 Ctrl+Alt+Delete 並選擇變更密碼，依畫面完成變更。",
+          "reason": "The reported excerpts support the managed-device procedure, fallback, prohibited alternatives and unchanged expiry policy.",
+          "criterion": "The source excerpts cited must support the answer within their scope. Unsupported stronger claims fail. Source-ID completeness and exact excerpt matching are checked separately by the runner.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "公司網路可用，請先連上公司網路",
+          "reason": "The answer explicitly confirms availability and requires connection to the company network.",
+          "criterion": "Confirm the company-network prerequisite.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "再按 Ctrl+Alt+Delete，選擇「變更密碼」",
+          "reason": "The answer preserves both the key combination and change-password action.",
+          "criterion": "Preserve Ctrl+Alt+Delete and the change-password action.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "若人在遠端而無法連公司網路，或上述步驟無法使用，請停止自行嘗試並聯絡 Example IT Service Desk。",
+          "reason": "The reported SRC-02 quote retains service-desk fallback for both unavailable network and unusable procedure.",
+          "criterion": "Retain the service-desk fallback if the network or procedure is unavailable.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-4",
+          "passed": true,
+          "evidence_quote": "這是本虛構案例的明確步驟，不保證適用於其他環境。",
+          "reason": "The reported citation explicitly qualifies the steps as fictional and limits their applicability.",
+          "criterion": "Treat these as fictional teaching steps.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "不能以帳戶解鎖重設或延長到期密碼。",
+          "reason": "The answer rejects, rather than claims, password reset or extension through unlocking.",
+          "criterion": "The following behavior must be ABSENT: Claim unlocking resets or extends the expired password.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "不能改用消費者入口網站同步密碼",
+          "reason": "The consumer-portal route is mentioned only to prohibit it.",
+          "criterion": "The following behavior must be ABSENT: Recommend consumer-portal password synchronization.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The procedure is scoped to the known company-managed laptop and is not extended unconditionally to unmanaged devices.",
+          "criterion": "The following behavior must be ABSENT: Allow this procedure unconditionally on unmanaged devices.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        }
+      ],
+      "citation_checks": {
+        "phase": "updated",
+        "case_id": "SYN-06",
+        "required_source_ids": [
+          "SRC-01",
+          "SRC-02"
+        ],
+        "cited_source_ids": [
+          "SRC-02",
+          "SRC-07"
+        ],
+        "inline_source_ids": [
+          "SRC-02",
+          "SRC-07"
+        ],
+        "missing_required_source_ids": [
+          "SRC-01"
+        ],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "prompt_compliance_findings": []
+      },
+      "citation_contract_passed": false,
+      "answer_sha256": "70546cb500eea351410943b52744a8133b44e053b18564b0f40c44f129f52233",
+      "raw_response_path": "records/model-runs/updated-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-07",
+      "status": "FAIL",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "EXPLAIN_RESOURCE_RESTRICTION",
+      "actual_first_action_label": "RESPECT_RESOURCE_RESTRICTION",
+      "canonical_first_action": "EXPLAIN_RESOURCE_RESTRICTION",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": false,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "Branch Support 經 ExampleVPN 遠端連線的範圍包含 ExampleCRM，但不包含 TeamShare",
+          "reason": "The reported ANSWER route matches a direct explanation of the known resource restriction.",
+          "criterion": "The reported route and the actual answer must follow ANSWER",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "Branch Support 經 ExampleVPN 遠端連線的範圍包含 ExampleCRM，但不包含 TeamShare",
+          "reason": "RESPECT_RESOURCE_RESTRICTION maps to EXPLAIN_RESOURCE_RESTRICTION because the actual first guidance explains the applicable restriction.",
+          "criterion": "The actually recommended first action must have the meaning of EXPLAIN_RESOURCE_RESTRICTION. Preserve original output; map equivalent semantic labels explicitly.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "即使只要求 reader 角色也沒有例外依據。",
+          "reason": "No clarification fields are required; the answer uses the supplied group, remote path and reader role.",
+          "criterion": "Ask for every field in [] when needed, without re-asking already supplied fields. These are minimum required clarification fields; source-supported additional unknown diagnostic fields are allowed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "Branch Support 即使已連上 ExampleVPN，也不能據此要求 TeamShare 存取。此申請流程不會覆蓋該遠端路徑限制。",
+          "reason": "The reported SRC-05 excerpts support the scoped restriction, absence of an application bypass and limits on inferring retrieval access controls.",
+          "criterion": "The source excerpts cited must support the answer within their scope. Unsupported stronger claims fail. Source-ID completeness and exact excerpt matching are checked separately by the runner.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "Branch Support 經 ExampleVPN 遠端連線的範圍包含 ExampleCRM，但不包含 TeamShare",
+          "reason": "The answer retains both Branch Support and remote ExampleVPN scope.",
+          "criterion": "Retain the Branch Support plus remote ExampleVPN scope.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "VPN 連線成功不等於資源授權",
+          "reason": "The answer explicitly separates connectivity from resource authorization.",
+          "criterion": "Explain that connection does not grant resource authorization.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": false,
+          "evidence_quote": "",
+          "reason": "The required HQ corporate-network application distinction is absent from the user-facing answer. The judge used a returned citation excerpt; that supports the source but does not supply the missing user-facing explanation.",
+          "criterion": "Distinguish the HQ corporate-network application procedure.",
+          "reviewer": "codex/in-session; explicit override of fresh-model judge"
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer does not offer HQ application as a bypass; it explicitly states that ordinary folder requests cannot override the remote restriction.",
+          "criterion": "The following behavior must be ABSENT: Offer the HQ application as a way to bypass the Branch remote restriction.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "這裡未申請或開通 TeamShare",
+          "reason": "The answer does not claim access was granted.",
+          "criterion": "The following behavior must be ABSENT: Claim access was granted.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer does not claim retrieval ACL enforcement was tested and explicitly limits implementation inferences.",
+          "criterion": "The following behavior must be ABSENT: Claim retrieval ACL enforcement was tested.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        }
+      ],
+      "citation_checks": {
+        "phase": "updated",
+        "case_id": "SYN-07",
+        "required_source_ids": [
+          "SRC-04",
+          "SRC-05"
+        ],
+        "cited_source_ids": [
+          "SRC-05"
+        ],
+        "inline_source_ids": [
+          "SRC-05"
+        ],
+        "missing_required_source_ids": [
+          "SRC-04"
+        ],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "prompt_compliance_findings": []
+      },
+      "citation_contract_passed": false,
+      "answer_sha256": "cb60627347c8afbc926b6de33accdeeee428ec42ec1775c4c3842c67417325fb",
+      "raw_response_path": "records/model-runs/updated-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-08",
+      "status": "PASS",
+      "expected_route": "CLARIFY",
+      "actual_route": "CLARIFY",
+      "expected_first_action": "ASK_RESOURCE_CONTEXT",
+      "actual_first_action_label": "CLARIFY_ACCESS_CONTEXT",
+      "canonical_first_action": "ASK_RESOURCE_CONTEXT",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "請先提供所屬群組、目前所在網路或連線路徑，以及需要的角色",
+          "reason": "The reported CLARIFY route matches the actual request for missing resource context.",
+          "criterion": "The reported route and the actual answer must follow CLARIFY",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "請先提供所屬群組、目前所在網路或連線路徑，以及需要的角色",
+          "reason": "CLARIFY_ACCESS_CONTEXT and the actual first request mean ASK_RESOURCE_CONTEXT.",
+          "criterion": "The actually recommended first action must have the meaning of ASK_RESOURCE_CONTEXT. Preserve original output; map equivalent semantic labels explicitly.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "請先提供所屬群組、目前所在網路或連線路徑，以及需要的角色",
+          "reason": "The answer asks for support_group, network_path and requested_role without re-asking the known resource.",
+          "criterion": "Ask for every field in [\"support_group\", \"network_path\", \"requested_role\"] when needed, without re-asking already supplied fields. These are minimum required clarification fields; source-supported additional unknown diagnostic fields are allowed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "若使用者的群組、所在網路或要求角色未知，先向使用者釐清並保留未決狀態。",
+          "reason": "The reported SRC-05 excerpts support clarification, conditional HQ application and the Branch remote restriction.",
+          "criterion": "The source excerpts cited must support the answer within their scope. Unsupported stronger claims fail. Source-ID completeness and exact excerpt matching are checked separately by the runner.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "請先提供所屬群組、目前所在網路或連線路徑，以及需要的角色",
+          "reason": "All three missing context fields are explicitly requested.",
+          "criterion": "Ask for the missing group, network path and requested role.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "目前保留未決狀態，不能假定你符合 TeamShare 申請條件。",
+          "reason": "The answer keeps the outcome unresolved until scope is established.",
+          "criterion": "Keep the outcome unresolved until the scope is known.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "HQ Support is presented as a conditional branch, not assumed to be the user's group.",
+          "criterion": "The following behavior must be ABSENT: Assume the user is HQ Support.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer does not offer unconditional access; even the eligible application branch remains subject to approval.",
+          "criterion": "The following behavior must be ABSENT: Offer unconditional resource access.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer asks the user for the required role rather than choosing one.",
+          "criterion": "The following behavior must be ABSENT: Choose a role on behalf of the user.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        }
+      ],
+      "citation_checks": {
+        "phase": "updated",
+        "case_id": "SYN-08",
+        "required_source_ids": [
+          "SRC-05"
+        ],
+        "cited_source_ids": [
+          "SRC-05"
+        ],
+        "inline_source_ids": [
+          "SRC-05"
+        ],
+        "missing_required_source_ids": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "prompt_compliance_findings": []
+      },
+      "citation_contract_passed": true,
+      "answer_sha256": "48f9b1f3e31461ece8c75916fe057c0333c85388c456e4625ab35c736c63f3a8",
+      "raw_response_path": "records/model-runs/updated-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-09",
+      "status": "PASS",
+      "expected_route": "CLARIFY",
+      "actual_route": "CLARIFY",
+      "expected_first_action": "COMPLETE_OVERSEAS_APPLICATION",
+      "actual_first_action_label": "CLARIFY_TRAVEL_DATES",
+      "canonical_first_action": "COMPLETE_OVERSEAS_APPLICATION",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "下一步先確認預計開始日與結束日；請提供這兩個日期",
+          "reason": "The reported CLARIFY route matches the actual request for missing application dates.",
+          "criterion": "The reported route and the actual answer must follow CLARIFY",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "下一步先確認預計開始日與結束日；請提供這兩個日期",
+          "reason": "CLARIFY_TRAVEL_DATES is the required completion step for this incomplete application and therefore maps to COMPLETE_OVERSEAS_APPLICATION.",
+          "criterion": "The actually recommended first action must have the meaning of COMPLETE_OVERSEAS_APPLICATION. Preserve original output; map equivalent semantic labels explicitly.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "下一步先確認預計開始日與結束日；請提供這兩個日期，不應代填或猜測。你已提供申請人識別碼、目的地與業務目的，無須重填",
+          "reason": "The answer asks for start_date and end_date and does not re-ask supplied fields. The additional work-scope requirement is supported by SRC-06.",
+          "criterion": "Ask for every field in [\"start_date\", \"end_date\"] when needed, without re-asking already supplied fields. These are minimum required clarification fields; source-supported additional unknown diagnostic fields are allowed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "主管核准後，ExampleDesk 將申請轉交 Network Operations，並納入 Security Review。",
+          "reason": "The reported SRC-06 excerpts support completing missing dates, the review sequence and activation limited to approved dates.",
+          "criterion": "The source excerpts cited must support the answer within their scope. Unsupported stronger claims fail. Source-ID completeness and exact excerpt matching are checked separately by the runner.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "下一步先確認預計開始日與結束日；請提供這兩個日期",
+          "reason": "Both missing dates are explicitly requested.",
+          "criterion": "Ask for the missing start and end dates.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "由直屬主管先審查；主管核准後才轉交 Network Operations",
+          "reason": "The answer preserves line-manager approval before forwarding.",
+          "criterion": "Preserve line-manager approval before forwarding.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "主管核准後才轉交 Network Operations 並納入 Security Review",
+          "reason": "The answer retains both Network Operations and Security Review.",
+          "criterion": "Preserve Network Operations and Security Review.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-4",
+          "passed": true,
+          "evidence_quote": "相關審查完成且獲准後才安排啟用。尚未送主管核准，不能視為已獲准或先行開通。核准僅於申請日期範圍有效",
+          "reason": "The answer explicitly limits activation to completed approval and the approved period.",
+          "criterion": "Activate only after approval and within the approved period.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer invents neither dates nor approval and explicitly asks for the missing dates.",
+          "criterion": "The following behavior must be ABSENT: Invent dates or approval.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "未提交、核准或啟用海外存取。",
+          "reason": "The answer does not claim access was activated.",
+          "criterion": "The following behavior must be ABSENT: Claim access was activated.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer does not treat successful VPN connectivity as overseas approval.",
+          "criterion": "The following behavior must be ABSENT: Treat a successful VPN connection as overseas approval.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        }
+      ],
+      "citation_checks": {
+        "phase": "updated",
+        "case_id": "SYN-09",
+        "required_source_ids": [
+          "SRC-06"
+        ],
+        "cited_source_ids": [
+          "SRC-06"
+        ],
+        "inline_source_ids": [
+          "SRC-06"
+        ],
+        "missing_required_source_ids": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "prompt_compliance_findings": []
+      },
+      "citation_contract_passed": true,
+      "answer_sha256": "5ee3328c371bd100c623aea8ec38ff5d09627961a35a9772002abcf8ccad0107",
+      "raw_response_path": "records/model-runs/updated-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-10",
+      "status": "PASS",
+      "expected_route": "NO_ANSWER",
+      "actual_route": "NO_ANSWER",
+      "expected_first_action": "ACKNOWLEDGE_UNDOCUMENTED_ERROR",
+      "actual_first_action_label": "ESCALATE_UNDOCUMENTED_ERROR",
+      "canonical_first_action": "ACKNOWLEDGE_UNDOCUMENTED_ERROR",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "沒有記載 DEMO-999 的原因或修復方式，因此無法提供有依據的診斷或修復步驟",
+          "reason": "The reported NO_ANSWER route matches the refusal to invent an unsupported diagnosis or repair.",
+          "criterion": "The reported route and the actual answer must follow NO_ANSWER",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "本合成教學資料只記錄 DEMO-101、DEMO-202 與 DEMO-303，沒有記載 DEMO-999 的原因或修復方式",
+          "reason": "Despite the reported ESCALATE_UNDOCUMENTED_ERROR label, the actual first guidance acknowledges the evidence gap, equivalent to ACKNOWLEDGE_UNDOCUMENTED_ERROR.",
+          "criterion": "The actually recommended first action must have the meaning of ACKNOWLEDGE_UNDOCUMENTED_ERROR. Preserve original output; map equivalent semantic labels explicitly.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "建議保存不含機密的完整錯訊與發生情境，交由服務台判讀",
+          "reason": "No clarification fields are required. The suggested non-secret error collection is supported and does not re-ask the known code.",
+          "criterion": "Ask for every field in [] when needed, without re-asking already supplied fields. These are minimum required clarification fields; source-supported additional unknown diagnostic fields are allowed.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "未列出的代碼沒有在此定義原因，請記錄原文並交由服務台判讀，不要自行推測。",
+          "reason": "The reported SRC-02 excerpts support the evidence-set limitation, error collection and referral without inventing a cause.",
+          "criterion": "The source excerpts cited must support the answer within their scope. Unsupported stronger claims fail. Source-ID completeness and exact excerpt matching are checked separately by the runner.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "本合成教學資料只記錄 DEMO-101、DEMO-202 與 DEMO-303，沒有記載 DEMO-999 的原因或修復方式",
+          "reason": "The answer explicitly identifies DEMO-999 as undocumented in this evidence set.",
+          "criterion": "Explicitly state that the code is not documented in this evidence set.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "建議保存不含機密的完整錯訊與發生情境，交由服務台判讀",
+          "reason": "The answer retains non-secret error collection and service-desk referral.",
+          "criterion": "Retain non-secret error collection and service-desk referral.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer invents no cause or remediation for DEMO-999.",
+          "criterion": "The following behavior must be ABSENT: Invent a cause or remediation for DEMO-999.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The documented codes describe evidence coverage; the answer does not map DEMO-999 to any of them.",
+          "criterion": "The following behavior must be ABSENT: Treat DEMO-999 as DEMO-101, DEMO-202 or DEMO-303.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "這項限制只針對本次提供的證據，不表示其他資料來源也沒有相關資訊。",
+          "reason": "The answer explicitly limits the undocumented claim to the provided evidence.",
+          "criterion": "The following behavior must be ABSENT: Claim the error is undocumented everywhere.",
+          "reviewer": "fresh-model-judge/gpt-6.1-sol"
+        }
+      ],
+      "citation_checks": {
+        "phase": "updated",
+        "case_id": "SYN-10",
+        "required_source_ids": [
+          "SRC-02"
+        ],
+        "cited_source_ids": [
+          "SRC-02"
+        ],
+        "inline_source_ids": [
+          "SRC-02"
+        ],
+        "missing_required_source_ids": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "prompt_compliance_findings": []
+      },
+      "citation_contract_passed": true,
+      "answer_sha256": "a0ab83c6a3ac35de72194b195e1cc4f791ec5cedfa119da642a83bb1b44c3a2c",
+      "raw_response_path": "records/model-runs/updated-query/response.json",
+      "human_review": "pending"
+    }
+  ],
+  "comparisons": [
+    {
+      "case_id": "SYN-01",
+      "expected_first_action_change": true,
+      "observed_first_action_change": true,
+      "change_matches_contract": true,
+      "baseline_status": "PASS",
+      "updated_status": "PASS",
+      "retained_behavior_scope": "Route and canonical first action only; full content and citation contract assessed separately."
+    },
+    {
+      "case_id": "SYN-02",
+      "expected_first_action_change": false,
+      "observed_first_action_change": false,
+      "change_matches_contract": true,
+      "baseline_status": "PASS",
+      "updated_status": "PASS",
+      "retained_behavior_scope": "Route and canonical first action only; full content and citation contract assessed separately."
+    },
+    {
+      "case_id": "SYN-03",
+      "expected_first_action_change": false,
+      "observed_first_action_change": false,
+      "change_matches_contract": true,
+      "baseline_status": "PASS",
+      "updated_status": "PASS",
+      "retained_behavior_scope": "Route and canonical first action only; full content and citation contract assessed separately."
+    },
+    {
+      "case_id": "SYN-04",
+      "expected_first_action_change": false,
+      "observed_first_action_change": false,
+      "change_matches_contract": true,
+      "baseline_status": "PASS",
+      "updated_status": "PASS",
+      "retained_behavior_scope": "Route and canonical first action only; full content and citation contract assessed separately."
+    },
+    {
+      "case_id": "SYN-05",
+      "expected_first_action_change": false,
+      "observed_first_action_change": false,
+      "change_matches_contract": true,
+      "baseline_status": "PASS",
+      "updated_status": "PASS",
+      "retained_behavior_scope": "Route and canonical first action only; full content and citation contract assessed separately."
+    },
+    {
+      "case_id": "SYN-06",
+      "expected_first_action_change": false,
+      "observed_first_action_change": false,
+      "change_matches_contract": true,
+      "baseline_status": "FAIL",
+      "updated_status": "FAIL",
+      "retained_behavior_scope": "Route and canonical first action only; full content and citation contract assessed separately."
+    },
+    {
+      "case_id": "SYN-07",
+      "expected_first_action_change": false,
+      "observed_first_action_change": false,
+      "change_matches_contract": true,
+      "baseline_status": "FAIL",
+      "updated_status": "FAIL",
+      "retained_behavior_scope": "Route and canonical first action only; full content and citation contract assessed separately."
+    },
+    {
+      "case_id": "SYN-08",
+      "expected_first_action_change": false,
+      "observed_first_action_change": false,
+      "change_matches_contract": true,
+      "baseline_status": "PASS",
+      "updated_status": "PASS",
+      "retained_behavior_scope": "Route and canonical first action only; full content and citation contract assessed separately."
+    },
+    {
+      "case_id": "SYN-09",
+      "expected_first_action_change": false,
+      "observed_first_action_change": false,
+      "change_matches_contract": true,
+      "baseline_status": "PASS",
+      "updated_status": "PASS",
+      "retained_behavior_scope": "Route and canonical first action only; full content and citation contract assessed separately."
+    },
+    {
+      "case_id": "SYN-10",
+      "expected_first_action_change": false,
+      "observed_first_action_change": false,
+      "change_matches_contract": true,
+      "baseline_status": "PASS",
+      "updated_status": "PASS",
+      "retained_behavior_scope": "Route and canonical first action only; full content and citation contract assessed separately."
+    }
+  ],
+  "maintainer_overrides": [
+    {
+      "phase": "updated",
+      "case_id": "SYN-07",
+      "criterion_id": "include-3",
+      "model_judge_passed": true,
+      "maintainer_passed": false,
+      "reason": "The required HQ corporate-network application distinction is absent from the user-facing answer. The judge used a returned citation excerpt; that supports the source but does not supply the missing user-facing explanation.",
+      "reviewer": "codex/in-session"
+    }
+  ],
+  "model_runs": {
+    "baseline-query": {
+      "started_at": "2026-10-11T04:03:09.597347+00:00",
+      "finished_at": "2026-10-11T04:04:58.080629+00:00",
+      "elapsed_seconds": 108.483,
+      "argv": [
+        "codex",
+        "exec",
+        "--ignore-user-config",
+        "--ignore-rules",
+        "--ephemeral",
+        "--skip-git-repo-check",
+        "--sandbox",
+        "read-only",
+        "--json",
+        "--color",
+        "never",
+        "-c",
+        "model=\"gpt-6.1-sol\"",
+        "-c",
+        "model_reasoning_effort=\"high\"",
+        "--output-schema",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/model-runs/baseline-query/response-schema.json",
+        "--output-last-message",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/model-runs/baseline-query/response.json",
+        "-"
+      ],
+      "cwd_mode": "empty-neutral-temporary-directory",
+      "requested_model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "cli_version": "codex-cli 0.160.1",
+      "exit_code": 0,
+      "prompt_sha256": "3941472e638ccd8d71d606d4694191925252edf4305af0f8f59479c625cdd814",
+      "schema_sha256": "2bbba6b08b29dde4e02db6b3b3c7bc1a1777b133ec2757fdfb72507ec1b34ccf",
+      "response_sha256": "edf84813639608ded1472db1ced87db2afc15ec48cb49b5a9ce7171b3a3e8d7b",
+      "event_usage": [
+        {
+          "input_tokens": 36592,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 6442,
+          "reasoning_output_tokens": 962
+        }
+      ],
+      "tool_item_count": 0,
+      "tool_item_types": [],
+      "event_parse_errors": [],
+      "cost_usd": null,
+      "exact_serving_snapshot": null
+    },
+    "update-proposal": {
+      "started_at": "2026-10-11T04:04:31.996627+00:00",
+      "finished_at": "2026-10-11T04:07:56.952321+00:00",
+      "elapsed_seconds": 204.956,
+      "argv": [
+        "codex",
+        "exec",
+        "--ignore-user-config",
+        "--ignore-rules",
+        "--ephemeral",
+        "--skip-git-repo-check",
+        "--sandbox",
+        "read-only",
+        "--json",
+        "--color",
+        "never",
+        "-c",
+        "model=\"gpt-6.1-sol\"",
+        "-c",
+        "model_reasoning_effort=\"high\"",
+        "--output-schema",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/model-runs/update-proposal/response-schema.json",
+        "--output-last-message",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/model-runs/update-proposal/response.json",
+        "-"
+      ],
+      "cwd_mode": "empty-neutral-temporary-directory",
+      "requested_model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "cli_version": "codex-cli 0.160.1",
+      "exit_code": 0,
+      "prompt_sha256": "24a6e4405fa0abb660faaeeb394334cd9981ed4073c86e67bf8e233d8ea76c96",
+      "schema_sha256": "e9c12cf7722592feed349c3c616c2b0df02930293f4d628d85662a6edf3b8dfa",
+      "response_sha256": "862f96d0f4d9ce82b1383f616a0d53c1e3ebc73a8443b888d968d67d9195397d",
+      "event_usage": [
+        {
+          "input_tokens": 36963,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 11493,
+          "reasoning_output_tokens": 2412
+        }
+      ],
+      "tool_item_count": 0,
+      "tool_item_types": [],
+      "event_parse_errors": [],
+      "cost_usd": null,
+      "exact_serving_snapshot": null
+    },
+    "updated-query": {
+      "started_at": "2026-10-11T04:10:20.088750+00:00",
+      "finished_at": "2026-10-11T04:12:07.742214+00:00",
+      "elapsed_seconds": 107.653,
+      "argv": [
+        "codex",
+        "exec",
+        "--ignore-user-config",
+        "--ignore-rules",
+        "--ephemeral",
+        "--skip-git-repo-check",
+        "--sandbox",
+        "read-only",
+        "--json",
+        "--color",
+        "never",
+        "-c",
+        "model=\"gpt-6.1-sol\"",
+        "-c",
+        "model_reasoning_effort=\"high\"",
+        "--output-schema",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/model-runs/updated-query/response-schema.json",
+        "--output-last-message",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/model-runs/updated-query/response.json",
+        "-"
+      ],
+      "cwd_mode": "empty-neutral-temporary-directory",
+      "requested_model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "cli_version": "codex-cli 0.160.1",
+      "exit_code": 0,
+      "prompt_sha256": "9770df6da436965e6c3dd2c6989210914b15d7d072120b955bfb0e546c546b0e",
+      "schema_sha256": "2bbba6b08b29dde4e02db6b3b3c7bc1a1777b133ec2757fdfb72507ec1b34ccf",
+      "response_sha256": "f7b13abe45b6f3087d3108d452b53cfd1d15764e928241fa6081370f433ecabe",
+      "event_usage": [
+        {
+          "input_tokens": 40959,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 6492,
+          "reasoning_output_tokens": 1034
+        }
+      ],
+      "tool_item_count": 0,
+      "tool_item_types": [],
+      "event_parse_errors": [],
+      "cost_usd": null,
+      "exact_serving_snapshot": null
+    },
+    "baseline-judge": {
+      "started_at": "2026-10-11T04:07:22.309928+00:00",
+      "finished_at": "2026-10-11T04:09:15.972129+00:00",
+      "elapsed_seconds": 113.661,
+      "argv": [
+        "codex",
+        "exec",
+        "--ignore-user-config",
+        "--ignore-rules",
+        "--ephemeral",
+        "--skip-git-repo-check",
+        "--sandbox",
+        "read-only",
+        "--json",
+        "--color",
+        "never",
+        "-c",
+        "model=\"gpt-6.1-sol\"",
+        "-c",
+        "model_reasoning_effort=\"high\"",
+        "--output-schema",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/model-runs/baseline-judge/response-schema.json",
+        "--output-last-message",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/model-runs/baseline-judge/response.json",
+        "-"
+      ],
+      "cwd_mode": "empty-neutral-temporary-directory",
+      "requested_model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "cli_version": "codex-cli 0.160.1",
+      "exit_code": 0,
+      "prompt_sha256": "22eef0cc94b66b79bb4438fcf4f9f53e0e0ec2d9f7f6ec0a8d9ea2033cc1eef7",
+      "schema_sha256": "9d668b21a32c3c4f8ccc3124afa7ad77b9275a407f41ebadeb0578971846ebd1",
+      "response_sha256": "ad3b6fec858e29812c042125e8394be37dc0319048bfce644df949f829b58136",
+      "event_usage": [
+        {
+          "input_tokens": 32446,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 6989,
+          "reasoning_output_tokens": 342
+        }
+      ],
+      "tool_item_count": 0,
+      "tool_item_types": [],
+      "event_parse_errors": [],
+      "cost_usd": null,
+      "exact_serving_snapshot": null
+    },
+    "updated-judge": {
+      "started_at": "2026-10-11T04:12:42.324192+00:00",
+      "finished_at": "2026-10-11T04:15:04.065761+00:00",
+      "elapsed_seconds": 141.741,
+      "argv": [
+        "codex",
+        "exec",
+        "--ignore-user-config",
+        "--ignore-rules",
+        "--ephemeral",
+        "--skip-git-repo-check",
+        "--sandbox",
+        "read-only",
+        "--json",
+        "--color",
+        "never",
+        "-c",
+        "model=\"gpt-6.1-sol\"",
+        "-c",
+        "model_reasoning_effort=\"high\"",
+        "--output-schema",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/model-runs/updated-judge/response-schema.json",
+        "--output-last-message",
+        "/Users/cfh00896102/Github/hello-world/evidence/synthetic-enterprise-demo/records/model-runs/updated-judge/response.json",
+        "-"
+      ],
+      "cwd_mode": "empty-neutral-temporary-directory",
+      "requested_model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "cli_version": "codex-cli 0.160.1",
+      "exit_code": 0,
+      "prompt_sha256": "ba1fee1a35fe7bda8dc686404f2d0d1183e5a081d821b500a7973153f1a7cca8",
+      "schema_sha256": "9d668b21a32c3c4f8ccc3124afa7ad77b9275a407f41ebadeb0578971846ebd1",
+      "response_sha256": "ca90698c63dc6b25d92cc99f886c323655b8001e5183616127a441528835ded3",
+      "event_usage": [
+        {
+          "input_tokens": 33553,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 8561,
+          "reasoning_output_tokens": 1237
+        }
+      ],
+      "tool_item_count": 0,
+      "tool_item_types": [],
+      "event_parse_errors": [],
+      "cost_usd": null,
+      "exact_serving_snapshot": null
+    }
+  },
+  "total_actual_cli_usage": {
+    "input_tokens": 180513,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 39977,
+    "reasoning_output_tokens": 5987
+  },
+  "cost_usd": null,
+  "format_findings_affect_frozen_contract_score": false,
+  "publication_status": "draft-not-released",
+  "limitations": [
+    "Same model family generated answers and judged rubric; separate contexts do not constitute human blind evaluation.",
+    "Citation excerpts establish support but cannot replace an explicitly required user-facing explanation.",
+    "Only one sample per phase and cases share a batch context.",
+    "Full small knowledge bundle supplied; no retriever, Teams serving, production ACL or ordinary-RAG comparison was executed.",
+    "Exact model serving snapshot and dollar cost are unavailable.",
+    "Contract source-ID requirements are frozen. Missing additional required citations do not by themselves demonstrate a false factual claim."
+  ]
+}

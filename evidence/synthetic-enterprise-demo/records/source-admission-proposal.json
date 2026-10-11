@@ -1,0 +1,63 @@
+{
+  "proposal_id": "synthetic-enterprise-baseline-admission-v1",
+  "status": "awaiting-human-confirmation",
+  "created_at": "2026-10-11T03:46:20.181304+00:00",
+  "scope": "local-baseline-ingest-only",
+  "proposed_decision": {
+    "classification": "public",
+    "owner": "process:synthetic-enterprise-demo",
+    "access_scope": "public",
+    "retention": "permanent",
+    "contains_pii": false,
+    "redaction": "none"
+  },
+  "source_count": 6,
+  "sources": [
+    {
+      "id": "SRC-01",
+      "path": "sources/vpn-common-qa.md",
+      "sha256": "d59a8fc31afd03b58670211eb38bd5d7c01031d989066209bef422b6df1e277a",
+      "kind": "synthetic-teaching"
+    },
+    {
+      "id": "SRC-02",
+      "path": "sources/examplevpn-error-reference.md",
+      "sha256": "0e29b6236aec4d3b9e06204db79a67d191071c9b8f4eac124a8d4d7012b0deff",
+      "kind": "synthetic-teaching"
+    },
+    {
+      "id": "SRC-03",
+      "path": "sources/account-recovery-v1.md",
+      "sha256": "8be47d524d37d33abd258fa27cab30b46bb4e41937bb18f25ea87b086ec26928",
+      "kind": "synthetic-teaching"
+    },
+    {
+      "id": "SRC-04",
+      "path": "sources/managed-laptop-remote-access.md",
+      "sha256": "cd79876f43c56b6e18e80d7086570249b3b8a2fd72fb314bd166fa37464e5ee9",
+      "kind": "synthetic-teaching"
+    },
+    {
+      "id": "SRC-05",
+      "path": "sources/shared-resource-access-policy.md",
+      "sha256": "3b0327bba0be07df6f62362fd56e24ebf81b9bea5650e883131286fe9d9c854d",
+      "kind": "synthetic-teaching"
+    },
+    {
+      "id": "SRC-06",
+      "path": "sources/overseas-access-request.md",
+      "sha256": "c23286dcb14629cb72bd3ca1ea631706d07b507a8a098b1ce3a276d41b52d003",
+      "kind": "synthetic-teaching"
+    }
+  ],
+  "human_approval": null,
+  "excludes": [
+    "SRC-07",
+    "original-enterprise-documents",
+    "active-project-wiki",
+    "commit",
+    "push",
+    "publish"
+  ],
+  "note": "This proposal is not an approval receipt. Existing Ingest policy requires explicit human confirmation before raw writes."
+}
