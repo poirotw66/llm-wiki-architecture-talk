@@ -1,0 +1,2339 @@
+{
+  "run_id": "synthetic-enterprise-regression-v2-20261012",
+  "completed_at": "2026-10-12T08:43:27.517163+00:00",
+  "status": "completed-pending-human-content-review",
+  "contract_id": "synthetic-enterprise-regression-v2",
+  "contract_sha256": "fb33ef8439a87f840bc2c690d80c2856625f963e4c8f08f47c3c0b8a5356b443",
+  "method": "Fresh answer inference, separate model rubric review, deterministic exact citation checks, maintainer review",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "answer_sampling": "one eleven-case batch per phase",
+  "reference_answers_supplied_to_answer_model": false,
+  "human_content_review": "pending",
+  "cases": [
+    {
+      "phase": "baseline",
+      "case_id": "SYN-01",
+      "status": "PASS",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "SERVICE_DESK_REQUEST",
+      "actual_first_action_label": "SUBMIT_EXAMPLEDESK_RECOVERY_REQUEST",
+      "canonical_first_action": "SERVICE_DESK_REQUEST",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "請透過 ExampleDesk 提交帳戶復原請求，由 Example IT Service Desk 檢視。",
+          "reason": "The reported ANSWER route and the direct procedural answer agree."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "請透過 ExampleDesk 提交帳戶復原請求",
+          "reason": "Submitting an ExampleDesk recovery request means SERVICE_DESK_REQUEST. The reported SUBMIT_EXAMPLEDESK_RECOVERY_REQUEST label is equivalent."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "請附識別與聯絡資訊、非機密完整錯訊及發生時間，並記錄已提供的公司管理筆電、已註冊自助復原及已確認鎖定狀態",
+          "reason": "No minimum fields are missing. Additional request details are supported by SRC-03; supplied device, enrollment and account states are retained rather than re-asked."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "已確認鎖定時，使用者透過 ExampleDesk 提交帳戶復原請求，交由 Example IT Service Desk 檢視。",
+          "reason": "SRC-03 supports the confirmed-lock route, request details and secret-handling restrictions. Its baseline provides no alternative self-service procedure or guaranteed unlock."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "請透過 ExampleDesk 提交帳戶復原請求",
+          "reason": "The answer uses ExampleDesk for the confirmed lock."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "不要附密碼、驗證碼或復原連結。",
+          "reason": "The answer excludes passwords and verification codes from the request."
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "提交不代表已解鎖，也不保證直接解除或特定處理時間",
+          "reason": "The answer makes no promise that submission completes an unlock."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Self-service recovery is not recommended as the first action."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer does not treat password expiry as an account lock."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "本回答未執行復原操作。",
+          "reason": "The answer does not claim an unlock was executed."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [
+          "SRC-03"
+        ],
+        "cited_source_ids": [
+          "SRC-03"
+        ],
+        "inline_source_ids": [
+          "SRC-03"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "778f33939d9b329c5f7600cd6c77896f834d417c10931ce7e8fe111b6aff47d9",
+      "raw_response_path": "records/model-runs-v2/baseline-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-02",
+      "status": "PASS",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "SERVICE_DESK_REQUEST",
+      "actual_first_action_label": "SUBMIT_EXAMPLEDESK_RECOVERY_REQUEST",
+      "canonical_first_action": "SERVICE_DESK_REQUEST",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "此基準明確適用於全職員工與承包人員的已確認帳戶鎖定情境，因此請透過 ExampleDesk 提交帳戶復原請求",
+          "reason": "The reported ANSWER route and the user-facing contractor procedure agree."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "請透過 ExampleDesk 提交帳戶復原請求",
+          "reason": "Submitting an ExampleDesk recovery request means SERVICE_DESK_REQUEST. The reported SUBMIT_EXAMPLEDESK_RECOVERY_REQUEST label is equivalent."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "請附識別與聯絡資訊、非機密錯訊及發生時間，並記錄公司管理筆電、已註冊自助復原及已確認鎖定的既有狀態。",
+          "reason": "No minimum fields are missing. SRC-03 supports the additional request details, and supplied states are recorded without being re-asked."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "此版本適用於全職員工與承包人員的已確認帳戶鎖定情境，直到有明確範圍的變更生效。",
+          "reason": "SRC-03 supports contractor eligibility, ExampleDesk review, request details and the absence of an unlock guarantee. It supplies no separate self-service procedure."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "請透過 ExampleDesk 提交帳戶復原請求",
+          "reason": "The answer uses ExampleDesk for the confirmed lock."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "不得附登入秘密",
+          "reason": "No passwords or verification codes are requested; the answer excludes login secrets."
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "送出請求不代表已解鎖，也沒有直接解除或處理時間的保證。",
+          "reason": "The answer makes no promise that the request completes an unlock."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The first action is an ExampleDesk request, not self-service recovery."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer does not equate password expiry with account lock."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer does not claim an unlock was executed."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [
+          "SRC-03"
+        ],
+        "cited_source_ids": [
+          "SRC-03"
+        ],
+        "inline_source_ids": [
+          "SRC-03"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "f3f19de3c99b8c1a5e4ae55d0c739fcbd9e8da397abcb219cb7c52576f51b62b",
+      "raw_response_path": "records/model-runs-v2/baseline-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-03",
+      "status": "PASS",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "SERVICE_DESK_REQUEST",
+      "actual_first_action_label": "SUBMIT_EXAMPLEDESK_RECOVERY_REQUEST",
+      "canonical_first_action": "SERVICE_DESK_REQUEST",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "請直接依已確認鎖定的基準，透過 ExampleDesk 提交帳戶復原請求。",
+          "reason": "The reported ANSWER route matches the direct procedural answer."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "透過 ExampleDesk 提交帳戶復原請求。",
+          "reason": "Submitting an ExampleDesk recovery request means SERVICE_DESK_REQUEST. The reported SUBMIT_EXAMPLEDESK_RECOVERY_REQUEST label is equivalent."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "附識別與聯絡資訊、非機密錯訊及發生時間，並如實記錄公司管理筆電、自助復原尚未註冊及已確認鎖定。",
+          "reason": "No minimum fields are missing. SRC-03 supports the additional request details; known device, enrollment and lock states are not re-asked."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "自助復原是否已註冊；若不清楚，填「未知」。",
+          "reason": "SRC-03 records enrollment as request information rather than a prerequisite. It supports the ExampleDesk route, supplied-state recording, secret exclusions and conditional follow-up."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "透過 ExampleDesk 提交帳戶復原請求。",
+          "reason": "The answer uses ExampleDesk for the confirmed lock."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "不要提供密碼、驗證碼或復原連結。",
+          "reason": "The answer explicitly excludes passwords and verification codes."
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "後續由服務台核實決定，不能保證直接解鎖",
+          "reason": "The answer does not promise that the request completes an unlock."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Self-service recovery or enrollment is not recommended as the first action."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer does not treat expiry as an account lock."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "目前未執行任何解鎖操作。",
+          "reason": "The answer denies having executed an unlock."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [
+          "SRC-03"
+        ],
+        "cited_source_ids": [
+          "SRC-03"
+        ],
+        "inline_source_ids": [
+          "SRC-03"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "002d3b2e97fad3e24285923bc3ce2d7b6ca794418323a707396cde1bb45195a6",
+      "raw_response_path": "records/model-runs-v2/baseline-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-04",
+      "status": "PASS",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "SERVICE_DESK_REQUEST",
+      "actual_first_action_label": "SUBMIT_EXAMPLEDESK_RECOVERY_REQUEST",
+      "canonical_first_action": "SERVICE_DESK_REQUEST",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "當時應透過 ExampleDesk 提交帳戶復原請求，由 Example IT Service Desk 檢視。",
+          "reason": "The reported ANSWER route matches the procedure given for the specified event date."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "當時應透過 ExampleDesk 提交帳戶復原請求",
+          "reason": "The first operational recommendation means SERVICE_DESK_REQUEST. SUBMIT_EXAMPLEDESK_RECOVERY_REQUEST is an equivalent reported label; the preceding date explanation is context."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "請求應附識別與聯絡資訊、當時的非機密錯訊及發生時間，並記錄公司管理筆電、已註冊自助復原及已確認鎖定狀態。",
+          "reason": "No minimum fields are missing. Additional request details are supported by SRC-03. The event date is used as supplied; requesting occurrence time does not re-ask that date."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "本文件記錄 2030-01-10 起使用的鎖定復原基準。",
+          "reason": "SRC-03 supports the effective-date reasoning and confirmed-lock procedure. The supplied evidence contains no applicable replacement, and request details and limits remain within SRC-03's scope."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "當時應透過 ExampleDesk 提交帳戶復原請求",
+          "reason": "The answer uses ExampleDesk for the confirmed lock."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "不得附密碼、驗證碼或復原連結。",
+          "reason": "Passwords and verification codes are excluded."
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "提交也不代表已解鎖或保證直接解除。",
+          "reason": "The answer does not promise that submission completes an unlock."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer recommends the service-desk request first, not self-service recovery."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer does not treat password expiry as an account lock."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer does not claim an unlock was executed."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [
+          "SRC-03"
+        ],
+        "cited_source_ids": [
+          "SRC-03"
+        ],
+        "inline_source_ids": [
+          "SRC-03"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "893bd14efce46a64333e69c5d0ebdba456ad359c4b4bae9176ae530dcc114d86",
+      "raw_response_path": "records/model-runs-v2/baseline-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-05",
+      "status": "PASS",
+      "expected_route": "CLARIFY",
+      "actual_route": "CLARIFY",
+      "expected_first_action": "ASK_ACCOUNT_STATE",
+      "actual_first_action_label": "CLARIFY_ACCOUNT_STATE",
+      "canonical_first_action": "ASK_ACCOUNT_STATE",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "請確認是否有明確的鎖定或到期通知",
+          "reason": "The reported CLARIFY route matches the request to establish account state before recovery."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "請確認是否有明確的鎖定或到期通知",
+          "reason": "Asking about explicit lock or expiry notifications means ASK_ACCOUNT_STATE. The reported CLARIFY_ACCOUNT_STATE label is equivalent."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "請確認是否有明確的鎖定或到期通知，並補充不含機密的完整錯訊、發生時間、裝置管理狀態及當時公司網路是否可用",
+          "reason": "The answer asks for account_state. Additional reported fields are unknown diagnostics supported by SRC-01; requesting the full message does not re-ask the supplied code."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "這些是待查原因；不可只因代碼出現就判定帳戶已鎖定。",
+          "reason": "SRC-01 and SRC-02 support the possible causes, diagnostic questions and distinction between confirmed-lock recovery and expiry handling."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "不能只憑 DEMO-101 判定帳戶被鎖。它可能與密碼輸入錯誤、鎖定、密碼到期或網路狀況有關，目前只能保留這些待查方向。",
+          "reason": "Possible causes are explicitly distinguished from a confirmed diagnosis."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "請確認是否有明確的鎖定或到期通知",
+          "reason": "The answer asks whether an explicit lock or expiry message exists."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "不能只憑 DEMO-101 判定帳戶被鎖。",
+          "reason": "The answer does not diagnose a lock from DEMO-101 alone."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "不要提供密碼或驗證碼。",
+          "reason": "Passwords and verification codes are not requested."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "確認鎖定後才走帳戶復原請求，確認到期則走獨立的密碼更新程序。",
+          "reason": "Recovery actions are conditional on the confirmed state, not unconditional."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [],
+        "cited_source_ids": [
+          "SRC-01",
+          "SRC-02"
+        ],
+        "inline_source_ids": [
+          "SRC-01",
+          "SRC-02"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [
+          {
+            "claim": "DEMO-101 alone does not establish account lock; clarify the actual state.",
+            "any_of_source_ids": [
+              "SRC-01",
+              "SRC-02"
+            ],
+            "satisfied_by": [
+              "SRC-01",
+              "SRC-02"
+            ],
+            "passed": true
+          }
+        ],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "8c05f9f496e6d7c16e10913b7307d162dc9374da3222f6c663865e09ea694151",
+      "raw_response_path": "records/model-runs-v2/baseline-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-06",
+      "status": "FAIL",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "CHANGE_PASSWORD_ON_COMPANY_NETWORK",
+      "actual_first_action_label": "CHANGE_PASSWORD_ON_COMPANY_NETWORK",
+      "canonical_first_action": "CHANGE_PASSWORD_ON_COMPANY_NETWORK",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": false,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "請先連上公司網路，按 Ctrl+Alt+Delete，選擇「變更密碼」，依畫面完成",
+          "reason": "The reported ANSWER route matches the direct password-update procedure."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "請先連上公司網路，按 Ctrl+Alt+Delete，選擇「變更密碼」",
+          "reason": "Changing the password while connected to the company network means CHANGE_PASSWORD_ON_COMPANY_NETWORK, matching the reported label."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "你已確認密碼到期、使用公司管理筆電且公司網路可用",
+          "reason": "No minimum fields are missing. The answer accepts the supplied prerequisites without re-asking them."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "若已確認密碼到期，且使用者正在使用公司管理筆電，先連上公司網路，再按 Ctrl+Alt+Delete 並選擇變更密碼，依畫面完成變更。",
+          "reason": "SRC-02 supports the managed-device procedure, synthetic scope, testing, procedure-unavailability fallback and prohibited alternatives. The omitted network fallback is a completeness failure assessed separately."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "你已確認密碼到期、使用公司管理筆電且公司網路可用，符合本合成案例的更新條件。請先連上公司網路",
+          "reason": "The answer confirms and preserves the company-network prerequisite."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "按 Ctrl+Alt+Delete，選擇「變更密碼」",
+          "reason": "Both the key sequence and change-password action are retained."
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": false,
+          "evidence_quote": "若操作無法使用，停止自行嘗試並聯絡 Example IT Service Desk。",
+          "reason": "The procedure-unavailability fallback is present, but the answer does not retain the explicit service-desk fallback when the company network cannot be reached."
+        },
+        {
+          "criterion_id": "include-4",
+          "passed": true,
+          "evidence_quote": "符合本合成案例的更新條件。",
+          "reason": "The procedure is framed as a synthetic case and further limited to that case, preserving its fictional teaching scope."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "不要把帳戶解鎖當成重設或延長到期密碼",
+          "reason": "The answer does not claim unlocking resets or extends an expired password."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "不要用消費者入口網站同步密碼",
+          "reason": "Consumer-portal synchronization is prohibited rather than recommended."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The procedure is presented for the supplied company-managed laptop, with no unconditional permission for unmanaged devices."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [
+          "SRC-02"
+        ],
+        "cited_source_ids": [
+          "SRC-02"
+        ],
+        "inline_source_ids": [
+          "SRC-02"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "c65f2989dc19480ee1cc716ca2c7a7bb659065b8cd3934625a7fbfdfb755172a",
+      "raw_response_path": "records/model-runs-v2/baseline-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-07",
+      "status": "PASS",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "EXPLAIN_RESOURCE_RESTRICTION",
+      "actual_first_action_label": "RESPECT_REMOTE_ACCESS_RESTRICTION",
+      "canonical_first_action": "EXPLAIN_RESOURCE_RESTRICTION",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "不能以一般資料夾權限申請取得此路徑下的 TeamShare 存取。",
+          "reason": "The reported ANSWER route matches a direct explanation of the applicable restriction."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "不能以一般資料夾權限申請取得此路徑下的 TeamShare 存取。",
+          "reason": "The answer first explains the resource restriction, meaning EXPLAIN_RESOURCE_RESTRICTION. The reported RESPECT_REMOTE_ACCESS_RESTRICTION label expresses the same restriction-based response."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "已確認的 Branch Support 加上 ExampleVPN 遠端連線情境",
+          "reason": "No minimum fields are missing. Known group, network path, resource and role are used without being re-asked."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "Branch Support 即使已連上 ExampleVPN，也不能據此要求 TeamShare 存取。此申請流程不會覆蓋該遠端路徑限制。",
+          "reason": "SRC-05 supports the precise Branch remote scope, ExampleCRM/TeamShare distinction, non-bypass rule and separation of connection from authorization. It documents no alternative exception procedure."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "已確認的 Branch Support 加上 ExampleVPN 遠端連線情境，政策範圍包含 ExampleCRM，但不包含 TeamShare",
+          "reason": "The restriction retains both the Branch Support and remote ExampleVPN conditions."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "VPN 連線成功只代表有遠端連線，不代表取得 TeamShare 授權。",
+          "reason": "Connection success is explicitly distinguished from resource authorization."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "一般申請流程不能覆蓋這項遠端路徑限制",
+          "reason": "The answer does not offer an HQ application as a bypass."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "目前未提出申請或開通權限",
+          "reason": "The answer does not claim access was granted."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "No retrieval ACL enforcement test is claimed."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [
+          "SRC-05"
+        ],
+        "cited_source_ids": [
+          "SRC-05"
+        ],
+        "inline_source_ids": [
+          "SRC-05"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "f93919896cf191244ed7b59bbd009ba0efe4667767cb62af6a1a108e44a0699e",
+      "raw_response_path": "records/model-runs-v2/baseline-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-08",
+      "status": "PASS",
+      "expected_route": "CLARIFY",
+      "actual_route": "CLARIFY",
+      "expected_first_action": "ASK_RESOURCE_CONTEXT",
+      "actual_first_action_label": "CLARIFY_ACCESS_CONTEXT",
+      "canonical_first_action": "ASK_RESOURCE_CONTEXT",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "請先提供你的群組、目前所在網路或連線路徑，以及需要的 TeamShare 角色",
+          "reason": "The reported CLARIFY route matches the initial request for missing access context."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "請先提供你的群組、目前所在網路或連線路徑，以及需要的 TeamShare 角色",
+          "reason": "Requesting group, network path and role means ASK_RESOURCE_CONTEXT. The reported CLARIFY_ACCESS_CONTEXT label is equivalent."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "請先提供你的群組、目前所在網路或連線路徑，以及需要的 TeamShare 角色",
+          "reason": "All three minimum fields are requested and reported: support_group, network_path and requested_role. The known resource is not re-asked."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "若使用者的群組、所在網路或要求角色未知，先向使用者釐清並保留未決狀態。",
+          "reason": "SRC-05 supports clarification, the unresolved outcome, conditional HQ application details and the Branch remote restriction."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "請先提供你的群組、目前所在網路或連線路徑，以及需要的 TeamShare 角色",
+          "reason": "The answer asks for the missing group, network path and role."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "目前應保留未決狀態，不能假定你符合申請條件或替你選擇權限。",
+          "reason": "The outcome remains unresolved until the scope is known."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "若確認是 HQ Support 且在公司網路",
+          "reason": "HQ membership is conditional, not assumed."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "The answer offers no unconditional resource access."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "不能假定你符合申請條件或替你選擇權限。",
+          "reason": "The answer does not choose a role on the user's behalf."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [
+          "SRC-05"
+        ],
+        "cited_source_ids": [
+          "SRC-05"
+        ],
+        "inline_source_ids": [
+          "SRC-05"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "810dbf6b7ae54fb2edd74f140c954fefde5a68b24d1194fef44b9f38be2c2927",
+      "raw_response_path": "records/model-runs-v2/baseline-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-09",
+      "status": "PASS",
+      "expected_route": "CLARIFY",
+      "actual_route": "CLARIFY",
+      "expected_first_action": "COMPLETE_OVERSEAS_APPLICATION",
+      "actual_first_action_label": "COMPLETE_OVERSEAS_APPLICATION_DETAILS",
+      "canonical_first_action": "COMPLETE_OVERSEAS_APPLICATION",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "請先補上預計開始日與結束日，並具體說明需要遠端連線的工作範圍。",
+          "reason": "The reported CLARIFY route matches the request to complete missing application information."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "請先補上預計開始日與結束日",
+          "reason": "Completing missing overseas application details means COMPLETE_OVERSEAS_APPLICATION. The reported COMPLETE_OVERSEAS_APPLICATION_DETAILS label is equivalent."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "請先補上預計開始日與結束日，並具體說明需要遠端連線的工作範圍。",
+          "reason": "Both minimum dates are requested and reported. Additional remote_work_scope is unknown and supported by SRC-06; supplied identity, destination, purpose and approval state are not re-asked."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "主管核准後，ExampleDesk 將申請轉交 Network Operations，並納入 Security Review。",
+          "reason": "SRC-06 supports the missing details, manager-first review sequence, subsequent teams, approval and period limits, renewal requirement and distinction from VPN connection success."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "請先補上預計開始日與結束日",
+          "reason": "The answer explicitly asks for both missing dates."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "先由直屬主管審查。主管核准後才轉交 Network Operations",
+          "reason": "Line-manager approval is required before forwarding."
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "主管核准後才轉交 Network Operations 並納入 Security Review",
+          "reason": "Both Network Operations and Security Review are retained."
+        },
+        {
+          "criterion_id": "include-4",
+          "passed": true,
+          "evidence_quote": "所有相關審查完成且獲准後才能安排啟用；目前尚未請主管核准，不能先行啟用。[SRC-06] 核准只在申請所列日期範圍有效",
+          "reason": "Activation requires completed approvals, and authorization is limited to the approved date range."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "未知日期不能代填猜測。",
+          "reason": "No dates or approval are invented."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "此處未提交、核准或啟用任何安排。",
+          "reason": "The answer does not claim access was activated."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "成功連上 VPN 也不代表海外存取已獲准",
+          "reason": "VPN connection success is not treated as overseas approval."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [
+          "SRC-06"
+        ],
+        "cited_source_ids": [
+          "SRC-06"
+        ],
+        "inline_source_ids": [
+          "SRC-06"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "552c4660075fdc5b8149d70f2a93166ea254b2a641dd77a1034b3b1d69ff036e",
+      "raw_response_path": "records/model-runs-v2/baseline-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-10",
+      "status": "PASS",
+      "expected_route": "NO_ANSWER",
+      "actual_route": "NO_ANSWER",
+      "expected_first_action": "ACKNOWLEDGE_UNDOCUMENTED_ERROR",
+      "actual_first_action_label": "REFER_UNDOCUMENTED_ERROR_TO_SERVICE_DESK",
+      "canonical_first_action": "ACKNOWLEDGE_UNDOCUMENTED_ERROR",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "這份證據集沒有記錄 DEMO-999 的原因或專屬修復步驟，因此無法據此診斷或提供修法。",
+          "reason": "The reported NO_ANSWER route matches the explicit inability to provide an evidence-supported diagnosis or repair."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "這份證據集沒有記錄 DEMO-999 的原因或專屬修復步驟",
+          "reason": "The actual first response means ACKNOWLEDGE_UNDOCUMENTED_ERROR. The reported REFER_UNDOCUMENTED_ERROR_TO_SERVICE_DESK label describes the subsequent referral; the answer places acknowledgment first."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "請保存不含機密的完整錯訊與發生情境，交由服務台判讀。",
+          "reason": "No minimum fields are missing. Non-secret error details and occurrence context are supported diagnostics; the known code is not re-asked."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "未列出的代碼沒有在此定義原因，請記錄原文並交由服務台判讀，不要自行推測。",
+          "reason": "SRC-02 supports the evidence-set limitation and referral without guessing. SRC-01 supports non-secret diagnostic collection; neither is used to invent a DEMO-999 cause."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "這份證據集沒有記錄 DEMO-999 的原因或專屬修復步驟",
+          "reason": "The answer explicitly states that DEMO-999 is undocumented in this evidence set."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "請保存不含機密的完整錯訊與發生情境，交由服務台判讀。",
+          "reason": "Non-secret error collection and service-desk referral are both present."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "No cause or remediation for DEMO-999 is invented."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "已記錄的 DEMO-101、DEMO-202、DEMO-303 不能用來推導 DEMO-999 是密碼、網路或裝置授權問題。",
+          "reason": "The other codes are mentioned to reject equivalence, not to diagnose DEMO-999."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "這是本證據集的資訊邊界，並非宣稱其他資料來源也沒有相關資訊",
+          "reason": "The undocumented claim is explicitly limited to this evidence set."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [
+          "SRC-02"
+        ],
+        "cited_source_ids": [
+          "SRC-01",
+          "SRC-02"
+        ],
+        "inline_source_ids": [
+          "SRC-01",
+          "SRC-02"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "3e1d01bda3743825735e4ed8508e5022c7c137bda40f31a31417f30666184aca",
+      "raw_response_path": "records/model-runs-v2/baseline-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "baseline",
+      "case_id": "SYN-11",
+      "status": "PASS",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "EXPLAIN_SCOPE_AND_APPLICATION",
+      "actual_first_action_label": "PREPARE_EXAMPLEDESK_ACCESS_REQUEST",
+      "canonical_first_action": "EXPLAIN_SCOPE_AND_APPLICATION",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "你是 HQ Support 且在公司網路，可以提出 TeamShare 權限申請",
+          "reason": "The reported ANSWER route matches the direct scope comparison and application guidance."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "差別在於群組與網路條件：你是 HQ Support 且在公司網路，可以提出 TeamShare 權限申請",
+          "reason": "The answer first explains eligibility and the application path, meaning EXPLAIN_SCOPE_AND_APPLICATION. The reported PREPARE_EXAMPLEDESK_ACCESS_REQUEST label describes the application component of that response."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "請透過 ExampleDesk 提供使用者識別碼、邏輯資料夾名称及所需角色",
+          "reason": "No minimum fields are missing. These additional application details are supported by SRC-05, and the supplied group, network path and resource are not re-asked."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "HQ Support 在公司網路上提出申請，也不表示系統已完成授權。",
+          "reason": "SRC-05 supports the HQ application conditions and details, Branch remote restriction, non-bypass rule and distinction between submission and active authorization."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "你是 HQ Support 且在公司網路，可以提出 TeamShare 權限申請；Branch Support 透過 ExampleVPN 遠端連線時，政策範圍包含 ExampleCRM，但不包含 TeamShare，一般申請不能覆蓋該限制。[SRC-05] 若要提出你的申請，請透過 ExampleDesk 提供使用者識別碼、邏輯資料夾名称及所需角色",
+          "reason": "The answer gives the HQ corporate-network application path through ExampleDesk and all required request details."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "送出申請不代表已核准或授權已生效",
+          "reason": "Submission is explicitly distinguished from approval and active access."
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "Branch Support 透過 ExampleVPN 遠端連線時，政策範圍包含 ExampleCRM，但不包含 TeamShare，一般申請不能覆蓋該限制。",
+          "reason": "The Branch remote restriction is scoped correctly, and ordinary application bypass is denied."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "本回答未提交申請或開通資源。",
+          "reason": "The answer does not claim a request was submitted or access granted."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "一般申請不能覆蓋該限制。",
+          "reason": "The HQ application is not offered as a bypass for the Branch remote restriction."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "No retrieval ACL enforcement test is claimed."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [
+          "SRC-05"
+        ],
+        "cited_source_ids": [
+          "SRC-05"
+        ],
+        "inline_source_ids": [
+          "SRC-05"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "80ad0014638585f3b3d8eaf34aee104501254c8986159336a8139cff85b91384",
+      "raw_response_path": "records/model-runs-v2/baseline-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-01",
+      "status": "FAIL",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "SELF_SERVICE_RECOVERY",
+      "actual_first_action_label": "TRY_SELF_SERVICE_RECOVERY",
+      "canonical_first_action": "SELF_SERVICE_RECOVERY",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": false,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "第一步是嘗試自助復原",
+          "reason": "Reported ANSWER matches the direct procedural answer."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "第一步是嘗試自助復原",
+          "reason": "TRY_SELF_SERVICE_RECOVERY and the recommended action mean SELF_SERVICE_RECOVERY."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "結果仍須由你確認。",
+          "reason": "No minimum fields are missing; neither the reported fields nor the answer re-asks supplied information."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "若流程失敗或狀態不明，轉由 Example IT Service Desk 處理。",
+          "reason": "SRC-07 supports the eligible-user recovery route, fictional URL, result confirmation and fallback."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": false,
+          "evidence_quote": "你已確認帳戶鎖定，且三項資格皆符合",
+          "reason": "Confirmed lock is explicit, but the answer does not identify full-time employment, a managed laptop and prior enrollment as the three required qualifications. Their citation excerpt cannot supply this omission."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": false,
+          "evidence_quote": "以本次情境日期 2030-03-02 判斷",
+          "reason": "The answer gives the scenario date but omits the qualification that the update applies only on or after 2030-03-01."
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "若流程失敗或狀態不明，轉由 Example IT Service Desk 處理。",
+          "reason": "Explicitly retains the service-desk fallback."
+        },
+        {
+          "criterion_id": "include-4",
+          "passed": true,
+          "evidence_quote": "這是虛構教學入口，沒有實際服務",
+          "reason": "Identifies the URL as a fictional teaching placeholder without a real service."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Does not extend self-service to contractors or unenrolled users."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "不能視為已完成復原",
+          "reason": "Does not claim recovery was executed."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Does not change the password-expiry procedure."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [
+          "SRC-07"
+        ],
+        "cited_source_ids": [
+          "SRC-07"
+        ],
+        "inline_source_ids": [
+          "SRC-07"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "170a93e0930a6cbf1ef1c29c939e1eef213ea3bacb25b4e1182d420817e2c676",
+      "raw_response_path": "records/model-runs-v2/updated-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-02",
+      "status": "PASS",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "SERVICE_DESK_REQUEST",
+      "actual_first_action_label": "SUBMIT_EXAMPLEDESK_REQUEST",
+      "canonical_first_action": "SERVICE_DESK_REQUEST",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "應沿用 ExampleDesk 服務台路徑。",
+          "reason": "Reported ANSWER matches the direct service-desk guidance."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "應沿用 ExampleDesk 服務台路徑。",
+          "reason": "SUBMIT_EXAMPLEDESK_REQUEST and the recommended request route mean SERVICE_DESK_REQUEST."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "附識別與聯絡資訊、非機密錯訊、發生時間，以及已知的裝置管理、復原註冊與鎖定狀態。",
+          "reason": "No minimum fields are missing. Additional request details are source-supported; including known information in a request does not re-ask it."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "服務台會檢視請求，但提交不代表已解鎖，也不保證直接解除或特定處理時間。",
+          "reason": "SRC-07 supports contractor ineligibility, and SRC-03 supports the request contents, secret exclusion and outcome limits."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "應沿用 ExampleDesk 服務台路徑。",
+          "reason": "Uses ExampleDesk for this confirmed-lock case."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "不要附密碼、驗證碼或復原連結。",
+          "reason": "Explicitly excludes passwords and verification codes."
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "提交不代表已解鎖，也不保證直接解除或特定處理時間。",
+          "reason": "Does not promise that submitting the request completes an unlock."
+        },
+        {
+          "criterion_id": "include-4",
+          "passed": true,
+          "evidence_quote": "你是承包人員，因此即使使用公司管理筆電且已註冊自助復原，也不適用這次更新的自助第一步",
+          "reason": "Explicitly states that the conditional self-service update does not apply to this contractor."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Rejects self-service as the first action rather than recommending it."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Does not treat password expiry as account lock."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Does not claim an unlock was executed."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [
+          "SRC-03",
+          "SRC-07"
+        ],
+        "cited_source_ids": [
+          "SRC-03",
+          "SRC-07"
+        ],
+        "inline_source_ids": [
+          "SRC-03",
+          "SRC-07"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "7ca234af34a768cb8e8f8f618bd3ddbd224f866e9313523a91f06801ec264b97",
+      "raw_response_path": "records/model-runs-v2/updated-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-03",
+      "status": "PASS",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "SERVICE_DESK_REQUEST",
+      "actual_first_action_label": "SUBMIT_EXAMPLEDESK_REQUEST",
+      "canonical_first_action": "SERVICE_DESK_REQUEST",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "第一步仍是透過 ExampleDesk 提交帳戶復原請求",
+          "reason": "Reported ANSWER matches the direct service-desk procedure."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "第一步仍是透過 ExampleDesk 提交帳戶復原請求",
+          "reason": "SUBMIT_EXAMPLEDESK_REQUEST and the actual recommendation mean SERVICE_DESK_REQUEST."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "請附識別與聯絡資訊、非機密錯訊、發生時間，並註明裝置受公司管理、尚未註冊自助復原及已確認鎖定。",
+          "reason": "No minimum fields are missing. Requests source-supported details and instructs inclusion of known states without asking to establish them again."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "因為你尚未註冊自助復原，第一步仍是透過 ExampleDesk 提交帳戶復原請求",
+          "reason": "SRC-07 supports the unenrolled-user fallback; SRC-03 supports the request details and outcome limits."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "透過 ExampleDesk 提交帳戶復原請求",
+          "reason": "Uses ExampleDesk for confirmed lock."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "不要提供密碼、驗證碼或復原連結。",
+          "reason": "Explicitly excludes passwords and verification codes."
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "提交不代表已解鎖，也沒有直接解鎖或處理時間的保證。",
+          "reason": "Does not promise that the request completes an unlock."
+        },
+        {
+          "criterion_id": "include-4",
+          "passed": true,
+          "evidence_quote": "全職身分與公司管理筆電不足以單獨取得自助流程資格。",
+          "reason": "Together with the explicit enrollment explanation, states why the conditional update does not apply."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Recommends the service desk, not self-service, as the first action."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Does not conflate password expiry and account lock."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Does not claim an unlock was executed."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [
+          "SRC-03",
+          "SRC-07"
+        ],
+        "cited_source_ids": [
+          "SRC-03",
+          "SRC-07"
+        ],
+        "inline_source_ids": [
+          "SRC-03",
+          "SRC-07"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "005f78e3136a11d809d99d750d8d33cfa1a5eed08971f79cd462c5195ac063ff",
+      "raw_response_path": "records/model-runs-v2/updated-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-04",
+      "status": "PASS",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "SERVICE_DESK_REQUEST",
+      "actual_first_action_label": "SUBMIT_EXAMPLEDESK_REQUEST",
+      "canonical_first_action": "SERVICE_DESK_REQUEST",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "採用當時已生效的 ExampleDesk 基準流程",
+          "reason": "Reported ANSWER matches the historical procedural answer."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "當時應提交帳戶復原請求，由 Example IT Service Desk 檢視",
+          "reason": "SUBMIT_EXAMPLEDESK_REQUEST and the historical recommendation mean SERVICE_DESK_REQUEST."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "附識別與聯絡資訊、非機密錯訊、發生時間及裝置管理、復原註冊、已確認鎖定等狀態",
+          "reason": "No minimum fields are missing. Describes source-supported request contents without asking to reconfirm supplied facts."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "2030-03-01 才生效的自助第一步不回溯適用",
+          "reason": "SRC-03 supports the baseline effective from January 10; SRC-07 supports non-retroactive application of the March update."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "採用當時已生效的 ExampleDesk 基準流程",
+          "reason": "Uses ExampleDesk for the historical confirmed lock."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "不得附登入秘密。",
+          "reason": "The prohibition on login secrets encompasses passwords and verification codes."
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "不能證明請求曾送出或帳戶已解鎖，也不保證處理時間。",
+          "reason": "Does not promise that submitting a request completes an unlock."
+        },
+        {
+          "criterion_id": "include-4",
+          "passed": true,
+          "evidence_quote": "應依事件日期 2030-01-20 判斷，採用當時已生效的 ExampleDesk 基準流程；2030-03-01 才生效的自助第一步不回溯適用",
+          "reason": "Explicitly applies the baseline to the historical event date."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Mentions self-service only to explain that it was not applicable."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Does not treat password expiry as account lock."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Does not claim an unlock was executed."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [
+          "SRC-03",
+          "SRC-07"
+        ],
+        "cited_source_ids": [
+          "SRC-03",
+          "SRC-07"
+        ],
+        "inline_source_ids": [
+          "SRC-03",
+          "SRC-07"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "51b29fb2f0f08b53f41ced0f2307abc3e8bbf1528d10d8c7904e3d1489076580",
+      "raw_response_path": "records/model-runs-v2/updated-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-05",
+      "status": "PASS",
+      "expected_route": "CLARIFY",
+      "actual_route": "CLARIFY",
+      "expected_first_action": "ASK_ACCOUNT_STATE",
+      "actual_first_action_label": "CLARIFY_ACCOUNT_STATE",
+      "canonical_first_action": "ASK_ACCOUNT_STATE",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "釐清實際狀態後，才能選擇適用處理分支。",
+          "reason": "Reported CLARIFY matches the unresolved diagnosis and clarification request."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "請確認是否收到明確的鎖定或到期通知",
+          "reason": "CLARIFY_ACCOUNT_STATE and the actual question mean ASK_ACCOUNT_STATE."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "請確認是否收到明確的鎖定或到期通知，並提供不含機密的完整錯誤文字；也請說明能否在其他公司核准的工作流程中登入。",
+          "reason": "Asks for account_state. The additional reported fields are source-supported diagnostics, and DEMO-101 is not re-asked."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "不能只憑 DEMO-101 判定帳戶鎖定；它也可能涉及密碼輸入錯誤、密碼到期或網路狀況。",
+          "reason": "SRC-02 supports the possible causes; SRC-01 supports state clarification, other approved login checks and secret exclusion."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "不能只憑 DEMO-101 判定帳戶鎖定；它也可能涉及密碼輸入錯誤、密碼到期或網路狀況。",
+          "reason": "Explicitly distinguishes possibilities from a confirmed diagnosis."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "請確認是否收到明確的鎖定或到期通知",
+          "reason": "Asks whether an explicit lock or expiry message exists."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "不能只憑 DEMO-101 判定帳戶鎖定",
+          "reason": "Does not diagnose lock from the code alone."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "不要提供密碼或驗證碼。",
+          "reason": "Forbids providing secrets rather than requesting them."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Defers recovery selection until state clarification; gives no unconditional recovery action."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [],
+        "cited_source_ids": [
+          "SRC-01",
+          "SRC-02"
+        ],
+        "inline_source_ids": [
+          "SRC-01",
+          "SRC-02"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [
+          {
+            "claim": "DEMO-101 alone does not establish account lock; clarify the actual state.",
+            "any_of_source_ids": [
+              "SRC-01",
+              "SRC-02"
+            ],
+            "satisfied_by": [
+              "SRC-01",
+              "SRC-02"
+            ],
+            "passed": true
+          }
+        ],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "13248868e61124f1572294d9c417a33e5a0a23c74ce493c9abebc3ab0917fcbf",
+      "raw_response_path": "records/model-runs-v2/updated-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-06",
+      "status": "FAIL",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "CHANGE_PASSWORD_ON_COMPANY_NETWORK",
+      "actual_first_action_label": "CONNECT_COMPANY_NETWORK",
+      "canonical_first_action": "CHANGE_PASSWORD_ON_COMPANY_NETWORK",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": false,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "請先連上公司網路，再按 Ctrl+Alt+Delete，選擇「變更密碼」並依畫面完成",
+          "reason": "Reported ANSWER matches the direct password-expiry procedure."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "請先連上公司網路，再按 Ctrl+Alt+Delete，選擇「變更密碼」並依畫面完成",
+          "reason": "CONNECT_COMPANY_NETWORK names the prerequisite within the recommended password-change procedure; the actual recommendation means CHANGE_PASSWORD_ON_COMPANY_NETWORK."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "你已確認密碼到期、使用公司管理筆電且公司網路可用",
+          "reason": "No minimum fields are missing; supplied states are acknowledged without re-asking."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "這是本合成教學案例的程序，不保證適用其他環境。",
+          "reason": "SRC-02 supports the scoped fictional procedure and fallback; SRC-07 supports its unchanged status."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "公司網路可用，請先連上公司網路",
+          "reason": "Confirms network availability and requires connecting before the password change."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "再按 Ctrl+Alt+Delete，選擇「變更密碼」並依畫面完成",
+          "reason": "Preserves the required key sequence and change-password action."
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": false,
+          "evidence_quote": "若操作無法使用，停止自行嘗試並聯絡 Example IT Service Desk。",
+          "reason": "Retains fallback for unavailable operations, but does not explicitly retain the separate fallback condition when the company network cannot be reached."
+        },
+        {
+          "criterion_id": "include-4",
+          "passed": true,
+          "evidence_quote": "這是本合成教學案例的程序，不保證適用其他環境。",
+          "reason": "Explicitly identifies the steps as a synthetic teaching procedure."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "不要以帳戶解鎖替代更新到期密碼",
+          "reason": "Does not claim unlocking resets or extends the expired password."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "不要用消費者入口網站同步密碼",
+          "reason": "Mentions consumer synchronization only to prohibit it."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "使用公司管理筆電",
+          "reason": "Scopes the procedure to a managed laptop and does not authorize unconditional use on unmanaged devices."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [
+          "SRC-02"
+        ],
+        "cited_source_ids": [
+          "SRC-02",
+          "SRC-07"
+        ],
+        "inline_source_ids": [
+          "SRC-02",
+          "SRC-07"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "414d8ac247b398ad128488cbbf7cefcded9fbc2e30750470c5af3beb59f20ad3",
+      "raw_response_path": "records/model-runs-v2/updated-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-07",
+      "status": "PASS",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "EXPLAIN_RESOURCE_RESTRICTION",
+      "actual_first_action_label": "RESPECT_REMOTE_ACCESS_RESTRICTION",
+      "canonical_first_action": "EXPLAIN_RESOURCE_RESTRICTION",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "不能用一般資料夾權限申請取得這條遠端路徑上的 TeamShare 存取。",
+          "reason": "Reported ANSWER matches the direct restriction explanation."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "不能用一般資料夾權限申請取得這條遠端路徑上的 TeamShare 存取。",
+          "reason": "RESPECT_REMOTE_ACCESS_RESTRICTION is implemented as explaining the restriction, equivalent to EXPLAIN_RESOURCE_RESTRICTION."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "即使要求的角色只是 reader，申請流程也不會覆蓋此限制。",
+          "reason": "No minimum fields are missing; neither the answer nor reported fields re-asks known context."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "Branch Support 經 ExampleVPN 遠端連線的政策範圍包含 ExampleCRM，但不包含 TeamShare",
+          "reason": "SRC-05 supports the precise group and path restriction, application limits and distinction between connection and authorization."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "Branch Support 經 ExampleVPN 遠端連線",
+          "reason": "Explicitly retains both the group and remote connection scope."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "VPN 連線成功不代表資源權限已核准。",
+          "reason": "Explicitly distinguishes connection success from resource authorization."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "申請流程也不會覆蓋此限制。",
+          "reason": "Does not offer an HQ application or ordinary application as a bypass."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Does not claim access was granted."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Does not claim retrieval ACL enforcement was tested."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [
+          "SRC-05"
+        ],
+        "cited_source_ids": [
+          "SRC-05"
+        ],
+        "inline_source_ids": [
+          "SRC-05"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "737080212745c95f8b62fda48ec894e73bef8bf2c5221b82874d6b3238e36989",
+      "raw_response_path": "records/model-runs-v2/updated-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-08",
+      "status": "PASS",
+      "expected_route": "CLARIFY",
+      "actual_route": "CLARIFY",
+      "expected_first_action": "ASK_RESOURCE_CONTEXT",
+      "actual_first_action_label": "CLARIFY_ACCESS_CONTEXT",
+      "canonical_first_action": "ASK_RESOURCE_CONTEXT",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "這些資訊尚未確認，不能先判定你適用哪個 TeamShare 分支。",
+          "reason": "Reported CLARIFY matches the unresolved scope and clarification request."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "請先提供你的支援群組、目前所在網路／連線路徑，以及需要的角色",
+          "reason": "CLARIFY_ACCESS_CONTEXT and the actual request mean ASK_RESOURCE_CONTEXT."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "請先提供你的支援群組、目前所在網路／連線路徑，以及需要的角色",
+          "reason": "Asks all three minimum fields, matching the reported missing_fields, without re-asking TeamShare."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "若是 Branch Support 經 ExampleVPN 遠端連線，該申請流程不能覆蓋 TeamShare 路徑限制。",
+          "reason": "SRC-05 supports clarification, the conditional HQ application path and the Branch remote restriction."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "請先提供你的支援群組、目前所在網路／連線路徑，以及需要的角色",
+          "reason": "Explicitly asks for group, network path and requested role."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "這些資訊尚未確認，不能先判定你適用哪個 TeamShare 分支。",
+          "reason": "Keeps the outcome unresolved while explaining conditional branches."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "若是 HQ Support 且在公司網路",
+          "reason": "Presents HQ membership conditionally rather than assuming it."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Offers only conditional application guidance, not unconditional access."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Asks the user for a role and does not choose one."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [
+          "SRC-05"
+        ],
+        "cited_source_ids": [
+          "SRC-05"
+        ],
+        "inline_source_ids": [
+          "SRC-05"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "8e966979e71e6182db700dce22544dd03f1717011393ee9ef2f6d65fcb74c323",
+      "raw_response_path": "records/model-runs-v2/updated-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-09",
+      "status": "PASS",
+      "expected_route": "CLARIFY",
+      "actual_route": "CLARIFY",
+      "expected_first_action": "COMPLETE_OVERSEAS_APPLICATION",
+      "actual_first_action_label": "CLARIFY_TRAVEL_DATES",
+      "canonical_first_action": "COMPLETE_OVERSEAS_APPLICATION",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "請先確認預計開始日與結束日",
+          "reason": "Reported CLARIFY matches the request to supply missing dates before proceeding."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "請先確認預計開始日與結束日；申請人識別資訊、目的地與業務目的已提供，不需重填或猜測日期。",
+          "reason": "CLARIFY_TRAVEL_DATES is the required initial step to complete the incomplete application, equivalent here to COMPLETE_OVERSEAS_APPLICATION."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "請先確認預計開始日與結束日；申請人識別資訊、目的地與業務目的已提供，不需重填或猜測日期。",
+          "reason": "Asks both minimum missing dates and acknowledges supplied fields. Additional work-scope information is source-supported."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "主管核准後才轉交 Network Operations 並納入 Security Review",
+          "reason": "SRC-06 supports the required data, review sequence, activation conditions and approved-period limits."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "請先確認預計開始日與結束日",
+          "reason": "Explicitly asks for the missing start and end dates."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "由直屬主管先審查。主管核准後才轉交",
+          "reason": "Preserves line-manager approval before forwarding."
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "Network Operations 並納入 Security Review",
+          "reason": "Explicitly preserves both required review participants."
+        },
+        {
+          "criterion_id": "include-4",
+          "passed": true,
+          "evidence_quote": "所有相關審查完成且獲准後，才安排啟用，待審或拒絕都不得先開通。核准僅在申請日期範圍內有效",
+          "reason": "Requires approval before activation and limits validity to the approved application period."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "不需重填或猜測日期。",
+          "reason": "Does not invent dates or approval."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "目前未替你提交、核准或啟用。",
+          "reason": "Does not claim access was activated."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Does not treat VPN connection success as overseas approval."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [
+          "SRC-06"
+        ],
+        "cited_source_ids": [
+          "SRC-06"
+        ],
+        "inline_source_ids": [
+          "SRC-06"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "c28143a021d66449f10f4fefc27607e938d6cf6cc0c38056906f322977d46e6f",
+      "raw_response_path": "records/model-runs-v2/updated-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-10",
+      "status": "PASS",
+      "expected_route": "NO_ANSWER",
+      "actual_route": "NO_ANSWER",
+      "expected_first_action": "ACKNOWLEDGE_UNDOCUMENTED_ERROR",
+      "actual_first_action_label": "ESCALATE_UNDOCUMENTED_ERROR",
+      "canonical_first_action": "ACKNOWLEDGE_UNDOCUMENTED_ERROR",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "本次證據集未記錄 DEMO-999 的原因或修復方法，因此無法判定如何修復",
+          "reason": "Reported NO_ANSWER matches the explicit evidence-bound inability to diagnose or prescribe a repair."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "本次證據集未記錄 DEMO-999 的原因或修復方法",
+          "reason": "Although reported as ESCALATE_UNDOCUMENTED_ERROR, the actual answer first acknowledges the documentation gap, equivalent to ACKNOWLEDGE_UNDOCUMENTED_ERROR."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "請保存不含機密的完整錯誤原文與發生情境，交由服務台判讀。",
+          "reason": "No minimum fields are missing. Additional non-secret diagnostics are source-supported and do not re-ask the known code."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "本次證據集未記錄 DEMO-999 的原因或修復方法",
+          "reason": "SRC-02 limits its documented codes and directs collection and referral without speculation; its table contains no DEMO-999."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "本次證據集未記錄 DEMO-999 的原因或修復方法",
+          "reason": "Explicitly states the code's documentation gap in this evidence set."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "請保存不含機密的完整錯誤原文與發生情境，交由服務台判讀。",
+          "reason": "Retains both non-secret error collection and service-desk referral."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Does not invent a cause or remediation; collection and referral are not a claimed repair."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "不能借用其他代碼的描述",
+          "reason": "Does not equate DEMO-999 with another documented code."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "不代表其他來源一定沒有相關資訊。",
+          "reason": "Limits the documentation claim to the supplied evidence set."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [
+          "SRC-02"
+        ],
+        "cited_source_ids": [
+          "SRC-02"
+        ],
+        "inline_source_ids": [
+          "SRC-02"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "ba5b5e287fe7b4d6c6c8a7fec799ef4c275487ad408c2a61fcb28d91b8bb27c4",
+      "raw_response_path": "records/model-runs-v2/updated-query/response.json",
+      "human_review": "pending"
+    },
+    {
+      "phase": "updated",
+      "case_id": "SYN-11",
+      "status": "PASS",
+      "expected_route": "ANSWER",
+      "actual_route": "ANSWER",
+      "expected_first_action": "EXPLAIN_SCOPE_AND_APPLICATION",
+      "actual_first_action_label": "PREPARE_TEAMSHARE_REQUEST",
+      "canonical_first_action": "EXPLAIN_SCOPE_AND_APPLICATION",
+      "first_action_semantic_match": true,
+      "route_match": true,
+      "semantic_criteria_passed": true,
+      "criteria": [
+        {
+          "criterion_id": "route",
+          "passed": true,
+          "evidence_quote": "你是 HQ Support 且在公司網路，可準備使用者識別碼、邏輯資料夾名稱及所需角色，透過 ExampleDesk 提出 TeamShare 權限申請",
+          "reason": "Reported ANSWER matches the direct scope comparison and application guidance."
+        },
+        {
+          "criterion_id": "first_action",
+          "passed": true,
+          "evidence_quote": "你是 HQ Support 且在公司網路，可準備使用者識別碼、邏輯資料夾名稱及所需角色，透過 ExampleDesk 提出 TeamShare 權限申請",
+          "reason": "PREPARE_TEAMSHARE_REQUEST is presented through an explanation of the applicable scope and application path, equivalent to EXPLAIN_SCOPE_AND_APPLICATION."
+        },
+        {
+          "criterion_id": "missing_fields",
+          "passed": true,
+          "evidence_quote": "可準備使用者識別碼、邏輯資料夾名稱及所需角色",
+          "reason": "No minimum fields are missing. The additional application details are source-supported and do not re-ask the supplied group, network or resource."
+        },
+        {
+          "criterion_id": "citation_alignment",
+          "passed": true,
+          "evidence_quote": "一般申請不能覆蓋該路徑限制。",
+          "reason": "SRC-05 supports the HQ application details, Branch remote restriction and distinction between submission and authorization."
+        },
+        {
+          "criterion_id": "include-1",
+          "passed": true,
+          "evidence_quote": "你是 HQ Support 且在公司網路，可準備使用者識別碼、邏輯資料夾名稱及所需角色，透過 ExampleDesk 提出 TeamShare 權限申請",
+          "reason": "Explicitly identifies the HQ corporate-network path and all required request details."
+        },
+        {
+          "criterion_id": "include-2",
+          "passed": true,
+          "evidence_quote": "不能把提交請求當成已核准、已生效或已可使用的證據。",
+          "reason": "Explicitly states that submission does not establish approval or active access."
+        },
+        {
+          "criterion_id": "include-3",
+          "passed": true,
+          "evidence_quote": "Branch Support 經 ExampleVPN 遠端連線的範圍包含 ExampleCRM，但不包含 TeamShare，一般申請不能覆蓋該路徑限制。",
+          "reason": "Distinguishes the Branch remote restriction and explicitly denies an ordinary-application bypass."
+        },
+        {
+          "criterion_id": "prohibit-1",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Gives prospective application guidance without claiming submission or granted access."
+        },
+        {
+          "criterion_id": "prohibit-2",
+          "passed": true,
+          "evidence_quote": "一般申請不能覆蓋該路徑限制。",
+          "reason": "Does not offer the HQ application as a bypass."
+        },
+        {
+          "criterion_id": "prohibit-3",
+          "passed": true,
+          "evidence_quote": "",
+          "reason": "Does not claim retrieval ACL enforcement was tested."
+        }
+      ],
+      "citation_checks": {
+        "required_source_ids": [
+          "SRC-05"
+        ],
+        "cited_source_ids": [
+          "SRC-05"
+        ],
+        "inline_source_ids": [
+          "SRC-05"
+        ],
+        "missing_required_source_ids": [],
+        "alternative_requirements": [],
+        "invalid_citations": [],
+        "inline_citation_mismatch": [],
+        "passed": true
+      },
+      "answer_sha256": "5ff3342f86eadba07485afc24c3258b9eb73a9c88e8f4977a1f6c8e2e7b4ffb9",
+      "raw_response_path": "records/model-runs-v2/updated-query/response.json",
+      "human_review": "pending"
+    }
+  ],
+  "model_runs": {
+    "baseline-query": {
+      "started_at": "2026-10-12T08:32:29.052918+00:00",
+      "finished_at": "2026-10-12T08:35:33.080123+00:00",
+      "elapsed_seconds": 184.028,
+      "argv": [
+        "codex",
+        "exec",
+        "--ignore-user-config",
+        "--ignore-rules",
+        "--ephemeral",
+        "--skip-git-repo-check",
+        "--sandbox",
+        "read-only",
+        "--json",
+        "--color",
+        "never",
+        "-c",
+        "model=\"gpt-6.1-sol\"",
+        "-c",
+        "model_reasoning_effort=\"high\"",
+        "--output-schema",
+        "evidence/synthetic-enterprise-demo/records/model-runs-v2/baseline-query/response-schema.json",
+        "--output-last-message",
+        "evidence/synthetic-enterprise-demo/records/model-runs-v2/baseline-query/response.json",
+        "-"
+      ],
+      "cwd_mode": "empty-neutral-temporary-directory",
+      "requested_model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "exit_code": 0,
+      "prompt_sha256": "3afccf297a76e03f390944f7d68fd5a865eaf8c2419632bcfa2332e892c58368",
+      "schema_sha256": "2bbba6b08b29dde4e02db6b3b3c7bc1a1777b133ec2757fdfb72507ec1b34ccf",
+      "response_sha256": "5545cfb32b1847342f0bdbbb2df761d31b5289a0383f6ed6b1fe718318d08c06",
+      "event_usage": [
+        {
+          "input_tokens": 36806,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 7168,
+          "reasoning_output_tokens": 1034
+        }
+      ],
+      "tool_item_count": 0,
+      "tool_item_types": [],
+      "event_parse_errors": [],
+      "cost_usd": null,
+      "exact_serving_snapshot": null,
+      "public_redaction_note": "Local absolute paths in argv were replaced with repository-relative paths for publication; execution settings and file hashes are unchanged."
+    },
+    "baseline-judge": {
+      "started_at": "2026-10-12T08:36:05.327309+00:00",
+      "finished_at": "2026-10-12T08:39:32.692978+00:00",
+      "elapsed_seconds": 207.367,
+      "argv": [
+        "codex",
+        "exec",
+        "--ignore-user-config",
+        "--ignore-rules",
+        "--ephemeral",
+        "--skip-git-repo-check",
+        "--sandbox",
+        "read-only",
+        "--json",
+        "--color",
+        "never",
+        "-c",
+        "model=\"gpt-6.1-sol\"",
+        "-c",
+        "model_reasoning_effort=\"high\"",
+        "--output-schema",
+        "evidence/synthetic-enterprise-demo/records/model-runs-v2/baseline-judge/response-schema.json",
+        "--output-last-message",
+        "evidence/synthetic-enterprise-demo/records/model-runs-v2/baseline-judge/response.json",
+        "-"
+      ],
+      "cwd_mode": "empty-neutral-temporary-directory",
+      "requested_model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "exit_code": 0,
+      "prompt_sha256": "81e502dec26016abc328f2c289c20b46f4206f85ec48532aa99a4a4e51eed9aa",
+      "schema_sha256": "9d668b21a32c3c4f8ccc3124afa7ad77b9275a407f41ebadeb0578971846ebd1",
+      "response_sha256": "35d79e479700a3315c7d5b7fd30af383dc7693c3be1ca107a9d6e2eaf876f0cb",
+      "event_usage": [
+        {
+          "input_tokens": 33371,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 8410,
+          "reasoning_output_tokens": 466
+        }
+      ],
+      "tool_item_count": 0,
+      "tool_item_types": [],
+      "event_parse_errors": [],
+      "cost_usd": null,
+      "exact_serving_snapshot": null,
+      "public_redaction_note": "Local absolute paths in argv were replaced with repository-relative paths for publication; execution settings and file hashes are unchanged."
+    },
+    "updated-query": {
+      "started_at": "2026-10-12T08:33:08.683840+00:00",
+      "finished_at": "2026-10-12T08:35:57.117471+00:00",
+      "elapsed_seconds": 168.434,
+      "argv": [
+        "codex",
+        "exec",
+        "--ignore-user-config",
+        "--ignore-rules",
+        "--ephemeral",
+        "--skip-git-repo-check",
+        "--sandbox",
+        "read-only",
+        "--json",
+        "--color",
+        "never",
+        "-c",
+        "model=\"gpt-6.1-sol\"",
+        "-c",
+        "model_reasoning_effort=\"high\"",
+        "--output-schema",
+        "evidence/synthetic-enterprise-demo/records/model-runs-v2/updated-query/response-schema.json",
+        "--output-last-message",
+        "evidence/synthetic-enterprise-demo/records/model-runs-v2/updated-query/response.json",
+        "-"
+      ],
+      "cwd_mode": "empty-neutral-temporary-directory",
+      "requested_model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "exit_code": 0,
+      "prompt_sha256": "9ec3d00f82e50b7fc0aa5b04d4850344f7fd34d7904a92a56e8a3975676be088",
+      "schema_sha256": "2bbba6b08b29dde4e02db6b3b3c7bc1a1777b133ec2757fdfb72507ec1b34ccf",
+      "response_sha256": "b830a032bf873f5e70d40e1b92d2300a3b6dda071f6be65d3a96433a0f230e3a",
+      "event_usage": [
+        {
+          "input_tokens": 40217,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 6493,
+          "reasoning_output_tokens": 1034
+        }
+      ],
+      "tool_item_count": 0,
+      "tool_item_types": [],
+      "event_parse_errors": [],
+      "cost_usd": null,
+      "exact_serving_snapshot": null,
+      "public_redaction_note": "Local absolute paths in argv were replaced with repository-relative paths for publication; execution settings and file hashes are unchanged."
+    },
+    "updated-judge": {
+      "started_at": "2026-10-12T08:36:10.611659+00:00",
+      "finished_at": "2026-10-12T08:43:23.989271+00:00",
+      "elapsed_seconds": 433.378,
+      "argv": [
+        "codex",
+        "exec",
+        "--ignore-user-config",
+        "--ignore-rules",
+        "--ephemeral",
+        "--skip-git-repo-check",
+        "--sandbox",
+        "read-only",
+        "--json",
+        "--color",
+        "never",
+        "-c",
+        "model=\"gpt-6.1-sol\"",
+        "-c",
+        "model_reasoning_effort=\"high\"",
+        "--output-schema",
+        "evidence/synthetic-enterprise-demo/records/model-runs-v2/updated-judge/response-schema.json",
+        "--output-last-message",
+        "evidence/synthetic-enterprise-demo/records/model-runs-v2/updated-judge/response.json",
+        "-"
+      ],
+      "cwd_mode": "empty-neutral-temporary-directory",
+      "requested_model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "exit_code": 0,
+      "prompt_sha256": "a52e1cb4d2bd5a38e08dc2db6c3873b6409c50f56486f1b1df920c6f4aaf1004",
+      "schema_sha256": "9d668b21a32c3c4f8ccc3124afa7ad77b9275a407f41ebadeb0578971846ebd1",
+      "response_sha256": "5af5ffe11f482fd270f81d7896b40ef92f6f6cd0102178905855567a278e246d",
+      "event_usage": [
+        {
+          "input_tokens": 32939,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 8521,
+          "reasoning_output_tokens": 966
+        }
+      ],
+      "tool_item_count": 0,
+      "tool_item_types": [],
+      "event_parse_errors": [],
+      "cost_usd": null,
+      "exact_serving_snapshot": null,
+      "public_redaction_note": "Local absolute paths in argv were replaced with repository-relative paths for publication; execution settings and file hashes are unchanged."
+    }
+  },
+  "limitations": [
+    "Synthetic teaching corpus only; no production Wiki import or serving query was performed.",
+    "One answer sample per phase is descriptive, not a reliability estimate.",
+    "Semantic checks use a model reviewer and maintainer audit; human content-owner review is pending."
+  ],
+  "summary": {
+    "baseline": {
+      "case_count": 11,
+      "passed": 10,
+      "failed": 1,
+      "route_and_action_matches": 11
+    },
+    "updated": {
+      "case_count": 11,
+      "passed": 9,
+      "failed": 2,
+      "route_and_action_matches": 11
+    }
+  }
+}

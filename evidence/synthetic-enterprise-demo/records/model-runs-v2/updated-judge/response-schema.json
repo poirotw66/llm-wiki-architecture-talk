@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "case_id": {
+            "type": "string"
+          },
+          "canonical_first_action": {
+            "type": "string"
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "criterion_id": {
+                  "type": "string"
+                },
+                "passed": {
+                  "type": "boolean"
+                },
+                "evidence_quote": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "criterion_id",
+                "passed",
+                "evidence_quote",
+                "reason"
+              ]
+            }
+          }
+        },
+        "required": [
+          "case_id",
+          "canonical_first_action",
+          "checks"
+        ]
+      }
+    }
+  },
+  "required": [
+    "reviews"
+  ]
+}

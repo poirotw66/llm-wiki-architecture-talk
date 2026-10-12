@@ -1,0 +1,49 @@
+{
+  "started_at": "2026-10-12T08:36:05.327309+00:00",
+  "finished_at": "2026-10-12T08:39:32.692978+00:00",
+  "elapsed_seconds": 207.367,
+  "argv": [
+    "codex",
+    "exec",
+    "--ignore-user-config",
+    "--ignore-rules",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--sandbox",
+    "read-only",
+    "--json",
+    "--color",
+    "never",
+    "-c",
+    "model=\"gpt-6.1-sol\"",
+    "-c",
+    "model_reasoning_effort=\"high\"",
+    "--output-schema",
+    "evidence/synthetic-enterprise-demo/records/model-runs-v2/baseline-judge/response-schema.json",
+    "--output-last-message",
+    "evidence/synthetic-enterprise-demo/records/model-runs-v2/baseline-judge/response.json",
+    "-"
+  ],
+  "cwd_mode": "empty-neutral-temporary-directory",
+  "requested_model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "exit_code": 0,
+  "prompt_sha256": "81e502dec26016abc328f2c289c20b46f4206f85ec48532aa99a4a4e51eed9aa",
+  "schema_sha256": "9d668b21a32c3c4f8ccc3124afa7ad77b9275a407f41ebadeb0578971846ebd1",
+  "response_sha256": "35d79e479700a3315c7d5b7fd30af383dc7693c3be1ca107a9d6e2eaf876f0cb",
+  "event_usage": [
+    {
+      "input_tokens": 33371,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 8410,
+      "reasoning_output_tokens": 466
+    }
+  ],
+  "tool_item_count": 0,
+  "tool_item_types": [],
+  "event_parse_errors": [],
+  "cost_usd": null,
+  "exact_serving_snapshot": null,
+  "public_redaction_note": "Local absolute paths in argv were replaced with repository-relative paths for publication; execution settings and file hashes are unchanged."
+}
