@@ -9,6 +9,7 @@
 3. [逐題與逐項判定](regression-results-v2.json)：路由、第一動作、內容條件、禁止事項及指定來源與引用片段檢查。
 4. [執行摘要與限制](experiment-summary-v2.md)：10／11、9／11 的計算方式、三個未通過的階段／題目組合與尚未完成的驗收。
 5. [v1 規則覆核與 v2 修訂理由](../contracts/V2_RUBRIC_REVIEW.md)：說明 SYN-07 舊規則與 Model Judge 覆核事件，以及新增 SYN-11 的原因。
+6. [聚焦修復與重新驗證](repair-revalidation-v2.md)：僅修改 `ops/purpose.md` 的通用回答完整性規則；原 v2 契約重跑後，Revised Candidate 為 11／11。原始回答、評分與修復差異另存，不覆寫上列兩階段紀錄。
 
 契約內的 `execution_status: not-run` 保留了凍結當下的狀態；執行後的結果另存於逐題判定。兩階段使用的知識草稿分別保存在 [Baseline 快照](../baseline-v1/) 與 [Updated 快照](../updated-v2/)。
 

@@ -1,0 +1,49 @@
+{
+  "started_at": "2026-10-13T09:17:12.947926+00:00",
+  "finished_at": "2026-10-13T09:21:15.288485+00:00",
+  "elapsed_seconds": 242.34,
+  "argv": [
+    "codex",
+    "exec",
+    "--ignore-user-config",
+    "--ignore-rules",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--sandbox",
+    "read-only",
+    "--json",
+    "--color",
+    "never",
+    "-c",
+    "model=\"gpt-6.1-sol\"",
+    "-c",
+    "model_reasoning_effort=\"high\"",
+    "--output-schema",
+    "evidence/synthetic-enterprise-demo/records/model-runs-v2/revised-query/response-schema.json",
+    "--output-last-message",
+    "evidence/synthetic-enterprise-demo/records/model-runs-v2/revised-query/response.json",
+    "-"
+  ],
+  "cwd_mode": "empty-neutral-temporary-directory",
+  "requested_model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "exit_code": 0,
+  "prompt_sha256": "106639792f2e57a42e6405e16942b11c67c4df89af5f29d160ef19b9b0d7fb27",
+  "schema_sha256": "2bbba6b08b29dde4e02db6b3b3c7bc1a1777b133ec2757fdfb72507ec1b34ccf",
+  "response_sha256": "910ff6e5e7e4b3cdf845cadafbeb7d8c48b1b65107b10cca6035c7af21c03ebb",
+  "event_usage": [
+    {
+      "input_tokens": 41325,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 7850,
+      "reasoning_output_tokens": 1034
+    }
+  ],
+  "tool_item_count": 0,
+  "tool_item_types": [],
+  "event_parse_errors": [],
+  "cost_usd": null,
+  "exact_serving_snapshot": null,
+  "argv_path_representation": "repository-relative for public evidence"
+}

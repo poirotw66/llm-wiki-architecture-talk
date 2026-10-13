@@ -21,8 +21,10 @@ def main() -> int:
         "updated-query",
         "baseline-judge",
         "updated-judge",
+        "revised-query",
+        "revised-judge",
     }:
-        raise SystemExit("Usage: run_model.py <baseline-query|updated-query|baseline-judge|updated-judge>")
+        raise SystemExit("Usage: run_model.py <baseline-query|updated-query|baseline-judge|updated-judge|revised-query|revised-judge>")
 
     run_dir = pathlib.Path(__file__).resolve().parent / sys.argv[1]
     prompt_path = run_dir / "prompt.txt"

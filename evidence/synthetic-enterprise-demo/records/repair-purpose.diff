@@ -1,0 +1,15 @@
+--- updated-v2/ops/purpose.md
++++ repair-v2/ops/purpose.md
+@@ -20,6 +20,12 @@
+ - Source admission is approved; compiled content and answers remain draft pending human review.
+ - Synthetic public teaching data only. No production access, real enterprise data, retrieval ACL enforcement or actual recovery operation.
+ 
++## Answer Completeness
++
++- When a policy changes a first action, state the effective-date boundary and each source-supported eligibility condition in the user-facing answer. Do not replace the conditions with a shorthand assertion that the user qualifies; if a required condition is unknown, ask for it before selecting a path.
++- When recommending a procedure that depends on a prerequisite, state the source-supported fallback if that prerequisite becomes unavailable or the procedure cannot be completed. Keep the fallback distinct from the first action that applies to the stated situation.
++- Include only conditions and contingencies relevant to the user's question. Cite the canonical sources for material claims; citation text does not replace the user-facing explanation. Do not infer an action, approval or completed recovery from a draft knowledge page.
++
+ ## Key Questions
+ 
+ - Which first action applies to confirmed account lock after evaluating all qualifications and time?

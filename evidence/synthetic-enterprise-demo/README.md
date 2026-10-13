@@ -2,11 +2,12 @@
 
 這組資料用於 LLM Wiki 演講與本機示範。七份來源依企業知識問答常見的問題結構重新編寫；組織、系統、權限、流程、錯誤碼、日期及操作步驟均為虛構教學設定，不代表任何企業現行政策，也不提供真實系統操作入口。
 
-六份基準來源已依既有 llm-wiki-example 流程完成草稿編譯。v1 十題契約的兩階段實際問答均為 8／10 題通過。後續凍結 v2 十一題契約並重新執行兩階段問答，結果為 Baseline 10／11、Updated 9／11；題數、規則與回答均不同，不能將兩版分數當成同一次實驗的前後變化。原始失敗保留，知識草稿尚未通過回歸、人審或發布。
+六份基準來源已依既有 llm-wiki-example 流程完成草稿編譯。v1 十題契約的兩階段實際問答均為 8／10 題通過。後續凍結 v2 十一題契約並重新執行兩階段問答，結果為 Baseline 10／11、Updated 9／11；題數、規則與回答均不同，不能將兩版分數當成同一次實驗的前後變化。原始失敗保留。針對 v2 的一次聚焦修復後，同契約 Revised Candidate 為 11／11；人工內容審核與發布仍未完成。
 
 ## 實驗進度
 
 - [v2 十一題證據入口](records/v2-evidence-index.md)：契約、22 則回答、逐題判定、原始模型回答與評審紀錄。
+- [v2 修復與重新驗證](records/repair-revalidation-v2.md)：僅修改一份通用知識規則，保存差異、11 則新回答與逐項評分；Revised Candidate 為 11／11。
 - [v1 十題實際問答與更新回歸結果](records/experiment-summary.md)：已執行，兩階段均有引用契約缺漏；更新後另有說明與格式問題。
 - [十題測試契約與判讀方式](contracts/README.md)：已定義情境、基準／更新後預期、必要引用與禁止推論；契約保持凍結，實際結果另存。
 - [來源 preflight 紀錄](records/ingest-preflight.json)：沿用既有 `llm-wiki-example` 工具，記錄核可前的 `review_ready` 狀態；使用者已核可六份確切 digest，正式准入紀錄見 [核可提案](records/source-admission-proposal.json)。

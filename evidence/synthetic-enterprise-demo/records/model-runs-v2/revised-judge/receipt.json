@@ -1,0 +1,49 @@
+{
+  "started_at": "2026-10-13T09:21:23.727520+00:00",
+  "finished_at": "2026-10-13T09:25:42.284996+00:00",
+  "elapsed_seconds": 258.558,
+  "argv": [
+    "codex",
+    "exec",
+    "--ignore-user-config",
+    "--ignore-rules",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--sandbox",
+    "read-only",
+    "--json",
+    "--color",
+    "never",
+    "-c",
+    "model=\"gpt-6.1-sol\"",
+    "-c",
+    "model_reasoning_effort=\"high\"",
+    "--output-schema",
+    "evidence/synthetic-enterprise-demo/records/model-runs-v2/revised-judge/response-schema.json",
+    "--output-last-message",
+    "evidence/synthetic-enterprise-demo/records/model-runs-v2/revised-judge/response.json",
+    "-"
+  ],
+  "cwd_mode": "empty-neutral-temporary-directory",
+  "requested_model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "exit_code": 0,
+  "prompt_sha256": "0481f9a685f1caedeef7b80d1352093b22aa86334e685786ec85805d4d80d28e",
+  "schema_sha256": "9d668b21a32c3c4f8ccc3124afa7ad77b9275a407f41ebadeb0578971846ebd1",
+  "response_sha256": "7febe5b13eafc269191ffdfd8726b922b4a8dd6e94fa43319afe09ba612b9628",
+  "event_usage": [
+    {
+      "input_tokens": 35175,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 8357,
+      "reasoning_output_tokens": 716
+    }
+  ],
+  "tool_item_count": 0,
+  "tool_item_types": [],
+  "event_parse_errors": [],
+  "cost_usd": null,
+  "exact_serving_snapshot": null,
+  "argv_path_representation": "repository-relative for public evidence"
+}
